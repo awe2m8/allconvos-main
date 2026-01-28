@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
 import Link from "next/link";
 import { ArrowRight, Bot, User, CheckCircle } from "lucide-react";
+import { VoiceDemoModal } from "../ui/VoiceDemoModal";
 
 export function Hero() {
+    const [isDemoOpen, setIsDemoOpen] = useState(false);
+
     return (
         <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
             {/* Background Grid */}
@@ -56,11 +60,13 @@ export function Hero() {
                         <Link href="#pricing">
                             <Button>Build My AI Agent</Button>
                         </Link>
-                        <Link href="#demo">
-                            <Button variant="secondary" className="group">
-                                Listen to Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                        </Link>
+                        <Button
+                            variant="secondary"
+                            className="group"
+                            onClick={() => setIsDemoOpen(true)}
+                        >
+                            Listen to Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
                     </motion.div>
 
                     <motion.p
@@ -138,6 +144,8 @@ export function Hero() {
                     </div>
                 </motion.div>
             </div>
+
+            <VoiceDemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
         </section>
     );
 }
