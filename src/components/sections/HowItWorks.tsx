@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Intercept, MessageSquare, Zap, TrendingUp } from "lucide-react";
+import { MessageSquare, Zap, TrendingUp } from "lucide-react";
 
 const steps = [
     {
