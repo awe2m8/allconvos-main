@@ -13,7 +13,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 overflow-y-auto sm:items-center">
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -28,7 +28,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative w-full max-w-md bg-ocean-900 border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+                        className="relative w-full max-w-md bg-ocean-900 border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] max-h-[90vh] overflow-y-auto"
                     >
                         {/* Technical Header */}
                         <div className="bg-black/40 border-b border-white/5 p-6 flex justify-between items-center">
