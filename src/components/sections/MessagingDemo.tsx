@@ -121,8 +121,8 @@ export function MessagingDemo() {
 
                             {/* Assistant Container */}
                             <div className="flex-1 bg-black/20 p-6 flex flex-col items-center justify-center min-h-[340px] relative">
-                                <AnimatePresence mode="wait">
-                                    {!isDemoStarted ? (
+                                <AnimatePresence>
+                                    {!isDemoStarted && (
                                         <motion.div
                                             key="overlay"
                                             initial={{ opacity: 0 }}
@@ -151,34 +151,31 @@ export function MessagingDemo() {
                                                 )}
                                             </Button>
                                         </motion.div>
-                                    ) : (
-                                        <motion.div
-                                            key="widget"
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            className="w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-inner p-4"
-                                        >
-                                            <iframe
-                                                ref={frameRef}
-                                                src="https://iframes.ai/o/1760442563274x523950783927418900?color=ffffff&icon="
-                                                allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
-                                                className="w-full h-[200px] border-none"
-                                                id="assistantFrame"
-                                                title="Voice AI Demo"
-                                            />
-                                            <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-6">
-                                                <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
-                                                    <Mic className={`w-3 h-3 ${micPermissionGranted ? 'text-neon' : 'text-red-500'}`} />
-                                                    {micPermissionGranted ? 'Mic Active' : 'Mic Blocked'}
-                                                </div>
-                                                <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
-                                                    <ShieldCheck className="w-3 h-3 text-neon/40" />
-                                                    Secure_Link
-                                                </div>
-                                            </div>
-                                        </motion.div>
                                     )}
                                 </AnimatePresence>
+
+                                <motion.div
+                                    className={`w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-inner p-4 transition-all duration-700 ${isDemoStarted ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
+                                >
+                                    <iframe
+                                        ref={frameRef}
+                                        src="https://iframes.ai/o/1766461376490x480369842284396540?color=ffffff&icon="
+                                        allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
+                                        className="w-full h-[200px] border-none"
+                                        id="assistantFrame"
+                                        title="Voice AI Demo"
+                                    />
+                                    <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-6">
+                                        <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
+                                            <Mic className={`w-3 h-3 ${micPermissionGranted ? 'text-neon' : 'text-red-500'}`} />
+                                            {micPermissionGranted ? 'Mic Active' : 'Mic Blocked'}
+                                        </div>
+                                        <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
+                                            <ShieldCheck className="w-3 h-3 text-neon/40" />
+                                            Secure_Link_v5
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
                         </div>
                     </motion.div>
