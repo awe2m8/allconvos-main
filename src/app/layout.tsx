@@ -37,6 +37,19 @@ export default function RootLayout({
           data-widget-id="6938c5244ccc570e59720168"
           strategy="lazyOnload"
         />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          #chat-widget-container, 
+          .lc-chat-widget {
+            left: 24px !important;
+            right: auto !important;
+          }
+          #chat-widget-container button[class*="launcher"],
+          .lc-chat-widget-launcher {
+            left: 24px !important;
+            right: auto !important;
+          }
+        `}} />
       </body>
     </html>
   );

@@ -1,36 +1,56 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, X, Bot } from "lucide-react";
+import { Terminal, X, Bot, Send } from "lucide-react";
 
-declare global {
-  interface Window {
-    leadConnector: any;
-  }
+interface Message {
+  text: string;
+  sender: "agent" | "user";
 }
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      text: "CORE SYSTEM ACTIVE. I am the allconvos_ AI receptionist. I'm here to qualify your leads and book jobs 24/7. How can I help you today?",
+      sender: "agent",
+    },
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    const checkGHLState = () => {
-      if (window.leadConnector && window.leadConnector.chatWidget) {
-        const active = window.leadConnector.chatWidget.isActive();
-        if (active !== isOpen) {
-          setIsOpen(active);
-        }
-      }
-    };
+    scrollToBottom();
+  }, [messages, isTyping]);
 
-    const interval = setInterval(checkGHLState, 500);
-    return () => clearInterval(interval);
-  }, [isOpen]);
+  const toggleChat = () => setIsOpen(!isOpen);
 
-  const toggleGHLWidget = () => {
-    if (window.leadConnector && window.leadConnector.chatWidget) {
-      window.leadConnector.chatWidget.toggleWidget();
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const val = inputValue.trim();
+    if (!val || isTyping) return;
+
+    setMessages((prev) => [...prev, { text: val, sender: "user" }]);
+    setInputValue("");
+    setIsTyping(true);
+
+    // Mock AI Response logic
+    setTimeout(() => {
+      setIsTyping(false);
+      const scripts = [
+        "ROUTING COMMAND: I've verified a technician is available in that sector. Would you like me to book them for you now?",
+        "QUALIFYING DATA: Understood. I can handle that qualification immediately. Please provide your contact sequence (phone number).",
+        "STATUS UPDATE: System routing complete. Our automation is currently qualifying your request. Expect a confirmation link shortly.",
+      ];
+      const randomMsg = scripts[Math.floor(Math.random() * scripts.length)];
+      setMessages((prev) => [...prev, { text: randomMsg, sender: "agent" }]);
+    }, 1400);
   };
 
   return (
@@ -42,9 +62,10 @@ export function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, scale: 0.9, y: 30, filter: "blur(10px)" }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[380px] h-[520px] bg-[#05070a]/95 backdrop-blur-2xl border border-gray-800 rounded-2xl flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(217,255,65,0.05)] mb-6 overflow-hidden pointer-events-none"
+            className="w-[380px] h-[520px] bg-[#05070a]/98 backdrop-blur-2xl border border-gray-800 rounded-2xl flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(217,255,65,0.05)] mb-6 overflow-hidden"
           >
-            <div className="bg-[#0f1115] border-b border-gray-800 px-5 py-4 flex items-center justify-between pointer-events-auto">
+            {/* Header */}
+            <div className="bg-[#0f1115] border-b border-gray-800 px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] shadow-[0_0_8px_rgba(255,95,87,0.5)]" />
@@ -59,7 +80,7 @@ export function ChatWidget() {
                 </div>
               </div>
               <button
-                onClick={toggleGHLWidget}
+                onClick={toggleChat}
                 className="text-gray-500 hover:text-neon p-1 transition-colors"
                 type="button"
               >
@@ -67,37 +88,80 @@ export function ChatWidget() {
               </button>
             </div>
 
-            <div className="bg-[#0a0c10]/60 px-5 py-2 border-b border-gray-800/40 flex items-center justify-between pointer-events-auto">
+            {/* System Bar */}
+            <div className="bg-[#0a0c10]/60 px-5 py-2 border-b border-gray-800/40 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-neon animate-pulse shadow-[0_0_5px_#D9FF41]" />
                 <span className="text-[9px] text-neon uppercase font-bold tracking-widest">
-                  Logic: GHL_LINK_ESTABLISHED
+                  Core Active
                 </span>
               </div>
+              <span className="text-[9px] text-gray-600 font-bold uppercase">
+                Sector: HQ-Main
+              </span>
             </div>
 
+            {/* Messages */}
             <div 
-              className="flex-grow bg-transparent" 
+              className="flex-grow p-5 overflow-y-auto custom-scrollbar flex flex-col gap-6"
               style={{
                 backgroundImage: "url('https://www.transparenttextures.com/patterns/carbon-fibre.png')",
                 backgroundAttachment: "local"
               }}
             >
-              <div className="h-full w-full flex items-center justify-center">
-                <div className="text-[9px] text-gray-700 animate-pulse text-center px-10">
-                  SYSTEM_ID: leadconnector_6938...
-                  <br />
-                  SYNCING_UI_BRIDGE...
+              {messages.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`${
+                    msg.sender === "agent"
+                      ? "border-l-2 border-neon bg-[#0a0c10] text-neon rounded-[4px_12px_12px_4px] self-start"
+                      : "bg-[#1f2937] text-white rounded-xl border border-[#374151] self-end"
+                  } p-3.5 text-xs max-w-[88%] shadow-xl`}
+                >
+                  {msg.text}
                 </div>
-              </div>
+              ))}
+              {isTyping && (
+                <div className="text-[11px] text-neon uppercase tracking-[2px] font-bold animate-pulse p-2">
+                  <span className="mr-2">&gt;&gt;&gt;</span>Qualifying Routing...
+                </div>
+              )}
+              <div ref={messagesEndRef} />
             </div>
+
+            {/* Input */}
+            <form
+              onSubmit={handleSubmit}
+              className="p-5 bg-[#0f1115] border-t border-gray-800 flex gap-3"
+            >
+              <div className="relative flex-grow">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neon opacity-50 text-xs font-bold">
+                  $
+                </span>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  autoComplete="off"
+                  placeholder="Type command..."
+                  className="w-full bg-[#05070a] border border-gray-800 rounded-xl pl-10 pr-4 py-3 text-sm text-neon focus:outline-none focus:border-neon/40 focus:ring-1 focus:ring-neon/20 placeholder-gray-700 transition-all font-mono"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-neon p-3 rounded-xl text-black hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(217,255,65,0.4)]"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Launcher */}
       <div className="relative">
         <motion.button
-          onClick={toggleGHLWidget}
+          onClick={toggleChat}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.85 }}
           className={`ml-auto w-[68px] h-[68px] bg-[#05070a] border-[1.5px] rounded-full flex items-center justify-center cursor-pointer transition-all duration-400 shadow-[0_10px_40px_rgba(0,0,0,0.6)] ${
@@ -120,6 +184,7 @@ export function ChatWidget() {
           )}
         </motion.button>
 
+        {/* Tooltip */}
         <AnimatePresence>
           {!isOpen && (
             <motion.div
@@ -128,7 +193,7 @@ export function ChatWidget() {
               exit={{ opacity: 0, y: 10 }}
               className="absolute bottom-full right-0 mb-5 pointer-events-none"
             >
-              <div className="bg-neon text-black text-[11px] font-black uppercase tracking-widest px-5 py-2.5 rounded-xl shadow-[0_15px_30px_rgba(217,255,65,0.4)] relative whitespace-nowrap animate-bounce">
+              <div className="bg-neon text-black text-[11px] font-black uppercase tracking-widest px-5 py-2.5 rounded-xl shadow-[0_15px_30_rgba(217,255,65,0.4)] relative whitespace-nowrap animate-bounce">
                 Build My AI Agent
                 <div className="absolute top-full right-7 w-4 h-4 bg-neon rotate-45 -translate-y-2" />
               </div>
@@ -138,31 +203,18 @@ export function ChatWidget() {
       </div>
 
       <style jsx global>{`
-        #chat-widget-container div[class*="launcher"],
-        #chat-widget-container button[class*="launcher"],
-        .lc-chat-widget-launcher {
-          display: none !important;
-          opacity: 0 !important;
-          visibility: hidden !important;
-          pointer-events: none !important;
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
         }
-
-        #chat-widget-container, 
-        .lc-chat-widget-window {
-           position: fixed !important;
-           bottom: 110px !important;
-           right: 24px !important;
-           width: 380px !important;
-           height: 520px !important;
-           z-index: 2147483645 !important;
-           border-radius: 16px !important;
-           box-shadow: none !important;
-           border: none !important;
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
         }
-
-        .lc-chat-widget-window iframe {
-           border-radius: 16px !important;
-           background: transparent !important;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #1f2937;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #d9ff41;
         }
       `}</style>
     </div>
