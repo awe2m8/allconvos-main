@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Permissions-Policy',
-            value: 'microphone=(self "https://iframes.ai")',
+            value: 'microphone=*, camera=*, autoplay=*',
           },
         ],
       },
