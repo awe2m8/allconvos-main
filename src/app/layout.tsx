@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ChatWidget } from "../components/ChatWidget";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,6 +31,12 @@ export default function RootLayout({
       <body className="relative">
         {children}
         <ChatWidget />
+        <Script
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="6938c5244ccc570e59720168"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
