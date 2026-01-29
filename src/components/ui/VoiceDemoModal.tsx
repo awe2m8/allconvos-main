@@ -15,6 +15,19 @@ export function VoiceDemoModal({ isOpen, onClose }: VoiceDemoModalProps) {
     useEffect(() => {
         if (!isOpen) return;
 
+        // "Prime" microphone permission at the parent level
+        // This ensures the browser prompt is triggered correctly for the iframe to inherit
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    stream.getTracks().forEach(track => track.stop());
+                    console.log('Microphone permission primed successfully');
+                })
+                .catch(err => {
+                    console.warn('Microphone priming failed or denied:', err);
+                });
+        }
+
         const checkPermissions = () => {
             if (navigator.permissions && navigator.permissions.query) {
                 navigator.permissions.query({ name: 'microphone' as PermissionName })
@@ -96,7 +109,7 @@ export function VoiceDemoModal({ isOpen, onClose }: VoiceDemoModalProps) {
                                 <iframe
                                     ref={frameRef}
                                     src="https://iframes.ai/o/1760442563274x523950783927418900?color=ffffff&icon="
-                                    allow="microphone"
+                                    allow="microphone; camera; autoplay; encrypted-media; fullscreen; display-capture; picture-in-picture; clipboard-read; clipboard-write;"
                                     className="w-full h-full border-none"
                                     id="assistantFrame"
                                     title="Voice AI Assistant"
