@@ -179,7 +179,7 @@ export function CallHandling() {
                     transition={{ delay: 0.8 }}
                     className="mt-16 flex flex-wrap justify-center gap-4 filter grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 >
-                    {["Real Estate", "Medical", "Automotive", "Law Firms", "Home Services"].map((industry) => (
+                    {["Real Estate", "Medical", "Automotive", "Home Services", "Tradies", "Gyms", "Med Spas", "Fitness Studios"].map((industry) => (
                         <span key={industry} className="px-4 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/50">
                             {industry}
                         </span>
