@@ -93,10 +93,13 @@ export function DIYDemo() {
 
                                     <a
                                         href="tel:0404009296"
-                                        className="text-4xl md:text-5xl font-black text-white hover:text-neon transition-colors duration-300 tracking-tighter mb-8"
+                                        className="text-4xl md:text-5xl font-black text-white hover:text-neon transition-colors duration-300 tracking-tighter"
                                     >
                                         0404 009 296
                                     </a>
+                                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 mb-8">
+                                        Just call this number
+                                    </p>
 
                                     <div className="w-full h-px bg-white/10 mb-8" />
 
