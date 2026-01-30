@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { VSL } from "@/components/sections/VSL";
+import { TestimonialStrip } from "@/components/sections/TestimonialStrip";
 import { CallHandling } from "@/components/sections/CallHandling";
 import { DIYDemo } from "@/components/sections/DIYDemo";
 import { MessagingDemo } from "@/components/sections/MessagingDemo";
@@ -16,6 +17,7 @@ export default function Home() {
       <Hero />
       <MessagingDemo />
       <VSL />
+      <TestimonialStrip />
       <CallHandling />
       <DIYDemo />
       <DashboardPreview />
