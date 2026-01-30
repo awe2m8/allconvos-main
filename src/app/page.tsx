@@ -8,6 +8,7 @@ import { DIYDemo } from "@/components/sections/DIYDemo";
 import { DashboardPreview } from "@/components/sections/DashboardPreview";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Pricing } from "@/components/sections/Pricing";
+import { Problem } from "@/components/sections/Problem";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <VSL />
+      <Problem />
       <TestimonialStrip />
       <CallHandling />
       <DIYDemo />
