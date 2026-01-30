@@ -52,9 +52,7 @@ export default function BuildPage() {
                         allconvos<span className="text-gray-400">_build</span>
                     </div>
                 </nav>
-                <BuildNextSteps />
-
-                <div className="grid lg:grid-cols-2 gap-16 items-start mb-32">
+                <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
                     {/* Left Side: Copy & Instructions */}
                     <div className="space-y-8">
                         <motion.div
@@ -172,6 +170,7 @@ export default function BuildPage() {
                 </div>
 
                 {/* Additional Sections */}
+                <BuildNextSteps />
                 <Pricing />
 
                 {/* Final Call to Action */}

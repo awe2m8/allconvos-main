@@ -33,7 +33,7 @@ const steps = [
 
 export function BuildNextSteps() {
     return (
-        <section className="py-24 relative">
+        <section className="pb-24 pt-6 relative">
             <div className="max-w-6xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <motion.div
