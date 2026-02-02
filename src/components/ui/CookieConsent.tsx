@@ -27,7 +27,7 @@ export function CookieConsent() {
                     initial={{ opacity: 0, y: 50, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 50, scale: 0.9 }}
-                    className="fixed bottom-6 left-6 right-6 md:left-auto md:max-w-md z-[100]"
+                    className="fixed bottom-6 left-6 right-6 md:left-1/2 md:right-auto md:-translate-x-1/2 md:max-w-md z-[100]"
                 >
                     <div className="relative group">
                         {/* Background Glow */}
