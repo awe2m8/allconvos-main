@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   description: "The AI receptionist that answers every call, qualifies every lead, and books jobs 24/7.",
 };
 
+import { CookieConsent } from "@/components/ui/CookieConsent";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} antialiased scroll-smooth`}>
       <body className="relative">
+        <CookieConsent />
         {children}
         <Script
           src="https://widgets.leadconnectorhq.com/loader.js"
