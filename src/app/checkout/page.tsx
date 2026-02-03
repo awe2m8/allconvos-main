@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { motion } from "framer-motion";
-import { Check, Shield, ArrowLeft, Loader2 } from "lucide-react";
+import { Check, Shield, ArrowLeft, Loader2, CreditCard } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import stripePromise from "@/lib/stripe";
 
 const plans = [
     {
@@ -32,12 +34,32 @@ const plans = [
     },
 ];
 
-export default function CheckoutPage() {
+const cardElementOptions = {
+    style: {
+        base: {
+            fontSize: "16px",
+            color: "#ffffff",
+            fontFamily: "ui-monospace, monospace",
+            "::placeholder": {
+                color: "#6b7280",
+            },
+        },
+        invalid: {
+            color: "#ef4444",
+        },
+    },
+};
+
+function CheckoutForm() {
     const searchParams = useSearchParams();
     const initialPlan = searchParams.get("plan") || "pro";
 
+    const stripe = useStripe();
+    const elements = useElements();
+
     const [selectedPlan, setSelectedPlan] = useState(initialPlan);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -55,17 +77,53 @@ export default function CheckoutPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!stripe || !elements) {
+            return;
+        }
+
         setIsLoading(true);
+        setError(null);
 
-        // TODO: Integrate with Stripe when keys are provided
-        // This will create a Stripe Checkout Session and redirect
-        console.log("Creating subscription for:", currentPlan.name, formData);
+        const cardElement = elements.getElement(CardElement);
 
-        // Simulate loading for now
-        setTimeout(() => {
+        if (!cardElement) {
+            setError("Card element not found");
             setIsLoading(false);
-            alert("Stripe integration pending - provide your Stripe keys to activate payments!");
-        }, 1500);
+            return;
+        }
+
+        try {
+            // Create a payment method
+            const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
+                type: "card",
+                card: cardElement,
+                billing_details: {
+                    name: formData.fullName,
+                    email: formData.email,
+                },
+            });
+
+            if (pmError) {
+                setError(pmError.message || "Payment failed");
+                setIsLoading(false);
+                return;
+            }
+
+            // TODO: Send to backend to create subscription
+            // For now, show success message
+            console.log("Payment method created:", paymentMethod.id);
+            console.log("Plan:", currentPlan.id);
+            console.log("Customer:", formData);
+
+            alert(`Payment method created successfully! ID: ${paymentMethod.id}\n\nTo complete the subscription, configure the backend API with your Stripe Secret Key.`);
+
+        } catch (err) {
+            setError("An unexpected error occurred");
+            console.error(err);
+        }
+
+        setIsLoading(false);
     };
 
     return (
@@ -196,33 +254,35 @@ export default function CheckoutPage() {
                                 </div>
                             </div>
 
-                            {/* Payment Method Placeholder */}
+                            {/* Payment Method - Stripe Card Element */}
                             <div>
                                 <h2 className="text-white font-bold text-lg mb-4">
                                     Add a payment method
                                 </h2>
                                 <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <span className="text-gray-400 text-sm">Card number</span>
+                                        <div className="flex items-center gap-2">
+                                            <CreditCard className="w-5 h-5 text-gray-400" />
+                                            <span className="text-gray-400 text-sm">Card details</span>
+                                        </div>
                                         <div className="flex gap-2">
                                             <div className="w-10 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-[8px] font-bold">VISA</div>
                                             <div className="w-10 h-6 bg-orange-500 rounded flex items-center justify-center text-white text-[8px] font-bold">MC</div>
                                             <div className="w-10 h-6 bg-blue-400 rounded flex items-center justify-center text-white text-[8px] font-bold">AMEX</div>
                                         </div>
                                     </div>
-                                    <div className="p-4 rounded-xl bg-ocean-950 border border-white/10 text-gray-500 text-sm text-center">
-                                        Stripe payment form will appear here once keys are configured
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4 mt-4">
-                                        <div className="p-3 rounded-xl bg-ocean-950 border border-white/10 text-gray-500 text-sm">
-                                            Expiration date
-                                        </div>
-                                        <div className="p-3 rounded-xl bg-ocean-950 border border-white/10 text-gray-500 text-sm">
-                                            Security code
-                                        </div>
+                                    <div className="p-4 rounded-xl bg-ocean-950 border border-white/10">
+                                        <CardElement options={cardElementOptions} />
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Error Message */}
+                            {error && (
+                                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                                    {error}
+                                </div>
+                            )}
 
                             {/* Terms */}
                             <p className="text-gray-500 text-xs">
@@ -232,7 +292,7 @@ export default function CheckoutPage() {
                             {/* Submit */}
                             <motion.button
                                 type="submit"
-                                disabled={isLoading}
+                                disabled={isLoading || !stripe}
                                 whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.99 }}
                                 className="w-full bg-neon text-ocean-950 py-4 rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -298,7 +358,7 @@ export default function CheckoutPage() {
                                 </div>
 
                                 {/* Promo Code */}
-                                <button className="text-neon text-sm font-medium hover:underline">
+                                <button type="button" className="text-neon text-sm font-medium hover:underline">
                                     Add promo code
                                 </button>
 
@@ -323,5 +383,19 @@ export default function CheckoutPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function CheckoutPage() {
+    return (
+        <Elements stripe={stripePromise}>
+            <Suspense fallback={
+                <div className="min-h-screen bg-ocean-950 flex items-center justify-center">
+                    <Loader2 className="w-8 h-8 text-neon animate-spin" />
+                </div>
+            }>
+                <CheckoutForm />
+            </Suspense>
+        </Elements>
     );
 }
