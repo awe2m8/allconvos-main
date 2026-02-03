@@ -92,10 +92,10 @@ export function DIYDemo() {
                                     </h3>
 
                                     <a
-                                        href="tel:0404009296"
+                                        href="tel:0485009296"
                                         className="text-4xl md:text-5xl font-black text-white hover:text-neon transition-colors duration-300 tracking-tighter"
                                     >
-                                        0404 009 296
+                                        0485 009 296
                                     </a>
                                     <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 mb-8">
                                         Just call this number
@@ -115,7 +115,7 @@ export function DIYDemo() {
                                     </div>
 
                                     <motion.a
-                                        href="tel:0404009296"
+                                        href="tel:0485009296"
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                         className="mt-10 w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-neon transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
