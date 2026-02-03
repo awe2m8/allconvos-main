@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    typescript: true,
-});
-
 // Price IDs - you'll need to create these in Stripe Dashboard
 // and add them to your environment variables
 const PRICE_IDS: Record<string, string> = {
@@ -14,6 +10,19 @@ const PRICE_IDS: Record<string, string> = {
 
 export async function POST(request: NextRequest) {
     try {
+        // Initialize Stripe lazily to avoid build-time errors if key is missing
+        if (!process.env.STRIPE_SECRET_KEY) {
+            console.error('Missing STRIPE_SECRET_KEY');
+            return NextResponse.json(
+                { error: 'Server configuration error' },
+                { status: 500 }
+            );
+        }
+
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+            typescript: true,
+        });
+
         const body = await request.json();
         const { paymentMethodId, planId, email, name, company } = body;
 
