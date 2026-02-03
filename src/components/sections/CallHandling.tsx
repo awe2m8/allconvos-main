@@ -20,8 +20,9 @@ export function CallHandling() {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
 
-                // Update source and load
-                audioRef.current.src = `/audio/${type.toLowerCase()}.wav`;
+                // Update source and load - Tradies uses MP3, Gyms uses WAV
+                const extension = type === "Tradies" ? "mp3" : "wav";
+                audioRef.current.src = `/audio/${type.toLowerCase()}.${extension}`;
                 audioRef.current.load();
                 audioRef.current.volume = 1.0;
 
