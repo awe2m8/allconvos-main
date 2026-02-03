@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
 import Link from "next/link";
-import Script from "next/script";
 import { ArrowRight, Bot, User, CheckCircle, Mic, Terminal, MessageSquare, ShieldCheck, Activity } from "lucide-react";
 
 export function Hero() {
@@ -178,8 +177,11 @@ export function Hero() {
                                 <div className="absolute inset-0 bg-neon/5 rounded-xl blur-lg" />
                                 <div className="relative bg-black/40 border border-white/5 rounded-xl p-2 h-[220px] flex items-center justify-center overflow-hidden">
                                     <div className="w-full h-full flex items-center justify-center">
-                                        <div data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4" style={{ width: '100%', height: '100%' }}></div>
-                                        <Script src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js" strategy="afterInteractive" />
+                                        <div
+                                            data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"
+                                            style={{ width: '100%', height: '100%' }}
+                                            suppressHydrationWarning
+                                        />
                                     </div>
 
                                     {/* Mic/Shield Overlay */}

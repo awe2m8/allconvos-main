@@ -38,6 +38,10 @@ export default function RootLayout({
           data-widget-id="6938c5244ccc570e59720168"
           strategy="lazyOnload"
         />
+        <Script
+          src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

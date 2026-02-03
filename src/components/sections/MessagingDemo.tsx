@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Script from "next/script";
 import { motion } from "framer-motion";
 import { Mic, Terminal, MessageSquare, ShieldCheck } from "lucide-react";
 
@@ -112,8 +111,11 @@ export function MessagingDemo() {
                                     className="w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-inner p-4"
                                 >
                                     <div className="w-full h-[200px] flex items-center justify-center">
-                                        <div data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4" style={{ width: '100%', height: '100%' }}></div>
-                                        <Script src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js" strategy="afterInteractive" />
+                                        <div
+                                            data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"
+                                            style={{ width: '100%', height: '100%' }}
+                                            suppressHydrationWarning
+                                        />
                                     </div>
                                     <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-6">
                                         <div className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase">
