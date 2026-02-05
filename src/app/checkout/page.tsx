@@ -195,20 +195,20 @@ function CheckoutForm() {
 
                         <div className="space-y-4 mb-8 relative z-10">
                             <div className="flex justify-between items-center py-3 border-b border-white/5">
-                                <span className="text-gray-400">Plan</span>
-                                <span className="text-white font-mono font-bold">{currentPlan.name}</span>
+                                <span className="text-gray-400">Subtotal</span>
+                                <span className="text-white">{currentPlan.priceDisplay}</span>
                             </div>
                             <div className="flex justify-between items-center py-3 border-b border-white/5">
-                                <span className="text-gray-400">Billing Cycle</span>
-                                <span className="text-white">Monthly</span>
+                                <span className="text-gray-400">GST (10%)</span>
+                                <span className="text-white">${(currentPlan.price * 0.10).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between items-center py-3 border-b border-white/5">
                                 <span className="text-gray-400">Total Due Today</span>
-                                <span className="text-neon text-xl font-bold">{currentPlan.priceDisplay}</span>
+                                <span className="text-neon text-xl font-bold">${(currentPlan.price * 1.10).toFixed(2)}</span>
                             </div>
                             <div className="pt-2">
                                 <p className="text-xs text-gray-500">
-                                    By clicking confirm, you agree to be charged {currentPlan.priceDisplay} immediately and then monthly until cancelled.
+                                    By clicking confirm, you agree to be charged ${(currentPlan.price * 1.10).toFixed(2)} immediately and then monthly until cancelled.
                                 </p>
                             </div>
                         </div>
@@ -224,7 +224,7 @@ function CheckoutForm() {
                                 onClick={processPayment}
                                 className="flex-1 px-4 py-3 rounded-xl bg-neon text-ocean-950 font-bold text-sm hover:bg-white transition-colors"
                             >
-                                Confirm & Pay
+                                Confirm & Pay ${(currentPlan.price * 1.10).toFixed(2)}
                             </button>
                         </div>
                     </motion.div>
@@ -472,12 +472,12 @@ function CheckoutForm() {
                                         <span>{currentPlan.priceDisplay}</span>
                                     </div>
                                     <div className="flex justify-between text-gray-400 text-sm">
-                                        <span>Sales tax (0.00%)</span>
-                                        <span>$0.00</span>
+                                        <span>GST (10%)</span>
+                                        <span>${(currentPlan.price * 0.10).toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-white font-bold text-lg pt-3 border-t border-white/10">
                                         <span>Total</span>
-                                        <span>{currentPlan.priceDisplay}</span>
+                                        <span>${(currentPlan.price * 1.10).toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
