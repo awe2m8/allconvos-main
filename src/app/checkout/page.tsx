@@ -151,7 +151,8 @@ function CheckoutForm() {
             // If subscription requires confirmation (SCA or incomplete status)
             if (data.status === 'incomplete') {
                 if (!data.clientSecret) {
-                    throw new Error("Payment setup failed. Please try a different card.");
+                    // Debug: Show detailed info to diagnose why secret is missing
+                    throw new Error(`Payment setup failed. Server Ref: ${data.subscriptionId} Status: ${data.status}. Secrets: ${data.clientSecret ? 'YES' : 'NO'}. Data: ${JSON.stringify(data)}`);
                 }
 
                 const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret);
