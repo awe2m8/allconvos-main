@@ -82,16 +82,22 @@ export async function POST(request: NextRequest) {
             expand: ['latest_invoice.payment_intent'],
         });
 
-        // Force retrieval of the invoice with explicit expansion to guarantee we get the PaymentIntent
-        const invoiceId = typeof subscription.latest_invoice === 'string' 
-            ? subscription.latest_invoice 
+        // Force retrieval of the invoice to ensure we have the latest status
+        const invoiceId = typeof subscription.latest_invoice === 'string'
+            ? subscription.latest_invoice
             : (subscription.latest_invoice as Stripe.Invoice).id;
 
         const invoice = await stripe.invoices.retrieve(invoiceId, {
             expand: ['payment_intent']
         });
 
-        const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
+        let paymentIntent = invoice.payment_intent as string | Stripe.PaymentIntent | null;
+
+        // CRITICAL FIX: Even with expand, sometimes specifically in certain API versions 
+        // or mock environments, this remains an ID. We must check.
+        if (typeof paymentIntent === 'string') {
+            paymentIntent = await stripe.paymentIntents.retrieve(paymentIntent);
+        }
 
         console.log('Subscription created:', {
             id: subscription.id,
