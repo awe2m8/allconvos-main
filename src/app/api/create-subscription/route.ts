@@ -76,9 +76,7 @@ export async function POST(request: NextRequest) {
             customer: customer.id,
             items: [{ price: priceId }],
             payment_behavior: 'default_incomplete',
-            payment_settings: {
-                save_default_payment_method: 'on_subscription',
-            },
+            collection_method: 'charge_automatically',
             expand: ['latest_invoice.payment_intent'],
         });
 
@@ -113,9 +111,9 @@ export async function POST(request: NextRequest) {
             debug: {
                 invoiceId: invoice.id,
                 invoiceStatus: invoice.status,
-                paymentIntentId: typeof paymentIntent === 'object' ? paymentIntent?.id : paymentIntent,
-                paymentIntentStatus: typeof paymentIntent === 'object' ? paymentIntent?.status : 'unknown_or_string',
-                originalInvoicePaymentIntent: (subscription.latest_invoice as any)?.payment_intent
+                invoiceCollectionMethod: invoice.collection_method,
+                paymentIntentId: paymentIntent ? paymentIntent.id : (paymentIntent === null ? 'NULL' : 'UNDEFINED'),
+                paymentIntentStatus: typeof paymentIntent === 'object' && paymentIntent ? paymentIntent.status : 'unknown',
             }
         });
 
