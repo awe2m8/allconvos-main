@@ -149,26 +149,31 @@ function CheckoutForm() {
             }
 
             // If subscription requires confirmation (SCA or incomplete status)
-            if (data.status === 'incomplete' && data.clientSecret) {
+            if (data.status === 'incomplete') {
+                if (!data.clientSecret) {
+                    throw new Error("Payment setup failed. Please try a different card.");
+                }
+
                 const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret);
 
                 if (confirmError) {
                     throw new Error(confirmError.message || "Payment confirmation failed");
                 }
 
-                // If confirmation succeeded, we are good!
+                // If confirmation succeeded
                 if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
                     window.location.href = `/checkout/success?plan=${currentPlan.id}`;
                     return;
+                } else {
+                    throw new Error(`Payment status: ${paymentIntent?.status}`);
                 }
             } else if (data.status === 'active') {
                 // Immediate success
                 window.location.href = `/checkout/success?plan=${currentPlan.id}`;
                 return;
             } else {
-                // Fallback for weird states
-                window.location.href = `/checkout/success?plan=${currentPlan.id}&status=${data.status}`;
-                return;
+                // Unknown state - treat as error to be safe
+                throw new Error("Subscription created but payment status is unknown. Please check your email.");
             }
 
         } catch (err: any) {

@@ -85,6 +85,13 @@ export async function POST(request: NextRequest) {
         const invoice = subscription.latest_invoice as any;
         const paymentIntent = invoice?.payment_intent as Stripe.PaymentIntent;
 
+        console.log('Subscription created:', {
+            id: subscription.id,
+            status: subscription.status,
+            paymentIntentId: paymentIntent?.id,
+            hasClientSecret: !!paymentIntent?.client_secret
+        });
+
         return NextResponse.json({
             subscriptionId: subscription.id,
             clientSecret: paymentIntent?.client_secret,
