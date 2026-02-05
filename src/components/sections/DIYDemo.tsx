@@ -144,8 +144,8 @@ export function DIYDemo() {
                                         >
                                             <div className="w-full bg-ocean-900 shadow-[inset_0_0_40px_rgba(0,0,0,0.4)] rounded-2xl border border-white/5 p-4 mb-6">
                                                 <iframe
-                                                    src="https://iframes.ai/o/1770094548049x895768558885666800?color=26d0d1&icon="
-                                                    allow="microphone"
+                                                    src="https://iframes.ai/o/1770334150828x100437170360156160?color=1adef1&icon="
+                                                    allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
                                                     style={{ width: "100%", height: "200px", border: "none" }}
                                                     id="assistantFrame"
                                                     title="AI Voice Assistant"
