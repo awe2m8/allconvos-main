@@ -81,46 +81,67 @@ export async function POST(request: NextRequest) {
             expand: ['latest_invoice.payment_intent', 'pending_setup_intent'],
         });
 
-        // With default_incomplete, Stripe may use:
-        // 1. subscription.pending_setup_intent (for SetupIntent flow)
-        // 2. invoice.payment_intent (for PaymentIntent flow)
-        // We need to check BOTH and use whichever has a client_secret
+        // Get invoice ID early for fallback
+        const latestInvoice = subscription.latest_invoice as any;
+        const invoiceId = latestInvoice?.id || (typeof subscription.latest_invoice === 'string' ? subscription.latest_invoice : null);
 
         let clientSecret: string | null = null;
         let secretSource = 'NONE';
 
-        // Check 1: subscription.pending_setup_intent (SetupIntent for 3D Secure / validation)
+        // Check 1: subscription.pending_setup_intent (SetupIntent flow)
         const pendingSetupIntent = (subscription as any).pending_setup_intent;
-        if (pendingSetupIntent) {
+        if (pendingSetupIntent && pendingSetupIntent !== null) {
             if (typeof pendingSetupIntent === 'object' && pendingSetupIntent.client_secret) {
                 clientSecret = pendingSetupIntent.client_secret;
                 secretSource = 'subscription.pending_setup_intent';
             } else if (typeof pendingSetupIntent === 'string') {
-                // It's just an ID, retrieve the full object
                 const si = await stripe.setupIntents.retrieve(pendingSetupIntent);
                 clientSecret = si.client_secret;
                 secretSource = 'subscription.pending_setup_intent (retrieved)';
             }
         }
 
-        // Check 2: invoice.payment_intent (PaymentIntent for immediate charge)
-        if (!clientSecret) {
-            const latestInvoice = subscription.latest_invoice as any;
-            if (latestInvoice && typeof latestInvoice === 'object') {
-                const pi = latestInvoice.payment_intent;
-                if (pi && typeof pi === 'object' && pi.client_secret) {
+        // Check 2: invoice.payment_intent (PaymentIntent flow)
+        if (!clientSecret && latestInvoice && typeof latestInvoice === 'object') {
+            const pi = latestInvoice.payment_intent;
+            if (pi && typeof pi === 'object' && pi.client_secret) {
+                clientSecret = pi.client_secret;
+                secretSource = 'invoice.payment_intent';
+            } else if (typeof pi === 'string') {
+                const paymentIntent = await stripe.paymentIntents.retrieve(pi);
+                clientSecret = paymentIntent.client_secret;
+                secretSource = 'invoice.payment_intent (retrieved)';
+            }
+        }
+
+        // Check 3 (FALLBACK): List customer's recent PaymentIntents and find by invoice
+        if (!clientSecret && invoiceId) {
+            const recentPIs = await stripe.paymentIntents.list({
+                customer: customer.id,
+                limit: 5,
+            });
+
+            for (const pi of recentPIs.data) {
+                if ((pi as any).invoice === invoiceId) {
                     clientSecret = pi.client_secret;
-                    secretSource = 'invoice.payment_intent';
-                } else if (typeof pi === 'string') {
-                    const paymentIntent = await stripe.paymentIntents.retrieve(pi);
-                    clientSecret = paymentIntent.client_secret;
-                    secretSource = 'invoice.payment_intent (retrieved)';
+                    secretSource = 'paymentIntents.list fallback';
+                    break;
                 }
             }
         }
 
-        // Debug info
-        const latestInvoice = subscription.latest_invoice as any;
+        // Check 4 (LAST RESORT): Get the most recent PaymentIntent for this customer
+        if (!clientSecret) {
+            const recentPIs = await stripe.paymentIntents.list({
+                customer: customer.id,
+                limit: 1,
+            });
+
+            if (recentPIs.data.length > 0 && recentPIs.data[0].status === 'requires_confirmation') {
+                clientSecret = recentPIs.data[0].client_secret;
+                secretSource = 'paymentIntents.list last resort';
+            }
+        }
 
         console.log('Subscription created:', {
             id: subscription.id,
@@ -135,9 +156,9 @@ export async function POST(request: NextRequest) {
             status: subscription.status,
             debug: {
                 secretSource: secretSource,
-                invoiceId: latestInvoice?.id || 'NONE',
+                invoiceId: invoiceId || 'NONE',
                 invoiceAmountDue: latestInvoice?.amount_due || 0,
-                hasPendingSetupIntent: !!pendingSetupIntent,
+                hasPendingSetupIntent: !!(pendingSetupIntent && pendingSetupIntent !== null),
                 pendingSetupIntentType: typeof pendingSetupIntent,
                 hasPaymentIntent: !!(latestInvoice?.payment_intent),
                 paymentIntentType: typeof latestInvoice?.payment_intent,
