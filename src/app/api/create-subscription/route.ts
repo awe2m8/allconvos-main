@@ -75,6 +75,7 @@ export async function POST(request: NextRequest) {
         const subscription = await stripe.subscriptions.create({
             customer: customer.id,
             items: [{ price: priceId }],
+            default_payment_method: paymentMethodId, // Explicitly attach the payment method
             payment_behavior: 'default_incomplete',
             collection_method: 'charge_automatically',
             expand: ['latest_invoice.payment_intent'],
