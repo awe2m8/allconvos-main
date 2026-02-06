@@ -231,7 +231,7 @@ export default function BuildPage() {
                             {/* Form iframe */}
                             <iframe
                                 src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
-                                style={{ width: "100%", height: "523px", border: "none", borderRadius: "10px" }}
+                                style={{ width: "100%", height: "575px", border: "none", borderRadius: "10px" }}
                                 id="inline-kTciuwAyNYWItRrsMHEN"
                                 title="Free Agent Build & Test"
                             />
