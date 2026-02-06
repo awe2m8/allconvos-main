@@ -415,6 +415,29 @@ export default function TestGraphicsPage() {
                     </div>
                 </section>
 
+                {/* ===== VARIATION 19: User's Preferred Layout + Workflow Text ===== */}
+                <section className="space-y-4">
+                    <p className="text-xs font-mono text-neon uppercase tracking-widest">Variation 19 - Your Layout + Workflow Text</p>
+                    <div className="bg-gradient-to-b from-ocean-900 to-ocean-950 rounded-2xl border border-white/10 text-center overflow-hidden">
+                        <div className="h-2 bg-gradient-to-r from-neon via-cyan-400 to-neon" />
+                        <div className="py-8 px-8">
+                            <p className="font-mono text-lg font-bold tracking-tighter text-white mb-6">
+                                allconvos<span className="text-neon">_</span>
+                            </p>
+                            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-2">
+                                <span className="text-white">CREATE YOUR AI </span>
+                                <span className="text-neon italic">RECEPTIONIST</span>
+                            </h2>
+                            <p className="text-neon font-bold italic uppercase text-sm tracking-widest mb-6">
+                                — TEST IT FREE —
+                            </p>
+                            <p className="text-gray-400 text-base font-medium tracking-wide">
+                                Describe your business → We build your agent → We send it to you to test
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
                 {/* Instructions */}
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-sm text-gray-400">
                     <p className="font-bold text-white mb-2">📸 How to use:</p>
