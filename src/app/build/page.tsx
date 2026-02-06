@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { Mic, ShieldCheck, ArrowLeft, Bot, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mic, ShieldCheck, ArrowLeft, Bot, Sparkles, X } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 import { Button } from "../../components/ui/Button";
 import { BuildNextSteps } from "../../components/sections/BuildNextSteps";
 import { Pricing } from "../../components/sections/Pricing";
 
 export default function BuildPage() {
     const [micPermissionGranted, setMicPermissionGranted] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
     const frameRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
@@ -129,12 +131,15 @@ export default function BuildPage() {
 
                             {/* Builder Container */}
                             <div className="flex-1 bg-black/20 p-8 flex flex-col items-center justify-center min-h-[360px]">
-                                <div className="w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] p-6">
+                                <div
+                                    className="w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] p-6 cursor-pointer hover:border-neon/30 transition-colors"
+                                    onClick={() => setShowPopup(true)}
+                                >
                                     <iframe
                                         ref={frameRef}
                                         src="https://iframes.ai/o/1769747339624x746533060485054500?color=d6fa12&icon="
                                         allow="microphone"
-                                        className="w-full h-[200px] border-none"
+                                        className="w-full h-[200px] border-none pointer-events-none"
                                         id="assistantFrame"
                                         title="Agent Builder"
                                     />
@@ -197,6 +202,46 @@ export default function BuildPage() {
                     </motion.div>
                 </div>
             </div>
+
+            {/* Popup Modal */}
+            <AnimatePresence>
+                {showPopup && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                        onClick={() => setShowPopup(false)}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="relative w-full max-w-2xl bg-ocean-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Close button */}
+                            <button
+                                onClick={() => setShowPopup(false)}
+                                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            >
+                                <X className="w-5 h-5 text-white" />
+                            </button>
+
+                            {/* Form iframe */}
+                            <iframe
+                                src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
+                                style={{ width: "100%", height: "700px", border: "none" }}
+                                id="popup-form-kTciuwAyNYWItRrsMHEN"
+                                title="Contact Form"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Lead Connector Script */}
+            <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
         </main>
     );
 }
