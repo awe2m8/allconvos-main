@@ -193,12 +193,14 @@ export default function BuildPage() {
                         <p className="text-gray-400 mb-10 font-mono text-sm uppercase tracking-widest leading-relaxed">
                             Initialize your professional mission control today.
                         </p>
-                        <Button
-                            variant="primary"
-                            className="w-full sm:w-auto px-12 py-6 text-sm font-mono uppercase italic tracking-[0.2em]"
-                        >
-                            Initialize Mission_Now
-                        </Button>
+                        <Link href="/checkout?plan=lite">
+                            <Button
+                                variant="primary"
+                                className="w-full sm:w-auto px-12 py-6 text-sm font-mono uppercase italic tracking-[0.2em]"
+                            >
+                                Initialize Mission_Now
+                            </Button>
+                        </Link>
                     </motion.div>
                 </div>
             </div>
