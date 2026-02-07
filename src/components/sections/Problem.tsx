@@ -127,7 +127,7 @@ export function Problem() {
                             transition={{ delay: 0.1 }}
                             className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 tracking-tighter uppercase italic"
                         >
-                            PROTOTYPE TO <span className="text-neon">PRODUCTION.</span>
+                            PROTOTYPE TO <span className="text-neon">PERSONALITY.</span>
                         </motion.h2>
 
                         <motion.p
