@@ -353,19 +353,22 @@ export default function BuildPage() {
                             </button>
 
                             {popupView === 'form' ? (
-                                /* Form View */
-                                <div>
-                                    <iframe
-                                        src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
-                                        style={{ width: "100%", height: "575px", border: "none", borderRadius: "10px" }}
-                                        id="inline-kTciuwAyNYWItRrsMHEN"
-                                        title="Free Agent Build & Test"
-                                    />
-                                    {/* Continue button - appears below form */}
-                                    <div className="p-4 bg-ocean-950 border-t border-white/10">
+                                /* Form View - with sticky footer */
+                                <div className="flex flex-col max-h-[90vh]">
+                                    {/* Scrollable form area */}
+                                    <div className="flex-1 overflow-auto">
+                                        <iframe
+                                            src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
+                                            style={{ width: "100%", height: "575px", border: "none", borderRadius: "10px" }}
+                                            id="inline-kTciuwAyNYWItRrsMHEN"
+                                            title="Free Agent Build & Test"
+                                        />
+                                    </div>
+                                    {/* Sticky Continue button footer - always visible */}
+                                    <div className="flex-shrink-0 p-4 bg-ocean-950 border-t border-white/10 sticky bottom-0">
                                         <button
                                             onClick={handleFormSubmitted}
-                                            className="w-full py-4 px-6 bg-neon text-ocean-950 font-black text-lg uppercase tracking-tight rounded-xl hover:bg-neon/90 transition-colors flex items-center justify-center gap-3"
+                                            className="w-full py-4 px-6 bg-neon text-ocean-950 font-black text-lg uppercase tracking-tight rounded-xl hover:bg-neon/90 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-neon/20"
                                         >
                                             <span>Continue to Build Your Agent</span>
                                             <span className="text-2xl">→</span>
