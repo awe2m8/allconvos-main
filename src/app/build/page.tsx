@@ -12,131 +12,7 @@ import { Pricing } from "../../components/sections/Pricing";
 export default function BuildPage() {
     const [micPermissionGranted, setMicPermissionGranted] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [popupView, setPopupView] = useState<'form' | 'orb'>('form');
-    const [formSubmitted, setFormSubmitted] = useState(false);
     const frameRef = useRef<HTMLIFrameElement>(null);
-
-    // Check if form was previously submitted (persisted in localStorage)
-    useEffect(() => {
-        const submitted = localStorage.getItem('allconvos_form_submitted');
-        if (submitted === 'true') {
-            setFormSubmitted(true);
-        }
-    }, []);
-
-    // Handle form submission - mark as submitted and show orb popup
-    const handleFormSubmitted = () => {
-        localStorage.setItem('allconvos_form_submitted', 'true');
-        setFormSubmitted(true);
-        setPopupView('orb'); // Switch to orb view instead of closing
-    };
-
-    // Listen for messages from GoHighLevel form iframe
-    useEffect(() => {
-        const handleMessage = (event: MessageEvent) => {
-            // Log all messages for debugging
-            console.log('PostMessage received:', event.origin, event.data);
-
-            // Check if message is from GoHighLevel/LeadConnector
-            const isFromGHL = event.origin?.includes('leadconnector') ||
-                event.origin?.includes('gohighlevel') ||
-                event.origin?.includes('msgsndr');
-
-            // GoHighLevel sends various messages - check for form submission indicators
-            if (event.data) {
-                const data = event.data;
-                const dataStr = typeof data === 'string' ? data : JSON.stringify(data);
-
-                // Check for common form submission message types
-                if (typeof data === 'object') {
-                    // Direct match on known properties
-                    if (data.type === 'form_submitted' ||
-                        data.action === 'submit' ||
-                        data.formSubmitted === true ||
-                        data.event === 'form_submitted' ||
-                        data.type === 'submit' ||
-                        data.message === 'form_submitted' ||
-                        data.status === 'success' ||
-                        data.submitted === true) {
-                        console.log('Form submission detected via object property');
-                        handleFormSubmitted();
-                        return;
-                    }
-
-                    // Check for height changes or resize events that might indicate form completion
-                    if (isFromGHL && (data.type === 'resize' || data.height)) {
-                        // GHL often sends resize events when form state changes
-                        console.log('GHL resize event detected - might be form completion');
-                    }
-                }
-
-                // Check string messages or stringified data for keywords
-                if (dataStr.toLowerCase().includes('submit') ||
-                    dataStr.toLowerCase().includes('success') ||
-                    dataStr.toLowerCase().includes('thank') ||
-                    dataStr.toLowerCase().includes('complete')) {
-                    console.log('Form submission detected via keyword in message');
-                    handleFormSubmitted();
-                    return;
-                }
-            }
-        };
-
-        window.addEventListener('message', handleMessage);
-        return () => window.removeEventListener('message', handleMessage);
-    }, []);
-
-    // MutationObserver to detect GoHighLevel's confirmation popup and hide it
-    useEffect(() => {
-        // Only run when popup is showing and we're in form view
-        if (!showPopup || popupView !== 'form') return;
-
-        const observer = new MutationObserver((mutations) => {
-            for (const mutation of mutations) {
-                for (const node of mutation.addedNodes) {
-                    if (node instanceof HTMLElement) {
-                        // GHL confirmation popup detection - look for common patterns
-                        // Check for elements with text containing "ready" or confirmation messages
-                        const text = node.textContent?.toLowerCase() || '';
-                        const hasConfirmationText = text.includes('ready') ||
-                            text.includes('thank') ||
-                            text.includes('submitted') ||
-                            text.includes('success');
-
-                        // Check for modal/popup-like elements
-                        const isPopupLike = node.classList?.contains('modal') ||
-                            node.classList?.contains('popup') ||
-                            node.getAttribute('role') === 'dialog' ||
-                            node.style?.position === 'fixed' ||
-                            node.style?.zIndex;
-
-                        if (hasConfirmationText && isPopupLike) {
-                            console.log('GHL popup detected, hiding and showing orb popup');
-                            node.style.display = 'none';
-                            handleFormSubmitted();
-                            return;
-                        }
-
-                        // Also check for specific GHL popup class/structure
-                        const ghlPopup = node.querySelector?.('[class*="success"], [class*="confirm"], [class*="thank"]');
-                        if (ghlPopup) {
-                            console.log('GHL popup child detected, hiding and showing orb popup');
-                            node.style.display = 'none';
-                            handleFormSubmitted();
-                            return;
-                        }
-                    }
-                }
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        return () => observer.disconnect();
-    }, [showPopup, popupView]);
 
     useEffect(() => {
         const checkPermissions = () => {
@@ -256,14 +132,14 @@ export default function BuildPage() {
                             {/* Builder Container */}
                             <div className="flex-1 bg-black/20 p-8 flex flex-col items-center justify-center min-h-[360px]">
                                 <div
-                                    className={`w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] p-6 ${!formSubmitted ? 'cursor-pointer hover:border-neon/30' : ''} transition-colors`}
-                                    onClick={() => !formSubmitted && setShowPopup(true)}
+                                    className="w-full max-w-md bg-ocean-800/50 border border-white/5 rounded-2xl overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] p-6 cursor-pointer hover:border-neon/30 transition-colors"
+                                    onClick={() => setShowPopup(true)}
                                 >
                                     <iframe
                                         ref={frameRef}
                                         src="https://iframes.ai/o/1769747339624x746533060485054500?color=d6fa12&icon="
                                         allow="microphone"
-                                        className={`w-full h-[200px] border-none ${formSubmitted ? '' : 'pointer-events-none'}`}
+                                        className="w-full h-[200px] border-none pointer-events-none"
                                         id="assistantFrame"
                                         title="Agent Builder"
                                     />
@@ -335,7 +211,7 @@ export default function BuildPage() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-                        onClick={() => { setShowPopup(false); setPopupView('form'); }}
+                        onClick={() => setShowPopup(false)}
                     >
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -346,68 +222,19 @@ export default function BuildPage() {
                         >
                             {/* Close button */}
                             <button
-                                onClick={() => { setShowPopup(false); setPopupView('form'); }}
+                                onClick={() => setShowPopup(false)}
                                 className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                             >
                                 <X className="w-5 h-5 text-white" />
                             </button>
 
-                            {popupView === 'form' ? (
-                                /* Form View - with sticky footer */
-                                <div className="flex flex-col max-h-[90vh]">
-                                    {/* Scrollable form area */}
-                                    <div className="flex-1 overflow-auto">
-                                        <iframe
-                                            src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
-                                            style={{ width: "100%", height: "575px", border: "none", borderRadius: "10px" }}
-                                            id="inline-kTciuwAyNYWItRrsMHEN"
-                                            title="Free Agent Build & Test"
-                                        />
-                                    </div>
-                                    {/* Sticky Continue button footer - always visible */}
-                                    <div className="flex-shrink-0 p-4 bg-ocean-950 border-t border-white/10 sticky bottom-0">
-                                        <button
-                                            onClick={handleFormSubmitted}
-                                            className="w-full py-4 px-6 bg-neon text-ocean-950 font-black text-lg uppercase tracking-tight rounded-xl hover:bg-neon/90 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-neon/20"
-                                        >
-                                            <span>Continue to Build Your Agent</span>
-                                            <span className="text-2xl">→</span>
-                                        </button>
-                                        <p className="text-center text-gray-500 text-xs mt-2 font-mono">
-                                            Click after submitting the form above
-                                        </p>
-                                    </div>
-                                </div>
-                            ) : (
-                                /* Orb View - Post-Form Submission */
-                                <div className="text-center">
-                                    {/* Gradient flourish bar */}
-                                    <div className="h-2 bg-gradient-to-r from-neon via-cyan-400 to-neon" />
-
-                                    <div className="py-8 px-8">
-                                        <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-2">
-                                            You're Ready!
-                                        </h2>
-                                        <p className="text-neon font-bold italic uppercase text-sm tracking-widest mb-6">
-                                            Click the Floating Orb to Start
-                                        </p>
-
-                                        {/* Interactive Orb iFrame */}
-                                        <div className="bg-ocean-950 rounded-2xl p-4 mb-6">
-                                            <iframe
-                                                src="https://iframes.ai/o/1769747339624x746533060485054500?color=d6fa12&icon="
-                                                allow="microphone"
-                                                className="w-full h-[200px] border-none"
-                                                title="Voice Agent Orb"
-                                            />
-                                        </div>
-
-                                        <p className="text-gray-400 text-sm font-medium tracking-wide">
-                                            Describe your business → We build your agent → We send it to you to test
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
+                            {/* Form iframe */}
+                            <iframe
+                                src="https://api.leadconnectorhq.com/widget/form/kTciuwAyNYWItRrsMHEN"
+                                style={{ width: "100%", height: "575px", border: "none", borderRadius: "10px" }}
+                                id="inline-kTciuwAyNYWItRrsMHEN"
+                                title="Free Agent Build & Test"
+                            />
                         </motion.div>
                     </motion.div>
                 )}
@@ -418,3 +245,4 @@ export default function BuildPage() {
         </main>
     );
 }
+
