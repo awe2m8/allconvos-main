@@ -34,13 +34,25 @@ export default function BuildPage() {
     // Listen for messages from GoHighLevel form iframe
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
+            // Log all messages for debugging
+            console.log('PostMessage received:', event.data);
+
             // GoHighLevel sends various messages - check for form submission indicators
-            if (event.data && typeof event.data === 'object') {
+            if (event.data) {
+                const data = event.data;
                 // Check for common form submission message types
-                if (event.data.type === 'form_submitted' ||
-                    event.data.action === 'submit' ||
-                    event.data.formSubmitted === true ||
-                    (typeof event.data === 'string' && event.data.includes('submit'))) {
+                if (typeof data === 'object') {
+                    if (data.type === 'form_submitted' ||
+                        data.action === 'submit' ||
+                        data.formSubmitted === true ||
+                        data.event === 'form_submitted' ||
+                        data.type === 'submit' ||
+                        data.message === 'form_submitted') {
+                        handleFormSubmitted();
+                    }
+                }
+                // Check string messages
+                if (typeof data === 'string' && (data.includes('submit') || data.includes('success'))) {
                     handleFormSubmitted();
                 }
             }
@@ -49,6 +61,58 @@ export default function BuildPage() {
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
     }, []);
+
+    // MutationObserver to detect GoHighLevel's confirmation popup and hide it
+    useEffect(() => {
+        // Only run when popup is showing and we're in form view
+        if (!showPopup || popupView !== 'form') return;
+
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node instanceof HTMLElement) {
+                        // GHL confirmation popup detection - look for common patterns
+                        // Check for elements with text containing "ready" or confirmation messages
+                        const text = node.textContent?.toLowerCase() || '';
+                        const hasConfirmationText = text.includes('ready') ||
+                            text.includes('thank') ||
+                            text.includes('submitted') ||
+                            text.includes('success');
+
+                        // Check for modal/popup-like elements
+                        const isPopupLike = node.classList?.contains('modal') ||
+                            node.classList?.contains('popup') ||
+                            node.getAttribute('role') === 'dialog' ||
+                            node.style?.position === 'fixed' ||
+                            node.style?.zIndex;
+
+                        if (hasConfirmationText && isPopupLike) {
+                            console.log('GHL popup detected, hiding and showing orb popup');
+                            node.style.display = 'none';
+                            handleFormSubmitted();
+                            return;
+                        }
+
+                        // Also check for specific GHL popup class/structure
+                        const ghlPopup = node.querySelector?.('[class*="success"], [class*="confirm"], [class*="thank"]');
+                        if (ghlPopup) {
+                            console.log('GHL popup child detected, hiding and showing orb popup');
+                            node.style.display = 'none';
+                            handleFormSubmitted();
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        return () => observer.disconnect();
+    }, [showPopup, popupView]);
 
     useEffect(() => {
         const checkPermissions = () => {
