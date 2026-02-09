@@ -74,7 +74,7 @@ export default function ContactPage() {
                             transition={{ duration: 0.5 }}
                         >
                             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 uppercase italic tracking-tighter">
-                                INITIALIZE <span className="text-neon">CONTACT</span>
+                                <span className="text-neon">CONTACT</span>
                             </h1>
                             <p className="text-gray-400 max-w-lg font-mono text-sm leading-relaxed">
                                 Ready to deploy your AI workforce? Our mission control is standing by to configure your custom solution.
@@ -92,8 +92,11 @@ export default function ContactPage() {
                                     <Phone className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Direct Line</h3>
-                                    <p className="text-gray-400 font-mono text-sm">+1 (555) 123-4567</p>
+                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Phone</h3>
+                                    <p className="text-gray-400 font-mono text-sm">
+                                        +61 404 283 605<br />
+                                        +61 401 027 141
+                                    </p>
                                 </div>
                             </div>
 
@@ -102,8 +105,11 @@ export default function ContactPage() {
                                     <Mail className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Encrypted Comms</h3>
-                                    <p className="text-gray-400 font-mono text-sm">mission@allconvos.ai</p>
+                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Email</h3>
+                                    <p className="text-gray-400 font-mono text-sm">
+                                        jesse@allconvos.ai<br />
+                                        giles@allconvos.ai
+                                    </p>
                                 </div>
                             </div>
 
@@ -112,10 +118,10 @@ export default function ContactPage() {
                                     <MapPin className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Base Of Operations</h3>
+                                    <h3 className="text-white font-bold uppercase tracking-wide mb-1">Address</h3>
                                     <p className="text-gray-400 font-mono text-sm">
-                                        Level 42, Cyber Tower One<br />
-                                        San Francisco, CA 94105
+                                        50a Habitat Way,<br />
+                                        Lennox Head NSW 2478
                                     </p>
                                 </div>
                             </div>
@@ -163,7 +169,7 @@ export default function ContactPage() {
                                             onChange={handleChange}
                                             required
                                             type="text"
-                                            placeholder="T. Stark"
+                                            placeholder="Full Name"
                                             className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
                                         />
                                     </div>
@@ -175,7 +181,7 @@ export default function ContactPage() {
                                             onChange={handleChange}
                                             required
                                             type="email"
-                                            placeholder="tony@stark.com"
+                                            placeholder="you@company.com"
                                             className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
                                         />
                                     </div>
@@ -188,20 +194,20 @@ export default function ContactPage() {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         type="tel"
-                                        placeholder="+1 (555) 000-0000"
+                                        placeholder="+61 400 000 000"
                                         className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
                                     />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Mission Parameters</label>
+                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Message</label>
                                     <textarea
                                         name="message"
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
                                         rows={4}
-                                        placeholder="Describe your custom build requirements..."
+                                        placeholder="Type your message here..."
                                         className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm resize-none"
                                     />
                                 </div>
