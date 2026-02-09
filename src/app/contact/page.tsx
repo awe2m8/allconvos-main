@@ -5,8 +5,56 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { useState } from "react";
 
 export default function ContactPage() {
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            // GHL Webhook URL
+            const webhookUrl = "https://services.leadconnectorhq.com/hooks/JV3CnL8WkMU5iYblOolr/webhook-trigger/42236792-c249-4506-b4d9-9f34d4dd37a6";
+
+            // Send data to GHL
+            await fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            setIsSuccess(true);
+            setFormData({ name: "", email: "", phone: "", message: "" });
+
+            // Reset success message after 5 seconds
+            setTimeout(() => setIsSuccess(false), 5000);
+
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("Error sending message. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
     return (
         <main className="bg-ocean-950 min-h-screen relative overflow-x-hidden flex flex-col">
             <Navbar />
@@ -90,52 +138,90 @@ export default function ContactPage() {
                             Transmission Form
                         </h2>
 
-                        <form className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
+                        {isSuccess ? (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-neon/10 border border-neon/20 rounded-xl p-8 text-center space-y-4"
+                            >
+                                <div className="w-16 h-16 bg-neon/20 rounded-full flex items-center justify-center mx-auto text-neon">
+                                    <ArrowRight className="w-8 h-8 -rotate-45" />
+                                </div>
+                                <h3 className="text-xl font-bold text-white uppercase italic">Transmission Received</h3>
+                                <p className="text-gray-400 text-sm font-mono">
+                                    Your mission parameters have been logged. Stand by for encrypted response.
+                                </p>
+                            </motion.div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Name</label>
+                                        <input
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            type="text"
+                                            placeholder="T. Stark"
+                                            className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Email</label>
+                                        <input
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            type="email"
+                                            placeholder="tony@stark.com"
+                                            className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="space-y-2">
-                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Name</label>
+                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Phone (Optional)</label>
                                     <input
-                                        type="text"
-                                        placeholder="T. Stark"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        type="tel"
+                                        placeholder="+1 (555) 000-0000"
                                         className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
                                     />
                                 </div>
+
                                 <div className="space-y-2">
-                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Email</label>
-                                    <input
-                                        type="email"
-                                        placeholder="tony@stark.com"
-                                        className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
+                                    <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Mission Parameters</label>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        rows={4}
+                                        placeholder="Describe your custom build requirements..."
+                                        className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm resize-none"
                                     />
                                 </div>
-                            </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Phone (Optional)</label>
-                                <input
-                                    type="tel"
-                                    placeholder="+1 (555) 000-0000"
-                                    className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm"
-                                />
-                            </div>
+                                <Button
+                                    disabled={isSubmitting}
+                                    className="w-full py-6 text-sm font-mono uppercase tracking-widest group bg-neon text-ocean-950 hover:bg-white transition-colors border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? 'Transmitting...' : (
+                                        <>
+                                            Send Transmission <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        </>
+                                    )}
+                                </Button>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono text-neon uppercase tracking-wider pl-1">Mission Parameters</label>
-                                <textarea
-                                    rows={4}
-                                    placeholder="Describe your custom build requirements..."
-                                    className="w-full bg-ocean-950/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-neon/50 focus:ring-1 focus:ring-neon/50 transition-all font-mono text-sm resize-none"
-                                />
-                            </div>
-
-                            <Button className="w-full py-6 text-sm font-mono uppercase tracking-widest group bg-neon text-ocean-950 hover:bg-white transition-colors border-none">
-                                Send Transmission <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-
-                            <p className="text-center text-[10px] text-gray-500 font-mono pt-2">
-                                * Secure channel established. 256-bit encryption active.
-                            </p>
-                        </form>
+                                <p className="text-center text-[10px] text-gray-500 font-mono pt-2">
+                                    * Secure channel established. 256-bit encryption active.
+                                </p>
+                            </form>
+                        )}
                     </motion.div>
                 </div>
             </div>
