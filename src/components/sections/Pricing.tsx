@@ -8,7 +8,7 @@ import Link from "next/link";
 const plans = [
     {
         id: "lite",
-        name: "LITE_DEPLOYMENT",
+        name: "FRONT_DESK_CORE",
         price: "$399",
         duration: "/mo",
         description: "One receptionist. Fully autonomous. Always on.",
