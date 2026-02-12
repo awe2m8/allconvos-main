@@ -11,24 +11,33 @@ import stripePromise from "@/lib/stripe";
 const plans = [
     {
         id: "lite",
-        name: "LITE_DEPLOYMENT",
-        price: 199,
+        name: "FRONT_DESK_CORE",
+        price: 399,
         priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_LITE, // Used for display logic if needed later
-        priceDisplay: "$199",
+        priceDisplay: "$399",
         duration: "/mo",
-        description: "Single-agent mission for small shops.",
-        features: ["24/7 AI Receptionist", "Basic Lead Qualification", "SMS Notifications", "1,000 Actions/mo"],
+        description: "One receptionist. Fully autonomous. Always on.",
+        features: ["24/7 AI Receptionist", "Calendar Integration", "CRM Lite", "Limited voices and accents", "SMS Notifications"],
         color: "border-blue-400",
         accent: "text-blue-400",
     },
     {
         id: "pro",
-        name: "PRO_STRATEGY",
-        price: 499,
-        priceDisplay: "$499",
+        name: "LEAD_ENGINE",
+        price: 599,
+        priceDisplay: "$599",
         duration: "/mo",
-        description: "Full-scale mission control. Our most popular.",
-        features: ["Unlimited AI Agents", "Deep Calendar Integration", "CRM Sync (HighLevel, etc)", "Priority System Support", "Everything in Lite"],
+        description: "Handles leads from calls, SMS and web forms — end to end. (Includes Voice AI Receptionist)",
+        features: [
+            "Multi agents",
+            "Calls + SMS + web forms included",
+            "Lead capture + instant responses",
+            "Automatic qualification + tagging",
+            "Ongoing follow-up & nurturing",
+            "CRM sync (HighLevel, etc.)",
+            "Priority support",
+            "Everything in Front Desk"
+        ],
         color: "border-neon",
         accent: "text-neon",
         popular: true,
@@ -442,9 +451,7 @@ function CheckoutForm() {
                                                 {currentPlan.name.replace("_", " ")} PLAN
                                             </p>
                                             <p className="text-white font-bold text-lg">
-                                                {currentPlan.features[currentPlan.features.length - 1] === "Everything in Lite"
-                                                    ? "Unlimited Agents"
-                                                    : currentPlan.features[3]}
+                                                {currentPlan.features[0]}
                                             </p>
                                         </div>
                                         <span className="text-white font-bold text-lg">
