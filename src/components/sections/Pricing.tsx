@@ -12,7 +12,7 @@ const plans = [
         price: "$199",
         duration: "/mo",
         description: "Single-agent mission for small shops.",
-        features: ["24/7 AI Receptionist", "Basic Lead Qualification", "SMS Notifications", "1,000 Action/mo"],
+        features: ["24/7 AI Receptionist", "Calendar Integration", "CRM Lite", "Limited voices and accents", "SMS Notifications"],
         color: "text-blue-400",
         bg: "bg-blue-400/5",
         border: "border-blue-400/20"
