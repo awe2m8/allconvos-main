@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { appUrl, marketingUrl } from "@/lib/siteUrls";
 
 export function Navbar() {
+    const [showComingSoon, setShowComingSoon] = useState(false);
     const marketingHomeUrl = marketingUrl("/");
-    const appLoginUrl = appUrl("/login");
     const appOnboardingUrl = appUrl("/app/onboarding");
+
+    useEffect(() => {
+        if (!showComingSoon) return;
+        const timer = setTimeout(() => setShowComingSoon(false), 2200);
+        return () => clearTimeout(timer);
+    }, [showComingSoon]);
 
     return (
         <nav className="fixed w-full z-50 top-0 left-0 bg-ocean-950/80 backdrop-blur-lg border-b border-white/5">
@@ -25,12 +32,13 @@ export function Navbar() {
 
                 <div className="hidden md:flex items-center gap-3">
                     <SignedOut>
-                        <Link
-                            href={appLoginUrl}
+                        <button
+                            type="button"
+                            onClick={() => setShowComingSoon(true)}
                             className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
                         >
                             Member Login
-                        </Link>
+                        </button>
                     </SignedOut>
 
                     <SignedIn>
@@ -44,6 +52,11 @@ export function Navbar() {
                     </SignedIn>
                 </div>
             </div>
+            {showComingSoon && (
+                <div className="pointer-events-none absolute right-6 top-[5.5rem] rounded-md border border-neon/30 bg-ocean-900/95 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-neon shadow-lg">
+                    Coming soon.
+                </div>
+            )}
         </nav>
     );
 }
