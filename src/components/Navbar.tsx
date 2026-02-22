@@ -32,13 +32,20 @@ export function Navbar() {
 
                 <div className="hidden md:flex items-center gap-3">
                     <SignedOut>
-                        <button
-                            type="button"
-                            onClick={() => setShowComingSoon(true)}
-                            className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
-                        >
-                            Member Login
-                        </button>
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowComingSoon(true)}
+                                className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
+                            >
+                                Member Login
+                            </button>
+                            {showComingSoon && (
+                                <div className="pointer-events-none absolute left-0 top-full mt-2 whitespace-nowrap rounded-md border border-neon/30 bg-ocean-900/95 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-neon shadow-lg">
+                                    Coming soon.
+                                </div>
+                            )}
+                        </div>
                     </SignedOut>
 
                     <SignedIn>
@@ -52,11 +59,6 @@ export function Navbar() {
                     </SignedIn>
                 </div>
             </div>
-            {showComingSoon && (
-                <div className="pointer-events-none absolute right-6 top-[5.5rem] rounded-md border border-neon/30 bg-ocean-900/95 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-neon shadow-lg">
-                    Coming soon.
-                </div>
-            )}
         </nav>
     );
 }
