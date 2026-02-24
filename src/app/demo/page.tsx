@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, CalendarDays, Mail, MapPin, Phone } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, CalendarDays, Mail, Phone } from "lucide-react";
 
 const WIDGET_KEY = "b22b183d-3336-4b9b-973d-12c1e47888c4";
 
 export default function DemoPage() {
     return (
-        <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20">
+        <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 flex items-center justify-center p-4">
             <Script
                 src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js"
                 strategy="afterInteractive"
@@ -66,36 +67,48 @@ export default function DemoPage() {
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px] opacity-10 pointer-events-none" />
             <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full bg-white/5 blur-[120px] pointer-events-none" />
 
-            <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 space-y-10">
-                <nav className="flex items-center justify-between">
-                    <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
-                        allconvos<span className="text-neon">_</span>
-                    </Link>
-                    <Link
-                        href="/build"
-                        className="group inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        Back to Build
-                    </Link>
-                </nav>
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.45 }}
+                className="relative z-10 w-full max-w-2xl"
+            >
+                <div className="bg-gradient-to-b from-ocean-900 to-ocean-950 rounded-2xl border border-white/10 overflow-hidden shadow-2xl relative">
+                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-neon via-cyan-400 to-neon" />
 
-                <section className="bg-gradient-to-b from-ocean-900 to-ocean-950 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
-                    <div className="h-2 bg-gradient-to-r from-neon via-cyan-400 to-neon" />
-                    <div className="px-8 py-10 md:px-12 md:py-12">
-                        <p className="font-mono text-xs text-neon uppercase tracking-[0.25em] mb-4">Live Voice Widget Demo</p>
-                        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-3">
-                            Try the Orb
-                        </h1>
-                        <p className="text-gray-400 text-sm md:text-base max-w-3xl">
-                            Talk to the live voice widget, then use the options below to continue with a tailored contact workflow.
+                    <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20">
+                        <div className="w-24 h-24 rounded-full border-2 border-neon bg-black p-1 shadow-[0_0_25px_rgba(0,255,255,0.35)]">
+                            <img
+                                src="/images/ai-avatar.png"
+                                alt="AI Analyst"
+                                className="w-full h-full rounded-full object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="px-8 pb-8 pt-36 text-center">
+                        <p className="font-mono text-lg font-bold tracking-tighter text-white mb-5">
+                            allconvos<span className="text-neon">_</span>
                         </p>
 
-                        <div className="mt-8 bg-ocean-950/70 rounded-2xl border border-white/10 p-6 md:p-8 flex items-center justify-center">
-                            <div data-widget-key={WIDGET_KEY} />
+                        <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-2">
+                            Live Voice Demo
+                        </h1>
+                        <p className="text-neon font-bold italic uppercase text-sm tracking-widest mb-7">
+                            Click the Orb and Start Talking
+                        </p>
+
+                        <div className="bg-ocean-950 rounded-2xl p-6 mb-6 border border-white/5">
+                            <div className="flex items-center justify-center py-3">
+                                <div data-widget-key={WIDGET_KEY} />
+                            </div>
                         </div>
 
-                        <div className="mt-8 grid sm:grid-cols-2 gap-3">
+                        <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                            Want a tailored rollout plan after testing? Book a walkthrough or send your requirements.
+                        </p>
+
+                        <div className="grid sm:grid-cols-2 gap-3 mb-6">
                             <Link
                                 href="/go"
                                 className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm border-2 border-neon/40 text-neon rounded-lg font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
@@ -110,45 +123,40 @@ export default function DemoPage() {
                                 Open Contact Form
                             </Link>
                         </div>
-                    </div>
-                </section>
 
-                <section className="grid md:grid-cols-3 gap-4">
-                    <div className="rounded-2xl border border-white/10 bg-ocean-900/70 p-5">
-                        <p className="inline-flex items-center gap-2 text-neon text-[11px] font-mono uppercase tracking-widest mb-2">
-                            <Phone className="w-4 h-4" />
-                            Phone
-                        </p>
-                        <p className="text-sm text-gray-300 font-mono leading-relaxed">
-                            +61 404 283 605
-                            <br />
-                            +61 401 027 141
-                        </p>
+                        <div className="grid sm:grid-cols-2 gap-3 text-left mb-6">
+                            <a
+                                href="tel:+61404283605"
+                                className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 hover:border-neon/40 transition-colors"
+                            >
+                                <p className="inline-flex items-center gap-2 text-neon text-[10px] font-mono uppercase tracking-widest mb-1">
+                                    <Phone className="w-3 h-3" />
+                                    Phone
+                                </p>
+                                <p className="text-sm text-gray-300 font-mono">+61 404 283 605</p>
+                            </a>
+                            <a
+                                href="mailto:jesse@allconvos.ai"
+                                className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 hover:border-neon/40 transition-colors"
+                            >
+                                <p className="inline-flex items-center gap-2 text-neon text-[10px] font-mono uppercase tracking-widest mb-1">
+                                    <Mail className="w-3 h-3" />
+                                    Email
+                                </p>
+                                <p className="text-sm text-gray-300 font-mono">jesse@allconvos.ai</p>
+                            </a>
+                        </div>
+
+                        <Link
+                            href="/build"
+                            className="inline-flex items-center gap-2 text-xs font-mono text-gray-500 hover:text-white transition-colors uppercase tracking-wider"
+                        >
+                            <ArrowLeft className="w-3 h-3" />
+                            Back to Build Page
+                        </Link>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-ocean-900/70 p-5">
-                        <p className="inline-flex items-center gap-2 text-neon text-[11px] font-mono uppercase tracking-widest mb-2">
-                            <Mail className="w-4 h-4" />
-                            Email
-                        </p>
-                        <p className="text-sm text-gray-300 font-mono leading-relaxed">
-                            jesse@allconvos.ai
-                            <br />
-                            giles@allconvos.ai
-                        </p>
-                    </div>
-                    <div className="rounded-2xl border border-white/10 bg-ocean-900/70 p-5">
-                        <p className="inline-flex items-center gap-2 text-neon text-[11px] font-mono uppercase tracking-widest mb-2">
-                            <MapPin className="w-4 h-4" />
-                            Address
-                        </p>
-                        <p className="text-sm text-gray-300 font-mono leading-relaxed">
-                            50a Habitat Way
-                            <br />
-                            Lennox Head NSW 2478
-                        </p>
-                    </div>
-                </section>
-            </div>
+                </div>
+            </motion.div>
         </main>
     );
 }
