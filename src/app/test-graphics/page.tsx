@@ -1,75 +1,12 @@
 "use client";
 
-import React from "react";
-import Script from "next/script";
 import { Bot, Phone, MessageSquare, Sparkles, Mic, Zap, Shield } from "lucide-react";
 
 export default function TestGraphicsPage() {
     return (
         <main className="min-h-screen bg-ocean-950 text-white p-8">
-            <Script
-                src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js"
-                strategy="afterInteractive"
-                onLoad={() => {
-                    // This widget bootstraps on DOMContentLoaded only.
-                    // On Next.js client-rendered pages, re-fire so it can scan and mount.
-                    document.dispatchEvent(new Event("DOMContentLoaded"));
-                }}
-            />
-            <style jsx global>{`
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] {
-                    width: auto !important;
-                    display: inline-flex !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                    margin: 0 auto !important;
-                }
-
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] .wcw-widget-wrapper {
-                    width: auto !important;
-                }
-
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container,
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container.text-mode,
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container.text-mode.idle,
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container.text-mode.always-expanded {
-                    border-radius: 50% !important;
-                    padding: 0 !important;
-                    gap: 0 !important;
-                    width: auto !important;
-                    max-width: none !important;
-                    background: transparent !important;
-                    border: none !important;
-                    box-shadow: none !important;
-                }
-
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container .wcw-text-container {
-                    display: none !important;
-                    width: 0 !important;
-                    margin: 0 !important;
-                    opacity: 0 !important;
-                    pointer-events: none !important;
-                }
-
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container .wcw-state-container {
-                    width: 96px !important;
-                    height: 96px !important;
-                }
-
-                [data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4"] #web-widget-container .wcw-quiet {
-                    width: 36px !important;
-                    height: 36px !important;
-                }
-            `}</style>
             <div className="max-w-4xl mx-auto space-y-16">
                 <h1 className="text-2xl font-mono text-gray-500 mb-8">Test Graphics - Unlinked Page</h1>
-
-                <section className="space-y-4">
-                    <p className="text-xs font-mono text-neon uppercase tracking-widest">Widget Demo Test</p>
-                    <div className="flex items-center justify-center py-2">
-                        <div data-widget-key="b22b183d-3336-4b9b-973d-12c1e47888c4" />
-                    </div>
-                </section>
 
                 {/* ===== VARIATION 1: Original Style with Flourish ===== */}
                 <section className="space-y-4">
