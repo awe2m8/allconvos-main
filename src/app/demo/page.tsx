@@ -71,7 +71,7 @@ export default function DemoPage() {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.45 }}
-                className="relative z-10 w-full max-w-2xl"
+                className="relative z-10 w-full max-w-lg"
             >
                 <div className="bg-gradient-to-b from-ocean-900 to-ocean-950 rounded-2xl border border-white/10 overflow-hidden shadow-2xl relative">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-neon via-cyan-400 to-neon" />
@@ -108,14 +108,16 @@ export default function DemoPage() {
                             Want a tailored rollout plan after testing? Book a walkthrough or send your requirements.
                         </p>
 
-                        <div className="grid sm:grid-cols-2 gap-3 mb-6">
-                            <Link
-                                href="/go"
+                        <div className="grid gap-3 mb-6">
+                            <a
+                                href="https://calendly.com/jessallan/30min"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-2 px-5 py-3 text-sm border-2 border-neon/40 text-neon rounded-lg font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
                             >
                                 <CalendarDays className="w-4 h-4" />
                                 In-Person Demo
-                            </Link>
+                            </a>
                             <Link
                                 href="/contact"
                                 className="inline-flex items-center justify-center px-5 py-3 text-sm bg-neon text-ocean-950 rounded-lg font-bold uppercase tracking-wide font-mono hover:bg-white transition-colors"
