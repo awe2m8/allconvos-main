@@ -4,19 +4,33 @@ import Link from "next/link";
 import Script from "next/script";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarDays, Mail, Phone } from "lucide-react";
+import { useCallback, useEffect } from "react";
 
 const WIDGET_KEY = "b22b183d-3336-4b9b-973d-12c1e47888c4";
 
 export default function DemoPage() {
+    const initializeWidget = useCallback(() => {
+        // Widget scans the page on DOMContentLoaded; trigger it after mount and script readiness.
+        document.dispatchEvent(new Event("DOMContentLoaded"));
+    }, []);
+
+    useEffect(() => {
+        const initFast = window.setTimeout(initializeWidget, 60);
+        const initSlow = window.setTimeout(initializeWidget, 280);
+
+        return () => {
+            window.clearTimeout(initFast);
+            window.clearTimeout(initSlow);
+        };
+    }, [initializeWidget]);
+
     return (
         <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 flex items-center justify-center p-4">
             <Script
                 src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js"
                 strategy="afterInteractive"
-                onLoad={() => {
-                    // The widget initializes on DOMContentLoaded; re-fire on client route render.
-                    document.dispatchEvent(new Event("DOMContentLoaded"));
-                }}
+                onLoad={initializeWidget}
+                onReady={initializeWidget}
             />
             <style jsx global>{`
                 [data-widget-key="${WIDGET_KEY}"] {
