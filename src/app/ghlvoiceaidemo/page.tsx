@@ -10,6 +10,18 @@ const GHL_WIDGET_HOST_ID = "ghl-voice-demo-widget";
 
 type CallState = "idle" | "connecting" | "live" | "error";
 
+const sleep = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs = 120): Promise<T | null> => {
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+        const value = finder();
+        if (value) return value;
+        await sleep(stepMs);
+    }
+    return null;
+};
+
 declare global {
     interface Window {
         leadConnector?: {
@@ -29,7 +41,14 @@ export default function GhlVoiceAiDemoPage() {
     const [hasCalledOnce, setHasCalledOnce] = useState(false);
 
     const getWidgetHost = useCallback(() => {
-        return document.querySelector(`chat-widget#${GHL_WIDGET_HOST_ID}`) as HTMLElement | null;
+        const byId = document.querySelector(`chat-widget#${GHL_WIDGET_HOST_ID}`) as HTMLElement | null;
+        if (byId) return byId;
+
+        const firstWidget = document.querySelector("chat-widget") as HTMLElement | null;
+        if (firstWidget && !firstWidget.id) {
+            firstWidget.id = GHL_WIDGET_HOST_ID;
+        }
+        return firstWidget;
     }, []);
 
     const getWidgetRoot = useCallback(() => {
@@ -38,13 +57,14 @@ export default function GhlVoiceAiDemoPage() {
 
     const applyWidgetStyles = useCallback(() => {
         const allWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
+        const target = getWidgetHost();
+
         allWidgets.forEach((widget) => {
-            if (widget.id !== GHL_WIDGET_HOST_ID) {
+            if (target && widget !== target) {
                 widget.style.display = "none";
             }
         });
 
-        const target = getWidgetHost();
         if (!target?.shadowRoot) return false;
 
         // Keep vendor UI mounted but fully off-canvas; orb controls the call flow.
@@ -123,19 +143,46 @@ export default function GhlVoiceAiDemoPage() {
 
         try {
             applyWidgetStyles();
-            window.leadConnector?.chatWidget?.openWidget?.();
-            await new Promise((resolve) => window.setTimeout(resolve, 240));
+            const chatApi = await waitForValue(() => window.leadConnector?.chatWidget ?? null, 6000);
+            if (!chatApi) {
+                setCallState("error");
+                return;
+            }
 
-            const root = getWidgetRoot();
-            const talkButton = root?.querySelector("ion-button.lc_text-widget--voice-talk-button");
+            chatApi.openWidget?.();
+            await sleep(240);
+
+            const root = await waitForValue(() => getWidgetRoot(), 6000);
+            if (!root) {
+                setCallState("error");
+                return;
+            }
+
+            let talkButton = (await waitForValue(
+                () => root.querySelector("ion-button.lc_text-widget--voice-talk-button, .lc_text-widget--voice-talk-button") as HTMLElement | null,
+                4500
+            )) as HTMLElement | null;
+
+            if (!talkButton) {
+                const launcherButton = root.querySelector("#lc_text-widget--btn") as HTMLElement | null;
+                launcherButton?.click();
+                await sleep(240);
+                talkButton = (await waitForValue(
+                    () =>
+                        root.querySelector(
+                            "ion-button.lc_text-widget--voice-talk-button, .lc_text-widget--voice-talk-button"
+                        ) as HTMLElement | null,
+                    3200
+                )) as HTMLElement | null;
+            }
 
             if (!talkButton) {
                 setCallState("error");
                 return;
             }
 
-            (talkButton as HTMLElement).click();
-            await new Promise((resolve) => window.setTimeout(resolve, 320));
+            talkButton.click();
+            await sleep(420);
             syncCallState();
         } catch {
             setCallState("error");
@@ -149,12 +196,12 @@ export default function GhlVoiceAiDemoPage() {
         setIsBusy(true);
 
         try {
-            const root = getWidgetRoot();
+            const root = await waitForValue(() => getWidgetRoot(), 2400);
             const endButton = root?.querySelector("ion-button.lc_text-widget--voice-end-call-btn");
             if (endButton) {
                 (endButton as HTMLElement).click();
             }
-            await new Promise((resolve) => window.setTimeout(resolve, 280));
+            await sleep(280);
             window.leadConnector?.chatWidget?.closeWidget?.();
             setCallState("idle");
         } catch {
@@ -176,7 +223,7 @@ export default function GhlVoiceAiDemoPage() {
     useEffect(() => {
         const checkWidget = () => {
             const styled = applyWidgetStyles();
-            const ready = Boolean(getWidgetRoot()?.querySelector("ion-button.lc_text-widget--voice-talk-button"));
+            const ready = styled && Boolean(getWidgetRoot()) && Boolean(window.leadConnector?.chatWidget);
             setIsWidgetReady(styled && ready);
             syncCallState();
         };
@@ -207,7 +254,7 @@ export default function GhlVoiceAiDemoPage() {
         if (callState === "connecting") return "Connecting to the voice agent...";
         if (callState === "live") return "Live call in progress";
         if (callState === "error") return "Could not start call. Check mic permission and try again.";
-        if (!isWidgetReady) return "Loading voice engine...";
+        if (!isWidgetReady) return "Voice engine is loading. Tap the orb to retry.";
         return "Tap the orb to start a voice conversation.";
     }, [callState, isWidgetReady]);
 
@@ -220,12 +267,6 @@ export default function GhlVoiceAiDemoPage() {
                 data-widget-id={GHL_WIDGET_ID}
                 strategy="afterInteractive"
             />
-
-            <style jsx global>{`
-                chat-widget:not(#ghl-voice-demo-widget) {
-                    display: none !important;
-                }
-            `}</style>
 
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px] opacity-10 pointer-events-none" />
             <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full bg-white/5 blur-[120px] pointer-events-none" />
@@ -243,7 +284,7 @@ export default function GhlVoiceAiDemoPage() {
                     <button
                         type="button"
                         onClick={handleOrbClick}
-                        disabled={isBusy || (!isWidgetReady && callState === "idle")}
+                        disabled={isBusy}
                         className={`group relative grid place-items-center w-56 h-56 rounded-full border transition-all duration-300 font-mono text-lg uppercase tracking-[0.28em] ${
                             callState === "live" || callState === "connecting"
                                 ? "border-red-400/90 text-red-200 bg-[radial-gradient(circle_at_30%_30%,#2a2230_0%,#170f1f_56%,#0b0a16_100%)] shadow-[0_0_0_2px_rgba(248,113,113,0.18),0_0_46px_rgba(248,113,113,0.34)]"
