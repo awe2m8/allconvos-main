@@ -153,16 +153,22 @@ export default function GhlVoiceAiDemoPage() {
             const root = await waitForValue(() => getWidgetRoot(), 3500, 70);
             if (!chatApi || !root) return;
 
-            chatApi.openWidget?.();
-            const talkButton = await waitForValue(() => getTalkButton(root), 2500, 60);
-            if (!talkButton) return;
+            // Warm the API/root only. Do not open the call UI on load.
+            const statusText =
+                root.querySelector(".lc_text-widget--voice-status-text")?.textContent?.trim().toLowerCase() ?? "";
+            if (statusText.includes("connecting") || statusText.includes("talking")) {
+                const endButton = root.querySelector("ion-button.lc_text-widget--voice-end-call-btn") as HTMLElement | null;
+                endButton?.click();
+                await sleep(120);
+                chatApi.closeWidget?.();
+            }
 
             setIsWidgetReady(true);
             setIsPrewarmed(true);
         } catch {
             // Best-effort warmup only.
         }
-    }, [applyWidgetStyles, getTalkButton, getWidgetRoot, isPrewarmed]);
+    }, [applyWidgetStyles, getWidgetRoot, isPrewarmed]);
 
     const startCall = useCallback(async () => {
         if (isBusy) return;
