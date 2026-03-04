@@ -24,6 +24,68 @@ export default function DemoPage() {
         };
     }, [initializeWidget]);
 
+    useEffect(() => {
+        const applyLeadConnectorVoiceStyle = () => {
+            const allChatWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
+            allChatWidgets.forEach((widget) => {
+                if (widget.id !== "leadconnector-demo-widget") {
+                    widget.style.display = "none";
+                }
+            });
+
+            const demoWidget = document.querySelector("chat-widget#leadconnector-demo-widget") as HTMLElement | null;
+            if (!demoWidget?.shadowRoot) return false;
+
+            const root = demoWidget.shadowRoot;
+            const existingStyle = root.getElementById("allconvos-demo-voice-widget-style");
+            if (existingStyle) return true;
+
+            const style = document.createElement("style");
+            style.id = "allconvos-demo-voice-widget-style";
+            style.textContent = `
+                #lc_text-widget {
+                    left: 20px !important;
+                    right: auto !important;
+                    bottom: 20px !important;
+                }
+
+                .lc_text-widget--prompt,
+                .lc_text-widget_prompt--msg-bubble {
+                    display: none !important;
+                }
+
+                #lc_text-widget--btn {
+                    left: 20px !important;
+                    right: auto !important;
+                    bottom: 20px !important;
+                    width: 74px !important;
+                    height: 74px !important;
+                    border-radius: 9999px !important;
+                    background: radial-gradient(circle at 30% 30%, #0e243a 0%, #0a1628 55%, #070f1e 100%) !important;
+                    border: 2px solid rgba(192, 239, 34, 0.75) !important;
+                    box-shadow: 0 0 0 2px rgba(192, 239, 34, 0.14), 0 0 24px rgba(0, 255, 255, 0.2) !important;
+                }
+            `;
+
+            root.appendChild(style);
+            return true;
+        };
+
+        const observer = new MutationObserver(() => {
+            applyLeadConnectorVoiceStyle();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+        const runFast = window.setTimeout(applyLeadConnectorVoiceStyle, 120);
+        const runSlow = window.setTimeout(applyLeadConnectorVoiceStyle, 600);
+
+        return () => {
+            observer.disconnect();
+            window.clearTimeout(runFast);
+            window.clearTimeout(runSlow);
+        };
+    }, []);
+
     return (
         <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 flex items-center justify-center p-4">
             <Script
@@ -82,6 +144,18 @@ export default function DemoPage() {
                 [data-widget-key="${WIDGET_KEY}"] #web-widget-container .wcw-quiet {
                     width: 36px !important;
                     height: 36px !important;
+                }
+
+                chat-widget:not(#leadconnector-demo-widget) {
+                    display: none !important;
+                }
+
+                chat-widget#leadconnector-demo-widget {
+                    position: fixed !important;
+                    left: 20px !important;
+                    bottom: 20px !important;
+                    right: auto !important;
+                    z-index: 60 !important;
                 }
             `}</style>
 
