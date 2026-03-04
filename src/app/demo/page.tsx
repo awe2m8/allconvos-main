@@ -32,6 +32,13 @@ export default function DemoPage() {
                 onLoad={initializeWidget}
                 onReady={initializeWidget}
             />
+            <Script
+                id="leadconnector-demo-widget"
+                src="https://beta.leadconnectorhq.com/loader.js"
+                data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+                data-widget-id="69a7bdf999dd5635833c8454"
+                strategy="afterInteractive"
+            />
             <style jsx global>{`
                 [data-widget-key="${WIDGET_KEY}"] {
                     width: auto !important;
