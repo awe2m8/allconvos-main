@@ -3,90 +3,218 @@
 import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft } from "lucide-react";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const GHL_WIDGET_ID = "69a7bdf999dd5635833c8454";
+const GHL_WIDGET_HOST_ID = "ghl-voice-demo-widget";
+
+type CallState = "idle" | "connecting" | "live" | "error";
+
+declare global {
+    interface Window {
+        leadConnector?: {
+            chatWidget?: {
+                openWidget?: () => void;
+                closeWidget?: () => void;
+                isActive?: () => boolean;
+            };
+        };
+    }
+}
 
 export default function GhlVoiceAiDemoPage() {
-    useEffect(() => {
-        const applyVoiceLauncherStyle = () => {
-            const allWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
-            allWidgets.forEach((widget) => {
-                if (widget.id !== "ghl-voice-demo-widget") {
-                    widget.style.display = "none";
-                }
-            });
+    const [callState, setCallState] = useState<CallState>("idle");
+    const [isWidgetReady, setIsWidgetReady] = useState(false);
+    const [isBusy, setIsBusy] = useState(false);
+    const [hasCalledOnce, setHasCalledOnce] = useState(false);
 
-            const target = document.querySelector("chat-widget#ghl-voice-demo-widget") as HTMLElement | null;
-            if (!target?.shadowRoot) return false;
+    const getWidgetHost = useCallback(() => {
+        return document.querySelector(`chat-widget#${GHL_WIDGET_HOST_ID}`) as HTMLElement | null;
+    }, []);
 
-            target.style.position = "fixed";
-            target.style.left = "50%";
-            target.style.top = "300px";
-            target.style.right = "auto";
-            target.style.bottom = "auto";
-            target.style.transform = "translateX(-50%)";
-            target.style.zIndex = "70";
+    const getWidgetRoot = useCallback(() => {
+        return getWidgetHost()?.shadowRoot ?? null;
+    }, [getWidgetHost]);
 
-            const root = target.shadowRoot;
-            const existingStyle = root.getElementById("ghl-voice-demo-style");
-            if (existingStyle) return true;
+    const applyWidgetStyles = useCallback(() => {
+        const allWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
+        allWidgets.forEach((widget) => {
+            if (widget.id !== GHL_WIDGET_HOST_ID) {
+                widget.style.display = "none";
+            }
+        });
 
+        const target = getWidgetHost();
+        if (!target?.shadowRoot) return false;
+
+        // Keep vendor UI mounted but fully off-canvas; orb controls the call flow.
+        target.style.position = "fixed";
+        target.style.left = "-9999px";
+        target.style.top = "-9999px";
+        target.style.width = "1px";
+        target.style.height = "1px";
+        target.style.opacity = "0";
+        target.style.pointerEvents = "none";
+        target.style.zIndex = "-1";
+
+        const root = target.shadowRoot;
+        if (!root.getElementById("ghl-voice-demo-style")) {
             const style = document.createElement("style");
             style.id = "ghl-voice-demo-style";
             style.textContent = `
-                #lc_text-widget {
-                    left: 50% !important;
-                    right: auto !important;
-                    top: 0 !important;
-                    bottom: auto !important;
-                    transform: translateX(-50%) !important;
-                }
-
+                #lc_text-widget--btn,
                 .lc_text-widget--prompt,
                 .lc_text-widget_prompt--msg-bubble {
                     display: none !important;
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                    pointer-events: none !important;
                 }
 
-                #lc_text-widget--btn {
-                    left: 50% !important;
-                    right: auto !important;
-                    top: 0 !important;
-                    bottom: auto !important;
-                    transform: translateX(-50%) !important;
-                    width: 84px !important;
-                    height: 84px !important;
-                    border-radius: 9999px !important;
-                    background: radial-gradient(circle at 30% 30%, #0e243a 0%, #0a1628 55%, #070f1e 100%) !important;
-                    border: 2px solid rgba(192, 239, 34, 0.75) !important;
-                    box-shadow: 0 0 0 2px rgba(192, 239, 34, 0.14), 0 0 24px rgba(0, 255, 255, 0.2) !important;
+                #lc_text-widget--box {
+                    width: 1px !important;
+                    height: 1px !important;
+                    min-height: 0 !important;
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                    overflow: hidden !important;
+                    transform: scale(0.9) !important;
                 }
             `;
-
             root.appendChild(style);
-            return true;
+        }
+
+        return true;
+    }, [getWidgetHost]);
+
+    const syncCallState = useCallback(() => {
+        const root = getWidgetRoot();
+        if (!root) return;
+
+        const statusText =
+            root.querySelector(".lc_text-widget--voice-status-text")?.textContent?.trim().toLowerCase() ?? "";
+        const callStatus = root.querySelector(".lc_text-widget--voice-call-status")?.textContent?.trim().toLowerCase() ?? "";
+
+        if (statusText.includes("connecting")) {
+            setCallState("connecting");
+            return;
+        }
+
+        if (statusText.includes("talking")) {
+            setCallState("live");
+            setHasCalledOnce(true);
+            return;
+        }
+
+        if (callStatus.includes("call ended")) {
+            setCallState("idle");
+            return;
+        }
+
+        if (!statusText && !callStatus && !window.leadConnector?.chatWidget?.isActive?.()) {
+            setCallState("idle");
+        }
+    }, [getWidgetRoot]);
+
+    const startCall = useCallback(async () => {
+        if (isBusy) return;
+        setIsBusy(true);
+        setCallState("connecting");
+
+        try {
+            applyWidgetStyles();
+            window.leadConnector?.chatWidget?.openWidget?.();
+            await new Promise((resolve) => window.setTimeout(resolve, 240));
+
+            const root = getWidgetRoot();
+            const talkButton = root?.querySelector("ion-button.lc_text-widget--voice-talk-button");
+
+            if (!talkButton) {
+                setCallState("error");
+                return;
+            }
+
+            (talkButton as HTMLElement).click();
+            await new Promise((resolve) => window.setTimeout(resolve, 320));
+            syncCallState();
+        } catch {
+            setCallState("error");
+        } finally {
+            setIsBusy(false);
+        }
+    }, [applyWidgetStyles, getWidgetRoot, isBusy, syncCallState]);
+
+    const endCall = useCallback(async () => {
+        if (isBusy) return;
+        setIsBusy(true);
+
+        try {
+            const root = getWidgetRoot();
+            const endButton = root?.querySelector("ion-button.lc_text-widget--voice-end-call-btn");
+            if (endButton) {
+                (endButton as HTMLElement).click();
+            }
+            await new Promise((resolve) => window.setTimeout(resolve, 280));
+            window.leadConnector?.chatWidget?.closeWidget?.();
+            setCallState("idle");
+        } catch {
+            setCallState("error");
+        } finally {
+            setIsBusy(false);
+        }
+    }, [getWidgetRoot, isBusy]);
+
+    const handleOrbClick = useCallback(() => {
+        if (callState === "live" || callState === "connecting") {
+            void endCall();
+            return;
+        }
+
+        void startCall();
+    }, [callState, endCall, startCall]);
+
+    useEffect(() => {
+        const checkWidget = () => {
+            const styled = applyWidgetStyles();
+            const ready = Boolean(getWidgetRoot()?.querySelector("ion-button.lc_text-widget--voice-talk-button"));
+            setIsWidgetReady(styled && ready);
+            syncCallState();
         };
 
-        const observer = new MutationObserver(() => {
-            applyVoiceLauncherStyle();
-        });
-
+        const observer = new MutationObserver(checkWidget);
         observer.observe(document.body, { childList: true, subtree: true });
 
-        const runFast = window.setTimeout(applyVoiceLauncherStyle, 120);
-        const runSlow = window.setTimeout(applyVoiceLauncherStyle, 600);
+        const quick = window.setTimeout(checkWidget, 120);
+        const medium = window.setTimeout(checkWidget, 420);
+        const slow = window.setTimeout(checkWidget, 900);
+        const poll = window.setInterval(checkWidget, 650);
 
         return () => {
             observer.disconnect();
-            window.clearTimeout(runFast);
-            window.clearTimeout(runSlow);
+            window.clearTimeout(quick);
+            window.clearTimeout(medium);
+            window.clearTimeout(slow);
+            window.clearInterval(poll);
         };
-    }, []);
+    }, [applyWidgetStyles, getWidgetRoot, syncCallState]);
+
+    const orbLabel = useMemo(() => {
+        if (callState === "live" || callState === "connecting") return "End Call";
+        return hasCalledOnce ? "Talk Again" : "Talk Here";
+    }, [callState, hasCalledOnce]);
+
+    const statusText = useMemo(() => {
+        if (callState === "connecting") return "Connecting to the voice agent...";
+        if (callState === "live") return "Live call in progress";
+        if (callState === "error") return "Could not start call. Check mic permission and try again.";
+        if (!isWidgetReady) return "Loading voice engine...";
+        return "Tap the orb to start a voice conversation.";
+    }, [callState, isWidgetReady]);
 
     return (
         <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20">
             <Script
-                id="ghl-voice-demo-widget"
+                id={GHL_WIDGET_HOST_ID}
                 src="https://beta.leadconnectorhq.com/loader.js"
                 data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
                 data-widget-id={GHL_WIDGET_ID}
@@ -108,8 +236,26 @@ export default function GhlVoiceAiDemoPage() {
                 </p>
                 <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-3">GHL Voice AI Demo</h1>
                 <p className="text-neon font-bold italic uppercase text-sm tracking-widest mb-6">
-                    Voice Launcher Positioned Top-Center
+                    Orb-Controlled Voice Call (No Popup Shell)
                 </p>
+
+                <div className="mb-7 flex justify-center">
+                    <button
+                        type="button"
+                        onClick={handleOrbClick}
+                        disabled={isBusy || (!isWidgetReady && callState === "idle")}
+                        className={`group relative grid place-items-center w-56 h-56 rounded-full border transition-all duration-300 font-mono text-lg uppercase tracking-[0.28em] ${
+                            callState === "live" || callState === "connecting"
+                                ? "border-red-400/90 text-red-200 bg-[radial-gradient(circle_at_30%_30%,#2a2230_0%,#170f1f_56%,#0b0a16_100%)] shadow-[0_0_0_2px_rgba(248,113,113,0.18),0_0_46px_rgba(248,113,113,0.34)]"
+                                : "border-neon/70 text-neon bg-[radial-gradient(circle_at_30%_30%,#0e243a_0%,#0a1628_56%,#070f1e_100%)] shadow-[0_0_0_2px_rgba(192,239,34,0.14),0_0_46px_rgba(0,255,255,0.24)]"
+                        } ${callState === "live" || callState === "connecting" ? "animate-pulse" : "hover:scale-[1.015]"}`}
+                    >
+                        <span className="pointer-events-none">{orbLabel}</span>
+                    </button>
+                </div>
+
+                <p className="text-sm md:text-base text-gray-300 mb-6">{statusText}</p>
+
                 <Link
                     href="/demo"
                     className="inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-white transition-colors uppercase tracking-wider"
