@@ -22,7 +22,7 @@ export default function GhlVoiceAiDemoPage() {
 
             target.style.position = "fixed";
             target.style.left = "50%";
-            target.style.top = "130px";
+            target.style.top = "200px";
             target.style.right = "auto";
             target.style.bottom = "auto";
             target.style.transform = "translateX(-50%)";
