@@ -1,9 +1,15 @@
 "use client";
 
+import { CallHandling } from "@/components/sections/CallHandling";
+import { CaseStudy } from "@/components/sections/CaseStudy";
+import { DIYDemo } from "@/components/sections/DIYDemo";
+import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Problem } from "@/components/sections/Problem";
+import { SocialProof } from "@/components/sections/SocialProof";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, CalendarDays, CheckCircle2, Wrench } from "lucide-react";
+import { ArrowLeft, CalendarDays, CheckCircle2, PhoneCall, Wrench } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const GHL_WIDGET_ID = "69a7bdf999dd5635833c8454";
@@ -393,36 +399,111 @@ export default function TradiesPage() {
                             <div className="px-8 pb-8 pt-10 md:px-10 md:pb-10">
                                 <div className="mb-7 text-center">
                                     <p className="mb-3 text-[11px] font-mono uppercase tracking-[0.28em] text-neon">
-                                        Voice Orb Demo
+                                        Live Browser Call
                                     </p>
                                     <h2 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
-                                        Talk to the AI
+                                        Start the Demo
                                     </h2>
                                     <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-gray-400">
-                                        Click the orb and act like a customer calling your business. Test urgent jobs,
-                                        quotes, booking requests, or after-hours enquiries.
+                                        Click the launch control below and act like a customer calling your business.
+                                        Test urgent jobs, quote requests, booking enquiries, or after-hours overflow.
                                     </p>
                                 </div>
 
-                                <div className="mb-7 rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top,rgba(192,239,34,0.06),transparent_30%),linear-gradient(180deg,rgba(7,15,30,0.95),rgba(3,8,23,0.98))] p-7">
-                                    <div className="mb-6 flex justify-center">
-                                        <button
-                                            type="button"
-                                            onClick={handleOrbClick}
-                                            disabled={isBusy}
-                                            className={`group relative grid h-52 w-52 place-items-center rounded-full border font-mono text-base uppercase tracking-[0.24em] transition-all duration-300 md:h-56 md:w-56 md:text-lg md:tracking-[0.28em] ${
-                                                callState === "live" || callState === "connecting"
-                                                    ? "border-red-400/90 text-red-200 bg-[radial-gradient(circle_at_30%_30%,#2a2230_0%,#170f1f_56%,#0b0a16_100%)] shadow-[0_0_0_2px_rgba(248,113,113,0.18),0_0_46px_rgba(248,113,113,0.34)]"
-                                                    : "border-neon/70 text-neon bg-[radial-gradient(circle_at_30%_30%,#0e243a_0%,#0a1628_56%,#070f1e_100%)] shadow-[0_0_0_2px_rgba(192,239,34,0.14),0_0_46px_rgba(0,255,255,0.24)]"
-                                            } ${
-                                                callState === "live" || callState === "connecting" ? "animate-pulse" : "hover:scale-[1.015]"
-                                            }`}
-                                        >
-                                            <span className="pointer-events-none text-center">{orbLabel}</span>
-                                        </button>
+                                <div className="mb-7 rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,17,32,0.98),rgba(3,8,23,0.98))] p-5 md:p-6">
+                                    <div className="rounded-[1.75rem] border border-neon/20 bg-[linear-gradient(180deg,rgba(6,13,27,0.94),rgba(4,8,18,0.98))] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
+                                        <div className="mb-4 flex items-center justify-between gap-3">
+                                            <span className="text-[10px] font-mono uppercase tracking-[0.26em] text-gray-400">
+                                                Voice Launch Control
+                                            </span>
+                                            <span
+                                                className={`rounded-full border px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] ${
+                                                    callState === "live"
+                                                        ? "border-red-400/40 bg-red-500/10 text-red-200"
+                                                        : callState === "connecting"
+                                                          ? "border-amber-300/30 bg-amber-300/10 text-amber-100"
+                                                          : "border-neon/30 bg-neon/10 text-neon"
+                                                }`}
+                                            >
+                                                {callState === "live"
+                                                    ? "Live"
+                                                    : callState === "connecting"
+                                                      ? "Dialing"
+                                                      : "Ready"}
+                                            </span>
+                                        </div>
+
+                                        <div className="mb-4 flex justify-center">
+                                            <button
+                                                type="button"
+                                                onClick={handleOrbClick}
+                                                disabled={isBusy}
+                                                className={`group relative flex h-[19rem] w-full max-w-[22rem] items-center justify-center overflow-hidden rounded-[2.25rem] border transition-all duration-300 md:h-[20rem] ${
+                                                    callState === "live" || callState === "connecting"
+                                                        ? "border-red-400/70 bg-[radial-gradient(circle_at_top,rgba(120,16,16,0.36),transparent_36%),linear-gradient(180deg,rgba(22,10,22,0.98),rgba(10,6,17,1))] shadow-[0_0_0_2px_rgba(248,113,113,0.14),0_0_52px_rgba(248,113,113,0.18)]"
+                                                        : "border-neon/45 bg-[radial-gradient(circle_at_top,rgba(192,239,34,0.14),transparent_34%),linear-gradient(180deg,rgba(7,18,37,0.98),rgba(3,8,23,1))] shadow-[0_0_0_2px_rgba(192,239,34,0.08),0_0_52px_rgba(34,211,238,0.12)] hover:border-neon/70 hover:shadow-[0_0_0_2px_rgba(192,239,34,0.12),0_0_62px_rgba(34,211,238,0.18)]"
+                                                }`}
+                                            >
+                                                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(24,34,53,0.55)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,34,53,0.55)_1px,transparent_1px)] bg-[size:28px_28px] opacity-20" />
+                                                <div
+                                                    className={`absolute inset-x-8 top-6 h-px ${
+                                                        callState === "live" || callState === "connecting"
+                                                            ? "bg-gradient-to-r from-transparent via-red-300/60 to-transparent"
+                                                            : "bg-gradient-to-r from-transparent via-neon/60 to-transparent"
+                                                    }`}
+                                                />
+                                                <div className="relative flex flex-col items-center justify-center gap-5 px-6 text-center">
+                                                    <div
+                                                        className={`flex h-20 w-20 items-center justify-center rounded-full border ${
+                                                            callState === "live" || callState === "connecting"
+                                                                ? "border-red-300/60 bg-red-500/10 text-red-100"
+                                                                : "border-neon/50 bg-neon/10 text-neon"
+                                                        }`}
+                                                    >
+                                                        <PhoneCall className="h-8 w-8" />
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
+                                                            {callState === "live" || callState === "connecting"
+                                                                ? "End the call"
+                                                                : "Tap to launch"}
+                                                        </div>
+                                                        <div className="text-2xl font-black uppercase tracking-[0.18em] text-white md:text-[2rem]">
+                                                            {orbLabel}
+                                                        </div>
+                                                        <div className="mx-auto max-w-[15rem] text-xs uppercase tracking-[0.2em] text-gray-400">
+                                                            {callState === "live" || callState === "connecting"
+                                                                ? "Hang up when you are done"
+                                                                : "Talk like a real customer and hear the response"}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+
+                                        <div className="grid gap-3 text-left md:grid-cols-2">
+                                            <div className="rounded-2xl border border-white/8 bg-ocean-950/70 px-4 py-4">
+                                                <div className="mb-2 text-[10px] font-mono uppercase tracking-[0.26em] text-neon">
+                                                    Best Test
+                                                </div>
+                                                <p className="text-sm leading-relaxed text-gray-300">
+                                                    Try an urgent plumbing or electrical call after hours.
+                                                </p>
+                                            </div>
+                                            <div className="rounded-2xl border border-white/8 bg-ocean-950/70 px-4 py-4">
+                                                <div className="mb-2 text-[10px] font-mono uppercase tracking-[0.26em] text-neon">
+                                                    What To Check
+                                                </div>
+                                                <p className="text-sm leading-relaxed text-gray-300">
+                                                    Listen for triage, booking logic, and clean caller capture.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <p className="text-center text-sm text-gray-300">{statusText}</p>
+                                    <div className="mt-4 rounded-2xl border border-white/8 bg-ocean-950/60 px-4 py-4">
+                                        <p className="text-center text-sm text-gray-300">{statusText}</p>
+                                    </div>
                                 </div>
 
                                 <div className="grid gap-3">
@@ -441,6 +522,15 @@ export default function TradiesPage() {
                     </motion.div>
                 </div>
             </div>
+
+            <section className="relative z-10 border-t border-white/6 bg-ocean-950">
+                <SocialProof />
+                <Problem />
+                <CallHandling />
+                <DIYDemo />
+                <CaseStudy />
+                <HowItWorks />
+            </section>
         </main>
     );
 }
