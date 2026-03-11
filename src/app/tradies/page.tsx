@@ -7,9 +7,6 @@ import {
     ArrowLeft,
     CalendarDays,
     CheckCircle2,
-    Clock3,
-    PhoneCall,
-    ShieldCheck,
     Wrench,
 } from "lucide-react";
 import { useEffect } from "react";
@@ -87,9 +84,8 @@ export default function TradiesPage() {
                 }
             `}</style>
 
-            <div className="fixed inset-0 bg-[linear-gradient(to_right,#182235_1px,transparent_1px),linear-gradient(to_bottom,#182235_1px,transparent_1px)] bg-[size:42px_42px] opacity-20 pointer-events-none" />
-            <div className="fixed inset-x-0 top-[-10%] mx-auto h-[42rem] w-[42rem] rounded-full bg-cyan-400/10 blur-[140px] pointer-events-none" />
-            <div className="fixed right-[-8rem] top-[18%] h-80 w-80 rounded-full bg-neon/10 blur-[120px] pointer-events-none" />
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#182235_1px,transparent_1px),linear-gradient(to_bottom,#182235_1px,transparent_1px)] bg-[size:42px_42px] opacity-12 pointer-events-none" />
+            <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto max-w-6xl px-6 py-10 md:py-14">
                 <nav className="mb-12 flex items-center justify-between">
@@ -105,12 +101,12 @@ export default function TradiesPage() {
                     </Link>
                 </nav>
 
-                <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+                <div className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
                     <motion.div
                         initial={{ opacity: 0, x: -18 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.45 }}
-                        className="space-y-8"
+                        className="space-y-6"
                     >
                         <div className="inline-flex items-center gap-2 rounded-full border border-neon/30 bg-white/5 px-4 py-2 text-[10px] font-mono uppercase tracking-[0.28em] text-neon">
                             <Wrench className="h-3.5 w-3.5" />
@@ -129,38 +125,28 @@ export default function TradiesPage() {
                             </p>
                         </div>
 
-                        <div className="grid gap-3 sm:grid-cols-3">
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-neon/15 text-neon">
-                                    <PhoneCall className="h-5 w-5" />
+                        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                            <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.24em] text-neon">
+                                What this handles
+                            </p>
+                            <div className="grid gap-3">
+                                <div className="flex items-start gap-3 text-sm leading-relaxed text-gray-300">
+                                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neon" />
+                                    After-hours calls, missed calls, and overflow when the team is on the tools.
                                 </div>
-                                <p className="mb-1 text-sm font-bold uppercase tracking-wide text-white">Answer Fast</p>
-                                <p className="text-sm leading-relaxed text-gray-400">
-                                    Pick up missed calls before the caller moves to the next tradie.
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-neon/15 text-neon">
-                                    <Clock3 className="h-5 w-5" />
+                                <div className="flex items-start gap-3 text-sm leading-relaxed text-gray-300">
+                                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neon" />
+                                    Urgent triage, quote requests, and clean callback capture.
                                 </div>
-                                <p className="mb-1 text-sm font-bold uppercase tracking-wide text-white">24/7 Triage</p>
-                                <p className="text-sm leading-relaxed text-gray-400">
-                                    Sort urgent work from quote requests and routine enquiries.
-                                </p>
-                            </div>
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-neon/15 text-neon">
-                                    <ShieldCheck className="h-5 w-5" />
+                                <div className="flex items-start gap-3 text-sm leading-relaxed text-gray-300">
+                                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neon" />
+                                    A consistent voice that follows your booking rules and business guardrails.
                                 </div>
-                                <p className="mb-1 text-sm font-bold uppercase tracking-wide text-white">On Brand</p>
-                                <p className="text-sm leading-relaxed text-gray-400">
-                                    Keep scripts, guardrails, and booking rules aligned to your business.
-                                </p>
                             </div>
                         </div>
 
-                        <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/8 to-white/[0.03] p-6">
-                            <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.26em] text-neon">
+                        <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/6 to-transparent p-6">
+                            <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.24em] text-neon">
                                 Try these prompts
                             </p>
                             <div className="grid gap-3">
@@ -183,31 +169,31 @@ export default function TradiesPage() {
                         transition={{ duration: 0.5 }}
                         className="relative"
                     >
-                        <div className="absolute -inset-6 rounded-[2.2rem] bg-cyan-400/10 blur-3xl" />
+                        <div className="absolute -inset-4 rounded-[2rem] bg-cyan-400/8 blur-3xl" />
                         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-b from-ocean-900 via-ocean-950 to-[#030817] shadow-2xl">
                             <div className="h-2 w-full bg-gradient-to-r from-neon via-cyan-400 to-neon" />
 
                             <div className="px-8 pb-8 pt-10 md:px-10 md:pb-10">
-                                <div className="mb-8 text-center">
+                                <div className="mb-7 text-center">
                                     <p className="mb-3 text-[11px] font-mono uppercase tracking-[0.28em] text-neon">
                                         Voice Orb Demo
                                     </p>
                                     <h2 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
                                         Talk to the AI
                                     </h2>
-                                    <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-400">
+                                    <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-gray-400">
                                         Click the orb and act like a customer calling your business. Test urgent jobs,
                                         quotes, booking requests, or after-hours enquiries.
                                     </p>
                                 </div>
 
-                                <div className="mb-8 rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top,rgba(192,239,34,0.08),transparent_35%),linear-gradient(180deg,rgba(7,15,30,0.95),rgba(3,8,23,0.98))] p-8">
-                                    <div className="flex items-center justify-center py-6">
+                                <div className="mb-7 rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top,rgba(192,239,34,0.06),transparent_30%),linear-gradient(180deg,rgba(7,15,30,0.95),rgba(3,8,23,0.98))] p-7">
+                                    <div className="flex items-center justify-center py-4">
                                         <div data-widget-key={WIDGET_KEY} />
                                     </div>
                                 </div>
 
-                                <div className="mb-6 grid gap-3 sm:grid-cols-2">
+                                <div className="grid gap-3 sm:grid-cols-2">
                                     <a
                                         href="https://calendly.com/jessallan/30min"
                                         target="_blank"
@@ -223,17 +209,6 @@ export default function TradiesPage() {
                                     >
                                         Request a Custom Build
                                     </Link>
-                                </div>
-
-                                <div className="rounded-2xl border border-white/8 bg-white/[0.04] p-5">
-                                    <div className="mb-3 flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.22em] text-neon">
-                                        <CheckCircle2 className="h-4 w-4" />
-                                        Good fit for
-                                    </div>
-                                    <p className="text-sm leading-relaxed text-gray-300">
-                                        Plumbing, electrical, HVAC, roofing, landscaping, glazing, concreting, building,
-                                        maintenance teams, and any tradie business that relies on inbound calls.
-                                    </p>
                                 </div>
                             </div>
                         </div>
