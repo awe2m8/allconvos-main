@@ -410,7 +410,7 @@ export default function TradiesPage() {
                                             type="button"
                                             onClick={handleOrbClick}
                                             disabled={isBusy}
-                                            className={`group relative grid h-44 w-44 place-items-center rounded-full border font-mono text-sm uppercase tracking-[0.22em] transition-all duration-300 md:h-52 md:w-52 md:text-base md:tracking-[0.26em] ${
+                                            className={`group relative grid h-52 w-52 place-items-center rounded-full border font-mono text-base uppercase tracking-[0.24em] transition-all duration-300 md:h-56 md:w-56 md:text-lg md:tracking-[0.28em] ${
                                                 callState === "live" || callState === "connecting"
                                                     ? "border-red-400/90 text-red-200 bg-[radial-gradient(circle_at_30%_30%,#2a2230_0%,#170f1f_56%,#0b0a16_100%)] shadow-[0_0_0_2px_rgba(248,113,113,0.18),0_0_46px_rgba(248,113,113,0.34)]"
                                                     : "border-neon/70 text-neon bg-[radial-gradient(circle_at_30%_30%,#0e243a_0%,#0a1628_56%,#070f1e_100%)] shadow-[0_0_0_2px_rgba(192,239,34,0.14),0_0_46px_rgba(0,255,255,0.24)]"
@@ -418,7 +418,7 @@ export default function TradiesPage() {
                                                 callState === "live" || callState === "connecting" ? "animate-pulse" : "hover:scale-[1.015]"
                                             }`}
                                         >
-                                            <span className="pointer-events-none px-6 text-center leading-tight">{orbLabel}</span>
+                                            <span className="pointer-events-none text-center">{orbLabel}</span>
                                         </button>
                                     </div>
 
