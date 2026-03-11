@@ -323,7 +323,7 @@ export default function TradiesPage() {
                         <div className="absolute top-8 left-1/2 z-20 -translate-x-1/2">
                             <div className="h-24 w-24 rounded-full border-2 border-sky-200/80 bg-[#050816] p-1 shadow-[0_0_28px_rgba(125,211,252,0.34)]">
                                 <img
-                                    src="/images/ai-avatar.png"
+                                    src="/images/ai-avatar-female.png"
                                     alt="Tradie voice AI"
                                     className="h-full w-full rounded-full object-cover"
                                 />
