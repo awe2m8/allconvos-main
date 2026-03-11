@@ -4,7 +4,31 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, ArrowRight, Star, ShieldCheck, Zap, RefreshCcw } from "lucide-react";
 
-export function DIYDemo() {
+type DIYDemoProps = {
+    eyebrowLabel?: string;
+    titlePrefix?: string;
+    titleAccent?: string;
+    heading?: string;
+    description?: string;
+    featureTitle?: string;
+    featureDescription?: string;
+    phoneEyebrow?: string;
+    phoneHelper?: string;
+    webDemoLabel?: string;
+};
+
+export function DIYDemo({
+    eyebrowLabel = "Live Interaction",
+    titlePrefix = "DIY",
+    titleAccent = "Demo",
+    heading = "Experience AI Receptionist",
+    description = "Be the caller: Ring our demo line or use our browser-based AI to interact with AI Receptionist live and hear samples of how calls can be handled.",
+    featureTitle = "Call our plumbing services demo",
+    featureDescription = "Inquire about their services, emergency callout, or fees.",
+    phoneEyebrow = "DIAL DIRECTLY",
+    phoneHelper = "Just call this number",
+    webDemoLabel = "Start Live Web Demo",
+}: DIYDemoProps) {
     const [showVoice, setShowVoice] = useState(false);
 
     return (
@@ -24,21 +48,21 @@ export function DIYDemo() {
                         >
                             <div className="flex items-center gap-2 mb-6">
                                 <span className="px-3 py-1 rounded-full bg-neon/10 border border-neon/20 text-neon text-[10px] font-black uppercase tracking-widest">
-                                    Live Interaction
+                                    {eyebrowLabel}
                                 </span>
                                 <div className="h-px w-12 bg-neon/20" />
                             </div>
 
                             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tighter leading-tight">
-                                DIY <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-white">Demo</span>
+                                {titlePrefix} <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-white">{titleAccent}</span>
                             </h2>
 
                             <p className="text-2xl font-bold text-white/90 mb-4 tracking-tight">
-                                Experience AI Receptionist
+                                {heading}
                             </p>
 
                             <p className="text-gray-400 text-lg mb-8 font-medium leading-relaxed max-w-xl">
-                                Be the caller: Ring our demo line or use our browser-based AI to interact with AI Receptionist live and hear samples of how calls can be handled.
+                                {description}
                             </p>
 
                             <div className="space-y-6">
@@ -47,9 +71,9 @@ export function DIYDemo() {
                                         <Star className="w-6 h-6 text-neon" />
                                     </div>
                                     <div>
-                                        <h4 className="text-white font-bold text-lg mb-1 uppercase tracking-tight">Call our plumbing services demo</h4>
+                                        <h4 className="text-white font-bold text-lg mb-1 uppercase tracking-tight">{featureTitle}</h4>
                                         <p className="text-gray-400 text-sm font-medium">
-                                            Inquire about their services, emergency callout, or fees.
+                                            {featureDescription}
                                         </p>
                                     </div>
                                 </div>
@@ -98,7 +122,7 @@ export function DIYDemo() {
                                             </div>
 
                                             <h3 className="text-white text-sm font-black uppercase tracking-[0.3em] mb-4 opacity-50">
-                                                DIAL DIRECTLY
+                                                {phoneEyebrow}
                                             </h3>
 
                                             <a
@@ -108,7 +132,7 @@ export function DIYDemo() {
                                                 0485 009 296
                                             </a>
                                             <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 mb-8">
-                                                Just call this number
+                                                {phoneHelper}
                                             </p>
 
                                             <div className="w-full h-px bg-white/10 mb-8" />
@@ -130,7 +154,7 @@ export function DIYDemo() {
                                                 whileTap={{ scale: 0.98 }}
                                                 className="mt-10 w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-neon transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
                                             >
-                                                Start Live Web Demo
+                                                {webDemoLabel}
                                                 <ArrowRight className="w-5 h-5" />
                                             </motion.button>
                                         </motion.div>

@@ -530,7 +530,15 @@ export default function TradiesPage() {
             </div>
 
             <section className="relative z-10 border-t border-white/6 bg-ocean-950">
-                <DIYDemo />
+                <DIYDemo
+                    heading="Try calling an actual mobile number to get a feel for your receptionist"
+                    description="Call the live mobile demo below to hear how your AI receptionist could handle plumbing questions, urgent callouts, pricing, and booking requests before you move into the web demo."
+                    featureTitle="Call our tradies mobile demo"
+                    featureDescription="Ask about plumbing jobs, emergency callouts, hot water issues, fees, or next availability."
+                    phoneEyebrow="CALL THE MOBILE DEMO"
+                    phoneHelper="Call this number now"
+                    webDemoLabel="Or Start Live Web Demo"
+                />
                 <Problem />
                 <CallHandling />
                 <CaseStudy />
