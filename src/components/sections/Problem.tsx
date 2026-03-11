@@ -223,7 +223,7 @@ export function Problem() {
                             className="inline-flex items-center gap-2 bg-neon text-ocean-950 px-8 py-4 rounded-xl font-mono uppercase font-bold tracking-wider hover:bg-white transition-colors group"
                             popoverClassName="left-1/2 -translate-x-1/2"
                         >
-                            Build your agent now
+                            Demo Voice Agent
                             <TrendingDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
                         </ComingSoonButton>
                     </motion.div>

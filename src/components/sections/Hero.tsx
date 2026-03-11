@@ -1,43 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
-import { ArrowRight, Bot, User, CheckCircle, Mic, Terminal, MessageSquare, ShieldCheck, Activity } from "lucide-react";
+import { ArrowRight, Bot, User, CheckCircle } from "lucide-react";
 import { ComingSoonButton } from "../ui/ComingSoonButton";
+import { SelfSellVoiceOrb } from "../app/SelfSellVoiceOrb";
 
 export function Hero() {
-    const [micPermissionGranted, setMicPermissionGranted] = useState(false);
     const [isHighlighting, setIsHighlighting] = useState(false);
-    const frameRef = useRef<HTMLIFrameElement>(null);
 
     const handleTalkClick = () => {
         setIsHighlighting(true);
         setTimeout(() => setIsHighlighting(false), 2000);
     };
-
-    useEffect(() => {
-        const checkPermissions = () => {
-            if (navigator.permissions && navigator.permissions.query) {
-                navigator.permissions.query({ name: 'microphone' as PermissionName })
-                    .then(result => {
-                        if (result.state === 'granted') {
-                            setMicPermissionGranted(true);
-                        } else {
-                            setMicPermissionGranted(false);
-                        }
-                    });
-            }
-        };
-
-        const currentFrame = frameRef.current;
-        if (currentFrame) {
-            currentFrame.addEventListener('load', checkPermissions);
-        }
-        return () => {
-            if (currentFrame) currentFrame.removeEventListener('load', checkPermissions);
-        };
-    }, []);
 
     return (
         <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
@@ -94,7 +70,7 @@ export function Hero() {
                             className="inline-flex items-center justify-center px-8 py-4 font-bold rounded-sm uppercase tracking-wide font-mono transition-all duration-200 outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-ocean-950 bg-neon text-ocean-950 border-2 border-neon shadow-[0px_0px_20px_rgba(163,230,53,0.3)] hover:bg-neon-hover hover:shadow-[0px_0px_30px_rgba(163,230,53,0.5)] active:translate-y-0.5"
                             popoverClassName="left-1/2 -translate-x-1/2"
                         >
-                            Build My AI Agent
+                            Demo Voice Agent
                         </ComingSoonButton>
                         <Button
                             variant="secondary"
@@ -179,26 +155,7 @@ export function Hero() {
                             <div className="relative px-4 pb-4">
                                 <div className="absolute inset-0 bg-neon/5 rounded-xl blur-lg" />
                                 <div className="relative bg-black/40 border border-white/5 rounded-xl p-2 h-[220px] flex items-center justify-center overflow-hidden">
-                                    <iframe
-                                        ref={frameRef}
-                                        src="https://iframes.ai/o/1769676637704x140265771944116220?color=1def05&icon="
-                                        allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
-                                        className="w-full h-full border-none"
-                                        id="assistantFrame"
-                                        title="Voice AI Demo"
-                                    />
-
-                                    {/* Mic/Shield Overlay */}
-                                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-2">
-                                        <div className="flex items-center gap-2 text-[9px] font-mono text-white/30 uppercase tracking-tighter">
-                                            <Mic className={`w-3 h-3 ${micPermissionGranted ? 'text-neon' : 'text-gray-600'}`} />
-                                            {micPermissionGranted ? 'Mic Active' : 'Mic Ready'}
-                                        </div>
-                                        <div className="flex items-center gap-2 text-[9px] font-mono text-white/30 uppercase tracking-tighter">
-                                            <ShieldCheck className="w-3 h-3 text-neon/40" />
-                                            Secure_V5
-                                        </div>
-                                    </div>
+                                    <SelfSellVoiceOrb />
                                 </div>
                             </div>
 
