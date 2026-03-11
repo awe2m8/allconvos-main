@@ -5,7 +5,6 @@ import { CaseStudy } from "@/components/sections/CaseStudy";
 import { DIYDemo } from "@/components/sections/DIYDemo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Problem } from "@/components/sections/Problem";
-import { SocialProof } from "@/components/sections/SocialProof";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarDays, Mail, Phone, PhoneCall } from "lucide-react";
 import Link from "next/link";
@@ -531,10 +530,9 @@ export default function TradiesPage() {
             </div>
 
             <section className="relative z-10 border-t border-white/6 bg-ocean-950">
-                <SocialProof />
+                <DIYDemo />
                 <Problem />
                 <CallHandling />
-                <DIYDemo />
                 <CaseStudy />
                 <HowItWorks />
             </section>
