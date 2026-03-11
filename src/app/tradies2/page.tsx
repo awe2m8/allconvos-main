@@ -59,8 +59,6 @@ const DEMO_CONFIGS = [
     },
 ] as const;
 
-const HOST_ORDER: readonly string[] = DEMO_CONFIGS.map((config) => config.hostId);
-
 type CallState = "idle" | "connecting" | "live" | "error";
 
 type DemoConfig = (typeof DEMO_CONFIGS)[number];
@@ -77,26 +75,7 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
     return null;
 };
 
-const assignWidgetHostIds = () => {
-    const widgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
-    let cursor = 0;
-
-    for (const hostId of HOST_ORDER) {
-        if (widgets.some((widget) => widget.id === hostId)) continue;
-
-        while (cursor < widgets.length && widgets[cursor].id && HOST_ORDER.includes(widgets[cursor].id)) {
-            cursor += 1;
-        }
-
-        const target = widgets[cursor];
-        if (target && !target.id) {
-            target.id = hostId;
-            cursor += 1;
-        }
-    }
-};
-
-function useGhlVoiceDemo(hostId: string) {
+function useGhlVoiceDemo(config: DemoConfig) {
     const [callState, setCallState] = useState<CallState>("idle");
     const [isWidgetReady, setIsWidgetReady] = useState(false);
     const [isBusy, setIsBusy] = useState(false);
@@ -104,9 +83,15 @@ function useGhlVoiceDemo(hostId: string) {
     const [isPrewarmed, setIsPrewarmed] = useState(false);
 
     const getWidgetHost = useCallback(() => {
-        assignWidgetHostIds();
-        return document.querySelector(`chat-widget#${hostId}`) as HTMLElement | null;
-    }, [hostId]);
+        const selector = [
+            `chat-widget[widget-id="${config.widgetId}"]`,
+            `chat-widget[data-widget-id="${config.widgetId}"]`,
+            `chat-widget#${config.hostId}-script`,
+            `chat-widget#${config.hostId}`,
+        ].join(", ");
+
+        return document.querySelector(selector) as HTMLElement | null;
+    }, [config.hostId, config.widgetId]);
 
     const getWidgetRoot = useCallback(() => {
         return getWidgetHost()?.shadowRoot ?? null;
@@ -133,7 +118,7 @@ function useGhlVoiceDemo(hostId: string) {
         target.style.zIndex = "-1";
 
         const root = target.shadowRoot;
-        const styleId = `${hostId}-voice-style`;
+        const styleId = `${config.hostId}-voice-style`;
         if (!root.getElementById(styleId)) {
             const style = document.createElement("style");
             style.id = styleId;
@@ -161,7 +146,7 @@ function useGhlVoiceDemo(hostId: string) {
         }
 
         return true;
-    }, [getWidgetHost, hostId]);
+    }, [config.hostId, getWidgetHost]);
 
     const syncCallState = useCallback(() => {
         const root = getWidgetRoot();
@@ -280,7 +265,6 @@ function useGhlVoiceDemo(hostId: string) {
 
     useEffect(() => {
         const checkWidget = () => {
-            assignWidgetHostIds();
             const styled = applyWidgetStyles();
             const ready = styled && Boolean(getWidgetRoot());
             setIsWidgetReady(Boolean(ready));
@@ -335,7 +319,7 @@ function useGhlVoiceDemo(hostId: string) {
 }
 
 function VoiceDemoCard({ config }: { config: DemoConfig }) {
-    const { callState, isBusy, orbLabel, statusText, handleOrbClick } = useGhlVoiceDemo(config.hostId);
+    const { callState, isBusy, orbLabel, statusText, handleOrbClick } = useGhlVoiceDemo(config);
     const isActive = callState === "live" || callState === "connecting";
 
     return (
