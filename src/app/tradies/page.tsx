@@ -425,7 +425,7 @@ export default function TradiesPage() {
                                     <p className="text-center text-sm text-gray-300">{statusText}</p>
                                 </div>
 
-                                <div className="grid gap-3 sm:grid-cols-2">
+                                <div className="grid gap-3">
                                     <a
                                         href="https://calendly.com/jessallan/30min"
                                         target="_blank"
@@ -435,12 +435,6 @@ export default function TradiesPage() {
                                         <CalendarDays className="h-4 w-4" />
                                         Book a Walkthrough
                                     </a>
-                                    <Link
-                                        href="/contact"
-                                        className="inline-flex items-center justify-center rounded-xl bg-neon px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ocean-950 transition-colors hover:bg-white"
-                                    >
-                                        Request a Custom Build
-                                    </Link>
                                 </div>
                             </div>
                         </div>
