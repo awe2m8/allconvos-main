@@ -485,7 +485,7 @@ export default function TradiesPage() {
                             className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
                         >
                             <CalendarDays className="h-4 w-4" />
-                            In-Person Demo
+                            Book In Person Demo
                         </a>
                         <Link
                             href="/contact"
