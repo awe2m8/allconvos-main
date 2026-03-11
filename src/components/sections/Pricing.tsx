@@ -8,7 +8,7 @@ const plans = [
     {
         id: "lite",
         name: "FRONT_DESK_CORE",
-        price: "$399",
+        price: "$299",
         duration: "/mo",
         onboardingNote: "+ One-time onboarding fee (tailored)",
         description: "One receptionist. Fully autonomous. Always on.",
