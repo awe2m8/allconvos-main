@@ -351,7 +351,7 @@ export default function TradiesPage() {
                                         className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
                                             callState === "live" || callState === "connecting"
                                                 ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                                                : "border-neon/40 bg-[radial-gradient(circle_at_50%_28%,rgba(196,255,82,0.1),transparent_38%),linear-gradient(180deg,rgba(8,22,40,0.98),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(192,239,34,0.08),0_0_46px_rgba(34,211,238,0.12)] hover:border-neon/60 hover:shadow-[0_0_0_1px_rgba(192,239,34,0.12),0_0_58px_rgba(34,211,238,0.16)]"
+                                                : "border-cyan-300/65 bg-[radial-gradient(circle_at_50%_26%,rgba(125,211,252,0.24),transparent_34%),linear-gradient(180deg,rgba(12,40,68,0.98),rgba(5,14,30,1))] shadow-[0_0_0_1px_rgba(125,211,252,0.16),0_0_56px_rgba(56,189,248,0.2)] hover:border-cyan-200/80 hover:shadow-[0_0_0_1px_rgba(125,211,252,0.24),0_0_72px_rgba(56,189,248,0.28)]"
                                         }`}
                                     >
                                         <div className="absolute inset-[10px] rounded-full border border-white/5" />
@@ -360,7 +360,7 @@ export default function TradiesPage() {
                                                 className={`flex h-12 w-12 items-center justify-center rounded-full border ${
                                                     callState === "live" || callState === "connecting"
                                                         ? "border-red-300/40 bg-red-500/10 text-red-100"
-                                                        : "border-neon/35 bg-neon/10 text-neon"
+                                                        : "border-cyan-200/55 bg-cyan-300/10 text-cyan-200"
                                                 }`}
                                             >
                                                 <PhoneCall className="h-4 w-4" />
