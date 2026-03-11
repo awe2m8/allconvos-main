@@ -77,7 +77,7 @@ export default function ContactPage() {
                                 <span className="text-neon">CONTACT</span>
                             </h1>
                             <p className="text-gray-400 max-w-lg font-mono text-sm leading-relaxed">
-                                Ready to deploy your AI workforce? Our mission control is standing by to configure your custom solution.
+                                Ready to talk about voice AI for your business? Send us a message and we&apos;ll get back to you.
                             </p>
                         </motion.div>
 
@@ -141,7 +141,7 @@ export default function ContactPage() {
 
                         <h2 className="text-2xl font-bold text-white mb-8 uppercase tracking-tight flex items-center gap-3">
                             <span className="w-2 h-8 bg-neon rounded-full" />
-                            Transmission Form
+                            Contact Form
                         </h2>
 
                         {isSuccess ? (
@@ -153,9 +153,9 @@ export default function ContactPage() {
                                 <div className="w-16 h-16 bg-neon/20 rounded-full flex items-center justify-center mx-auto text-neon">
                                     <ArrowRight className="w-8 h-8 -rotate-45" />
                                 </div>
-                                <h3 className="text-xl font-bold text-white uppercase italic">Transmission Received</h3>
+                                <h3 className="text-xl font-bold text-white uppercase italic">Message Sent</h3>
                                 <p className="text-gray-400 text-sm font-mono">
-                                    Your mission parameters have been logged. Stand by for encrypted response.
+                                    Thanks. We&apos;ve received your message and will be in touch soon.
                                 </p>
                             </motion.div>
                         ) : (
@@ -216,15 +216,15 @@ export default function ContactPage() {
                                     disabled={isSubmitting}
                                     className="w-full py-6 text-sm font-mono uppercase tracking-widest group bg-neon text-ocean-950 hover:bg-white transition-colors border-none disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {isSubmitting ? 'Transmitting...' : (
+                                    {isSubmitting ? 'Sending...' : (
                                         <>
-                                            Send Transmission <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            Send Message <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </>
                                     )}
                                 </Button>
 
                                 <p className="text-center text-[10px] text-gray-500 font-mono pt-2">
-                                    * Secure channel established. 256-bit encryption active.
+                                    We&apos;ll review your message and get back to you as soon as we can.
                                 </p>
                             </form>
                         )}

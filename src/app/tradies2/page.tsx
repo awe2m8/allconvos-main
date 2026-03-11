@@ -18,7 +18,7 @@ const DEMO_CONFIGS = [
         widgetId: "69a7bdf999dd5635833c8454",
         scriptSrc: "https://beta.leadconnectorhq.com/loader.js",
         resourcesUrl: "https://beta.leadconnectorhq.com/chat-widget/loader.js",
-        title: "Tradies Voice Demo",
+        title: "Voice AI Demo",
         subtitle: "Click the Orb and Start Talking",
         description:
             "Test how the AI handles after-hours overflow, urgent trade calls, quote requests, and callbacks for local service businesses.",
@@ -455,6 +455,12 @@ export default function TradiesPage() {
             <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-10 md:py-14">
+                <nav className="mb-10 flex items-center">
+                    <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
+                        allconvos<span className="text-neon">_</span>
+                    </Link>
+                </nav>
+
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
                     {DEMO_CONFIGS.map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
@@ -485,7 +491,7 @@ export default function TradiesPage() {
                             href="/contact"
                             className="inline-flex items-center justify-center rounded-lg bg-neon px-5 py-3 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-colors hover:bg-white"
                         >
-                            Open Contact Form
+                            Contact Form
                         </Link>
                     </div>
 
