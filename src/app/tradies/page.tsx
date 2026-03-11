@@ -3,86 +3,303 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Script from "next/script";
-import {
-    ArrowLeft,
-    CalendarDays,
-    CheckCircle2,
-    Wrench,
-} from "lucide-react";
-import { useEffect } from "react";
+import { ArrowLeft, CalendarDays, CheckCircle2, Wrench } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-const WIDGET_KEY = "b22b183d-3336-4b9b-973d-12c1e47888c4";
+const GHL_WIDGET_ID = "69a7bdf999dd5635833c8454";
+const GHL_WIDGET_HOST_ID = "ghl-tradies-widget";
 
-function initializeWidget() {
-    // Re-trigger the vendor widget scan after the script loads on this route.
-    document.dispatchEvent(new Event("DOMContentLoaded"));
+type CallState = "idle" | "connecting" | "live" | "error";
+
+const sleep = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+
+const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs = 120): Promise<T | null> => {
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+        const value = finder();
+        if (value) return value;
+        await sleep(stepMs);
+    }
+    return null;
+};
+
+declare global {
+    interface Window {
+        leadConnector?: {
+            chatWidget?: {
+                openWidget?: () => void;
+                closeWidget?: () => void;
+                isActive?: () => boolean;
+            };
+        };
+    }
 }
 
 export default function TradiesPage() {
-    useEffect(() => {
-        const fast = window.setTimeout(initializeWidget, 60);
-        const slow = window.setTimeout(initializeWidget, 260);
+    const [callState, setCallState] = useState<CallState>("idle");
+    const [isWidgetReady, setIsWidgetReady] = useState(false);
+    const [isBusy, setIsBusy] = useState(false);
+    const [hasCalledOnce, setHasCalledOnce] = useState(false);
+    const [isPrewarmed, setIsPrewarmed] = useState(false);
 
-        return () => {
-            window.clearTimeout(fast);
-            window.clearTimeout(slow);
-        };
+    const getWidgetHost = useCallback(() => {
+        const byId = document.querySelector(`chat-widget#${GHL_WIDGET_HOST_ID}`) as HTMLElement | null;
+        if (byId) return byId;
+
+        const firstWidget = document.querySelector("chat-widget") as HTMLElement | null;
+        if (firstWidget && !firstWidget.id) {
+            firstWidget.id = GHL_WIDGET_HOST_ID;
+        }
+        return firstWidget;
     }, []);
 
-    return (
-        <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 overflow-hidden">
-            <Script
-                src="https://d2cqc7yqzf8c8f.cloudfront.net/web-widget-v1.js"
-                strategy="afterInteractive"
-                onLoad={initializeWidget}
-                onReady={initializeWidget}
-            />
+    const getWidgetRoot = useCallback(() => {
+        return getWidgetHost()?.shadowRoot ?? null;
+    }, [getWidgetHost]);
 
-            <style jsx global>{`
-                [data-widget-key="${WIDGET_KEY}"] {
-                    width: auto !important;
-                    display: inline-flex !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                    margin: 0 auto !important;
-                }
+    const getTalkButton = useCallback((root: ShadowRoot | null) => {
+        if (!root) return null;
+        return root.querySelector(
+            "ion-button.lc_text-widget--voice-talk-button, .lc_text-widget--voice-talk-button"
+        ) as HTMLElement | null;
+    }, []);
 
-                [data-widget-key="${WIDGET_KEY}"] .wcw-widget-wrapper {
-                    width: auto !important;
-                }
+    const applyWidgetStyles = useCallback(() => {
+        const allWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
+        const target = getWidgetHost();
 
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container,
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container.text-mode,
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container.text-mode.idle,
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container.text-mode.always-expanded {
-                    border-radius: 50% !important;
-                    padding: 0 !important;
-                    gap: 0 !important;
-                    width: auto !important;
-                    max-width: none !important;
-                    background: transparent !important;
-                    border: none !important;
-                    box-shadow: none !important;
-                }
+        allWidgets.forEach((widget) => {
+            if (target && widget !== target) {
+                widget.style.display = "none";
+            }
+        });
 
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container .wcw-text-container {
+        if (!target?.shadowRoot) return false;
+
+        target.style.position = "fixed";
+        target.style.left = "-9999px";
+        target.style.top = "-9999px";
+        target.style.width = "1px";
+        target.style.height = "1px";
+        target.style.opacity = "0";
+        target.style.pointerEvents = "none";
+        target.style.zIndex = "-1";
+
+        const root = target.shadowRoot;
+        if (!root.getElementById("ghl-tradies-style")) {
+            const style = document.createElement("style");
+            style.id = "ghl-tradies-style";
+            style.textContent = `
+                #lc_text-widget--btn,
+                .lc_text-widget--prompt,
+                .lc_text-widget_prompt--msg-bubble {
                     display: none !important;
-                    width: 0 !important;
-                    margin: 0 !important;
+                    visibility: hidden !important;
                     opacity: 0 !important;
                     pointer-events: none !important;
                 }
 
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container .wcw-state-container {
-                    width: 132px !important;
-                    height: 132px !important;
+                #lc_text-widget--box {
+                    width: 1px !important;
+                    height: 1px !important;
+                    min-height: 0 !important;
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                    overflow: hidden !important;
+                    transform: scale(0.9) !important;
                 }
+            `;
+            root.appendChild(style);
+        }
 
-                [data-widget-key="${WIDGET_KEY}"] #web-widget-container .wcw-quiet {
-                    width: 48px !important;
-                    height: 48px !important;
-                }
-            `}</style>
+        return true;
+    }, [getWidgetHost]);
+
+    const syncCallState = useCallback(() => {
+        const root = getWidgetRoot();
+        if (!root) return;
+
+        const statusText =
+            root.querySelector(".lc_text-widget--voice-status-text")?.textContent?.trim().toLowerCase() ?? "";
+        const callStatus = root.querySelector(".lc_text-widget--voice-call-status")?.textContent?.trim().toLowerCase() ?? "";
+
+        if (statusText.includes("connecting")) {
+            setCallState("connecting");
+            return;
+        }
+
+        if (statusText.includes("talking")) {
+            setCallState("live");
+            setHasCalledOnce(true);
+            return;
+        }
+
+        if (callStatus.includes("call ended")) {
+            setCallState("idle");
+            return;
+        }
+
+        if (!statusText && !callStatus && !window.leadConnector?.chatWidget?.isActive?.()) {
+            setCallState("idle");
+        }
+    }, [getWidgetRoot]);
+
+    const prewarmWidget = useCallback(async () => {
+        if (isPrewarmed) return;
+
+        try {
+            applyWidgetStyles();
+            const chatApi = await waitForValue(() => window.leadConnector?.chatWidget ?? null, 3500, 70);
+            const root = await waitForValue(() => getWidgetRoot(), 3500, 70);
+            if (!chatApi || !root) return;
+
+            const statusText =
+                root.querySelector(".lc_text-widget--voice-status-text")?.textContent?.trim().toLowerCase() ?? "";
+            if (statusText.includes("connecting") || statusText.includes("talking")) {
+                const endButton = root.querySelector("ion-button.lc_text-widget--voice-end-call-btn") as HTMLElement | null;
+                endButton?.click();
+                await sleep(120);
+                chatApi.closeWidget?.();
+            }
+
+            setIsWidgetReady(true);
+            setIsPrewarmed(true);
+        } catch {
+            // Best-effort warmup only.
+        }
+    }, [applyWidgetStyles, getWidgetRoot, isPrewarmed]);
+
+    const startCall = useCallback(async () => {
+        if (isBusy) return;
+        setIsBusy(true);
+        setCallState("connecting");
+
+        try {
+            applyWidgetStyles();
+            const chatApi = await waitForValue(() => window.leadConnector?.chatWidget ?? null, 3500, 60);
+            if (!chatApi) {
+                setCallState("error");
+                return;
+            }
+
+            const root = await waitForValue(() => getWidgetRoot(), 3500, 60);
+            if (!root) {
+                setCallState("error");
+                return;
+            }
+
+            if (!chatApi.isActive?.()) {
+                chatApi.openWidget?.();
+            }
+
+            let talkButton = getTalkButton(root);
+
+            if (!talkButton) {
+                const launcherButton = root.querySelector("#lc_text-widget--btn") as HTMLElement | null;
+                launcherButton?.click();
+                talkButton = await waitForValue(() => getTalkButton(root), 2500, 60);
+            }
+
+            if (!talkButton) {
+                setCallState("error");
+                return;
+            }
+
+            talkButton.click();
+            setIsWidgetReady(true);
+            setIsPrewarmed(true);
+            await sleep(120);
+            syncCallState();
+        } catch {
+            setCallState("error");
+        } finally {
+            setIsBusy(false);
+        }
+    }, [applyWidgetStyles, getTalkButton, getWidgetRoot, isBusy, syncCallState]);
+
+    const endCall = useCallback(async () => {
+        if (isBusy) return;
+        setIsBusy(true);
+
+        try {
+            const root = await waitForValue(() => getWidgetRoot(), 2200, 60);
+            const endButton = root?.querySelector("ion-button.lc_text-widget--voice-end-call-btn");
+            if (endButton) {
+                (endButton as HTMLElement).click();
+            }
+            await sleep(120);
+            setCallState("idle");
+        } catch {
+            setCallState("error");
+        } finally {
+            setIsBusy(false);
+        }
+    }, [getWidgetRoot, isBusy]);
+
+    const handleOrbClick = useCallback(() => {
+        if (callState === "live" || callState === "connecting") {
+            void endCall();
+            return;
+        }
+
+        void startCall();
+    }, [callState, endCall, startCall]);
+
+    useEffect(() => {
+        const checkWidget = () => {
+            const styled = applyWidgetStyles();
+            const ready = styled && Boolean(getWidgetRoot()) && Boolean(window.leadConnector?.chatWidget);
+            setIsWidgetReady(styled && ready);
+            syncCallState();
+        };
+
+        const observer = new MutationObserver(checkWidget);
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        const quick = window.setTimeout(checkWidget, 120);
+        const medium = window.setTimeout(checkWidget, 420);
+        const slow = window.setTimeout(checkWidget, 900);
+        const poll = window.setInterval(checkWidget, 650);
+        const prewarmFast = window.setTimeout(() => {
+            void prewarmWidget();
+        }, 420);
+        const prewarmSlow = window.setTimeout(() => {
+            void prewarmWidget();
+        }, 1200);
+
+        return () => {
+            observer.disconnect();
+            window.clearTimeout(quick);
+            window.clearTimeout(medium);
+            window.clearTimeout(slow);
+            window.clearTimeout(prewarmFast);
+            window.clearTimeout(prewarmSlow);
+            window.clearInterval(poll);
+        };
+    }, [applyWidgetStyles, getWidgetRoot, prewarmWidget, syncCallState]);
+
+    const orbLabel = useMemo(() => {
+        if (callState === "live" || callState === "connecting") return "End Call";
+        return hasCalledOnce ? "Talk Again" : "Talk Here";
+    }, [callState, hasCalledOnce]);
+
+    const statusText = useMemo(() => {
+        if (callState === "connecting") return "Connecting to the voice agent...";
+        if (callState === "live") return "Live call in progress";
+        if (callState === "error") return "Could not start call. Check mic permission and try again.";
+        if (!isWidgetReady) return "Voice engine is loading. Tap the orb to retry.";
+        return "Tap the orb to start a voice conversation.";
+    }, [callState, isWidgetReady]);
+
+    return (
+        <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 overflow-hidden">
+            <Script
+                id={GHL_WIDGET_HOST_ID}
+                src="https://beta.leadconnectorhq.com/loader.js"
+                data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+                data-widget-id={GHL_WIDGET_ID}
+                strategy="afterInteractive"
+            />
 
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#182235_1px,transparent_1px),linear-gradient(to_bottom,#182235_1px,transparent_1px)] bg-[size:42px_42px] opacity-12 pointer-events-none" />
             <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
@@ -188,9 +405,24 @@ export default function TradiesPage() {
                                 </div>
 
                                 <div className="mb-7 rounded-[2rem] border border-white/8 bg-[radial-gradient(circle_at_top,rgba(192,239,34,0.06),transparent_30%),linear-gradient(180deg,rgba(7,15,30,0.95),rgba(3,8,23,0.98))] p-7">
-                                    <div className="flex items-center justify-center py-4">
-                                        <div data-widget-key={WIDGET_KEY} />
+                                    <div className="mb-6 flex justify-center">
+                                        <button
+                                            type="button"
+                                            onClick={handleOrbClick}
+                                            disabled={isBusy}
+                                            className={`group relative grid h-44 w-44 place-items-center rounded-full border font-mono text-sm uppercase tracking-[0.22em] transition-all duration-300 md:h-52 md:w-52 md:text-base md:tracking-[0.26em] ${
+                                                callState === "live" || callState === "connecting"
+                                                    ? "border-red-400/90 text-red-200 bg-[radial-gradient(circle_at_30%_30%,#2a2230_0%,#170f1f_56%,#0b0a16_100%)] shadow-[0_0_0_2px_rgba(248,113,113,0.18),0_0_46px_rgba(248,113,113,0.34)]"
+                                                    : "border-neon/70 text-neon bg-[radial-gradient(circle_at_30%_30%,#0e243a_0%,#0a1628_56%,#070f1e_100%)] shadow-[0_0_0_2px_rgba(192,239,34,0.14),0_0_46px_rgba(0,255,255,0.24)]"
+                                            } ${
+                                                callState === "live" || callState === "connecting" ? "animate-pulse" : "hover:scale-[1.015]"
+                                            }`}
+                                        >
+                                            <span className="pointer-events-none px-6 text-center leading-tight">{orbLabel}</span>
+                                        </button>
                                     </div>
+
+                                    <p className="text-center text-sm text-gray-300">{statusText}</p>
                                 </div>
 
                                 <div className="grid gap-3 sm:grid-cols-2">
