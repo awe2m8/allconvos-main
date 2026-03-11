@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { TrendingDown, RefreshCcw, BellOff, XCircle, AlertTriangle, Terminal, Activity } from "lucide-react";
-import { ComingSoonButton } from "@/components/ui/ComingSoonButton";
+import { marketingUrl } from "@/lib/siteUrls";
 
 export function Problem() {
+    const tradiesDemoUrl = marketingUrl("/tradies");
     const painPoints = [
         {
             title: "LEAKING REVENUE",
@@ -219,13 +221,13 @@ export function Problem() {
                         transition={{ delay: 0.6 }}
                         className="text-center"
                     >
-                        <ComingSoonButton
+                        <Link
+                            href={tradiesDemoUrl}
                             className="inline-flex items-center gap-2 bg-neon text-ocean-950 px-8 py-4 rounded-xl font-mono uppercase font-bold tracking-wider hover:bg-white transition-colors group"
-                            popoverClassName="left-1/2 -translate-x-1/2"
                         >
                             Demo Voice Agent
                             <TrendingDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
-                        </ComingSoonButton>
+                        </Link>
                     </motion.div>
                 </div>
             </div>

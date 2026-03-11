@@ -4,6 +4,7 @@ import { CallHandling } from "@/components/sections/CallHandling";
 import { CaseStudy } from "@/components/sections/CaseStudy";
 import { DIYDemo } from "@/components/sections/DIYDemo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Pricing } from "@/components/sections/Pricing";
 import { Problem } from "@/components/sections/Problem";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarDays, Mail, Phone, PhoneCall } from "lucide-react";
@@ -591,6 +592,7 @@ export default function TradiesPage() {
                 <CallHandling />
                 <CaseStudy />
                 <HowItWorks />
+                <Pricing />
             </section>
         </main>
     );

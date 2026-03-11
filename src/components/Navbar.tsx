@@ -7,6 +7,7 @@ import { ComingSoonButton } from "@/components/ui/ComingSoonButton";
 
 export function Navbar() {
     const marketingHomeUrl = marketingUrl("/");
+    const tradiesDemoUrl = marketingUrl("/tradies");
     const appOnboardingUrl = appUrl("/app/onboarding");
 
     return (
@@ -20,9 +21,9 @@ export function Navbar() {
                     <Link href={`${marketingHomeUrl}#problem`} className="hover:text-neon transition-colors">The Problem</Link>
                     <Link href={`${marketingHomeUrl}#how`} className="hover:text-neon transition-colors">How It Works</Link>
                     <Link href={`${marketingHomeUrl}#pricing`} className="hover:text-neon transition-colors">Pricing</Link>
-                    <ComingSoonButton className="text-neon hover:text-white transition-colors">
+                    <Link href={tradiesDemoUrl} className="text-neon hover:text-white transition-colors">
                         Demo Voice Agent
-                    </ComingSoonButton>
+                    </Link>
                 </div>
 
                 <div className="hidden md:flex items-center gap-3">
