@@ -7,15 +7,63 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Problem } from "@/components/sections/Problem";
 import { SocialProof } from "@/components/sections/SocialProof";
 import { motion } from "framer-motion";
+import { ArrowLeft, CalendarDays, Mail, Phone, PhoneCall } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, CalendarDays, Mail, Phone, PhoneCall } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const GHL_WIDGET_ID = "69a7bdf999dd5635833c8454";
-const GHL_WIDGET_HOST_ID = "ghl-tradies2-widget";
+const DEMO_CONFIGS = [
+    {
+        hostId: "ghl-tradies2-widget",
+        widgetId: "69a7bdf999dd5635833c8454",
+        scriptSrc: "https://beta.leadconnectorhq.com/loader.js",
+        resourcesUrl: "https://beta.leadconnectorhq.com/chat-widget/loader.js",
+        title: "Tradies Voice Demo",
+        subtitle: "Click the Orb and Start Talking",
+        description:
+            "Test how the AI handles after-hours overflow, urgent trade calls, quote requests, and callbacks for local service businesses.",
+        avatarSrc: "/images/ai-avatar-female.png",
+        accentBar: "from-neon via-cyan-400 to-neon",
+        accentText: "text-neon",
+        idleHaloClass: "bg-cyan-400/26",
+        idleConicClass:
+            "bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(125,211,252,0.2)_70deg,rgba(34,211,238,0.18)_150deg,rgba(14,165,233,0.16)_230deg,rgba(255,255,255,0)_320deg)]",
+        idleOrbClass:
+            "border-cyan-300/70 bg-[radial-gradient(circle_at_34%_26%,rgba(224,242,254,0.82)_0%,rgba(125,211,252,0.26)_20%,rgba(34,211,238,0.34)_38%,rgba(8,47,73,0.92)_70%,rgba(5,14,30,1)_100%)] shadow-[0_0_0_1px_rgba(103,232,249,0.16),0_0_64px_rgba(56,189,248,0.24)] hover:border-cyan-100 hover:shadow-[0_0_0_1px_rgba(165,243,252,0.24),0_0_84px_rgba(56,189,248,0.32)]",
+        idleIconClass: "border-cyan-200/55 bg-cyan-300/10 text-cyan-100",
+        idleInnerRingClass: "border-cyan-100/18",
+        idleShimmerClass:
+            "bg-[radial-gradient(circle_at_28%_24%,rgba(255,255,255,0.34),transparent_18%),radial-gradient(circle_at_72%_74%,rgba(34,211,238,0.18),transparent_26%)]",
+    },
+    {
+        hostId: "ghl-plumbing-example-widget",
+        widgetId: "69b161140ec30015b844b0d2",
+        scriptSrc: "https://widgets.leadconnectorhq.com/loader.js",
+        resourcesUrl: "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
+        title: "Plumbing Example",
+        subtitle: "Burst Pipes, Hot Water, Emergency Callouts",
+        description:
+            "A plumbing-specific example focused on urgent callouts, hot water issues, pipe bursts, and booking the next available callback.",
+        avatarSrc: "/images/ai-avatar.png",
+        accentBar: "from-sky-300 via-cyan-300 to-teal-300",
+        accentText: "text-cyan-200",
+        idleHaloClass: "bg-teal-300/26",
+        idleConicClass:
+            "bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(153,246,228,0.18)_65deg,rgba(45,212,191,0.18)_145deg,rgba(56,189,248,0.14)_225deg,rgba(255,255,255,0)_320deg)]",
+        idleOrbClass:
+            "border-teal-200/75 bg-[radial-gradient(circle_at_34%_24%,rgba(255,255,255,0.8)_0%,rgba(204,251,241,0.28)_18%,rgba(45,212,191,0.32)_36%,rgba(14,116,144,0.26)_50%,rgba(9,32,48,0.98)_78%)] shadow-[0_0_0_1px_rgba(94,234,212,0.16),0_0_64px_rgba(20,184,166,0.22)] hover:border-teal-100 hover:shadow-[0_0_0_1px_rgba(153,246,228,0.24),0_0_84px_rgba(45,212,191,0.28)]",
+        idleIconClass: "border-teal-100/55 bg-teal-300/10 text-teal-100",
+        idleInnerRingClass: "border-teal-100/18",
+        idleShimmerClass:
+            "bg-[radial-gradient(circle_at_28%_24%,rgba(255,255,255,0.3),transparent_18%),radial-gradient(circle_at_74%_72%,rgba(45,212,191,0.2),transparent_24%)]",
+    },
+] as const;
+
+const HOST_ORDER = DEMO_CONFIGS.map((config) => config.hostId);
 
 type CallState = "idle" | "connecting" | "live" | "error";
+
+type DemoConfig = (typeof DEMO_CONFIGS)[number];
 
 const sleep = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
 
@@ -29,19 +77,26 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
     return null;
 };
 
-declare global {
-    interface Window {
-        leadConnector?: {
-            chatWidget?: {
-                openWidget?: () => void;
-                closeWidget?: () => void;
-                isActive?: () => boolean;
-            };
-        };
-    }
-}
+const assignWidgetHostIds = () => {
+    const widgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
+    let cursor = 0;
 
-export default function TradiesPage() {
+    for (const hostId of HOST_ORDER) {
+        if (widgets.some((widget) => widget.id === hostId)) continue;
+
+        while (cursor < widgets.length && widgets[cursor].id && HOST_ORDER.includes(widgets[cursor].id)) {
+            cursor += 1;
+        }
+
+        const target = widgets[cursor];
+        if (target && !target.id) {
+            target.id = hostId;
+            cursor += 1;
+        }
+    }
+};
+
+function useGhlVoiceDemo(hostId: string) {
     const [callState, setCallState] = useState<CallState>("idle");
     const [isWidgetReady, setIsWidgetReady] = useState(false);
     const [isBusy, setIsBusy] = useState(false);
@@ -49,15 +104,9 @@ export default function TradiesPage() {
     const [isPrewarmed, setIsPrewarmed] = useState(false);
 
     const getWidgetHost = useCallback(() => {
-        const byId = document.querySelector(`chat-widget#${GHL_WIDGET_HOST_ID}`) as HTMLElement | null;
-        if (byId) return byId;
-
-        const firstWidget = document.querySelector("chat-widget") as HTMLElement | null;
-        if (firstWidget && !firstWidget.id) {
-            firstWidget.id = GHL_WIDGET_HOST_ID;
-        }
-        return firstWidget;
-    }, []);
+        assignWidgetHostIds();
+        return document.querySelector(`chat-widget#${hostId}`) as HTMLElement | null;
+    }, [hostId]);
 
     const getWidgetRoot = useCallback(() => {
         return getWidgetHost()?.shadowRoot ?? null;
@@ -71,15 +120,7 @@ export default function TradiesPage() {
     }, []);
 
     const applyWidgetStyles = useCallback(() => {
-        const allWidgets = Array.from(document.querySelectorAll("chat-widget")) as HTMLElement[];
         const target = getWidgetHost();
-
-        allWidgets.forEach((widget) => {
-            if (target && widget !== target) {
-                widget.style.display = "none";
-            }
-        });
-
         if (!target?.shadowRoot) return false;
 
         target.style.position = "fixed";
@@ -92,9 +133,10 @@ export default function TradiesPage() {
         target.style.zIndex = "-1";
 
         const root = target.shadowRoot;
-        if (!root.getElementById("ghl-tradies-style")) {
+        const styleId = `${hostId}-voice-style`;
+        if (!root.getElementById(styleId)) {
             const style = document.createElement("style");
-            style.id = "ghl-tradies-style";
+            style.id = styleId;
             style.textContent = `
                 #lc_text-widget--btn,
                 .lc_text-widget--prompt,
@@ -119,7 +161,7 @@ export default function TradiesPage() {
         }
 
         return true;
-    }, [getWidgetHost]);
+    }, [getWidgetHost, hostId]);
 
     const syncCallState = useCallback(() => {
         const root = getWidgetRoot();
@@ -145,7 +187,7 @@ export default function TradiesPage() {
             return;
         }
 
-        if (!statusText && !callStatus && !window.leadConnector?.chatWidget?.isActive?.()) {
+        if (!statusText && !callStatus) {
             setCallState("idle");
         }
     }, [getWidgetRoot]);
@@ -155,9 +197,8 @@ export default function TradiesPage() {
 
         try {
             applyWidgetStyles();
-            const chatApi = await waitForValue(() => window.leadConnector?.chatWidget ?? null, 3500, 70);
             const root = await waitForValue(() => getWidgetRoot(), 3500, 70);
-            if (!chatApi || !root) return;
+            if (!root) return;
 
             const statusText =
                 root.querySelector(".lc_text-widget--voice-status-text")?.textContent?.trim().toLowerCase() ?? "";
@@ -165,7 +206,6 @@ export default function TradiesPage() {
                 const endButton = root.querySelector("ion-button.lc_text-widget--voice-end-call-btn") as HTMLElement | null;
                 endButton?.click();
                 await sleep(120);
-                chatApi.closeWidget?.();
             }
 
             setIsWidgetReady(true);
@@ -182,24 +222,13 @@ export default function TradiesPage() {
 
         try {
             applyWidgetStyles();
-            const chatApi = await waitForValue(() => window.leadConnector?.chatWidget ?? null, 3500, 60);
-            if (!chatApi) {
-                setCallState("error");
-                return;
-            }
-
             const root = await waitForValue(() => getWidgetRoot(), 3500, 60);
             if (!root) {
                 setCallState("error");
                 return;
             }
 
-            if (!chatApi.isActive?.()) {
-                chatApi.openWidget?.();
-            }
-
             let talkButton = getTalkButton(root);
-
             if (!talkButton) {
                 const launcherButton = root.querySelector("#lc_text-widget--btn") as HTMLElement | null;
                 launcherButton?.click();
@@ -229,10 +258,8 @@ export default function TradiesPage() {
 
         try {
             const root = await waitForValue(() => getWidgetRoot(), 2200, 60);
-            const endButton = root?.querySelector("ion-button.lc_text-widget--voice-end-call-btn");
-            if (endButton) {
-                (endButton as HTMLElement).click();
-            }
+            const endButton = root?.querySelector("ion-button.lc_text-widget--voice-end-call-btn") as HTMLElement | null;
+            endButton?.click();
             await sleep(120);
             setCallState("idle");
         } catch {
@@ -253,9 +280,10 @@ export default function TradiesPage() {
 
     useEffect(() => {
         const checkWidget = () => {
+            assignWidgetHostIds();
             const styled = applyWidgetStyles();
-            const ready = styled && Boolean(getWidgetRoot()) && Boolean(window.leadConnector?.chatWidget);
-            setIsWidgetReady(styled && ready);
+            const ready = styled && Boolean(getWidgetRoot());
+            setIsWidgetReady(Boolean(ready));
             syncCallState();
         };
 
@@ -297,189 +325,217 @@ export default function TradiesPage() {
         return "Tap the orb to start a voice conversation.";
     }, [callState, isWidgetReady]);
 
+    return {
+        callState,
+        isBusy,
+        orbLabel,
+        statusText,
+        handleOrbClick,
+    };
+}
+
+function VoiceDemoCard({ config }: { config: DemoConfig }) {
+    const { callState, isBusy, orbLabel, statusText, handleOrbClick } = useGhlVoiceDemo(config.hostId);
+    const isActive = callState === "live" || callState === "connecting";
+
     return (
-        <main className="min-h-screen bg-ocean-950 text-white selection:bg-white/20 overflow-hidden">
+        <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+            className="w-full"
+        >
             <Script
-                id={GHL_WIDGET_HOST_ID}
-                src="https://beta.leadconnectorhq.com/loader.js"
-                data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
-                data-widget-id={GHL_WIDGET_ID}
+                id={`${config.hostId}-script`}
+                src={config.scriptSrc}
+                data-resources-url={config.resourcesUrl}
+                data-widget-id={config.widgetId}
                 strategy="afterInteractive"
             />
 
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
+                <div className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${config.accentBar}`} />
+
+                <div className="absolute top-6 left-1/2 z-20 -translate-x-1/2">
+                    <div className="h-28 w-28 rounded-full border-2 border-neon bg-black p-[2px] shadow-[0_0_25px_rgba(0,255,255,0.35)]">
+                        <img
+                            src={config.avatarSrc}
+                            alt={config.title}
+                            className="h-full w-full rounded-full object-cover"
+                        />
+                    </div>
+                </div>
+
+                <div className="px-8 pb-8 pt-40 text-center">
+                    <p className="mb-5 font-mono text-lg font-bold tracking-tighter text-white">
+                        allconvos<span className={config.accentText}>_</span>
+                    </p>
+
+                    <h2 className="mb-2 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+                        {config.title}
+                    </h2>
+                    <p className={`mb-7 text-sm font-bold italic uppercase tracking-widest ${config.accentText}`}>
+                        {config.subtitle}
+                    </p>
+
+                    <div className="mb-6 rounded-2xl border border-white/5 bg-ocean-950 p-6">
+                        <div className="flex items-center justify-center py-3">
+                            <div className="relative">
+                                <motion.div
+                                    aria-hidden="true"
+                                    className={`absolute inset-[-18px] rounded-full blur-2xl ${isActive ? "bg-red-400/24" : config.idleHaloClass}`}
+                                    animate={
+                                        isActive
+                                            ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
+                                            : { scale: [0.92, 1.08, 0.92], opacity: [0.26, 0.58, 0.26] }
+                                    }
+                                    transition={{ duration: isActive ? 1.6 : 2.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                />
+                                {!isActive ? (
+                                    <motion.div
+                                        aria-hidden="true"
+                                        className={`absolute inset-[-8px] rounded-full blur-md ${config.idleConicClass}`}
+                                        animate={{ rotate: [0, 360] }}
+                                        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                    />
+                                ) : null}
+                                <motion.button
+                                    type="button"
+                                    onClick={handleOrbClick}
+                                    disabled={isBusy}
+                                    whileHover={{ scale: 1.04 }}
+                                    whileTap={{ scale: 0.985 }}
+                                    animate={
+                                        isActive
+                                            ? { y: [0, -2, 0], scale: [1, 1.014, 1] }
+                                            : { y: [0, -6, 0], scale: [1, 1.03, 1] }
+                                    }
+                                    transition={{ duration: isActive ? 1.6 : 2.6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                    className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
+                                        isActive
+                                            ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
+                                            : config.idleOrbClass
+                                    }`}
+                                >
+                                    {!isActive ? (
+                                        <>
+                                            <motion.div
+                                                aria-hidden="true"
+                                                className={`absolute inset-0 rounded-full ${config.idleShimmerClass}`}
+                                                animate={{ opacity: [0.48, 0.92, 0.48] }}
+                                                transition={{ duration: 2.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                            />
+                                            <motion.div
+                                                aria-hidden="true"
+                                                className={`absolute inset-[8px] rounded-full border ${config.idleInnerRingClass}`}
+                                                animate={{ rotate: [0, -360] }}
+                                                transition={{ duration: 14, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                            />
+                                        </>
+                                    ) : null}
+                                    <div className="absolute inset-[10px] rounded-full border border-white/5" />
+                                    <div className="relative flex flex-col items-center gap-3 px-5 text-center">
+                                        <div
+                                            className={`flex h-12 w-12 items-center justify-center rounded-full border ${
+                                                isActive ? "border-red-300/40 bg-red-500/10 text-red-100" : config.idleIconClass
+                                            }`}
+                                        >
+                                            <PhoneCall className="h-4 w-4" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
+                                                {isActive ? "End Call" : "Voice Demo"}
+                                            </div>
+                                            <div className="text-lg font-black uppercase tracking-[0.16em] text-white md:text-xl">
+                                                {orbLabel}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.button>
+                            </div>
+                        </div>
+                        <p className="mt-4 text-sm text-gray-300">{statusText}</p>
+                    </div>
+
+                    <p className="mb-1 text-sm leading-relaxed text-gray-400">{config.description}</p>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
+export default function TradiesPage() {
+    return (
+        <main className="min-h-screen overflow-hidden bg-ocean-950 text-white selection:bg-white/20">
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#182235_1px,transparent_1px),linear-gradient(to_bottom,#182235_1px,transparent_1px)] bg-[size:42px_42px] opacity-12 pointer-events-none" />
             <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
 
-            <div className="relative z-10 mx-auto max-w-6xl px-6 py-10 md:py-14">
+            <div className="relative z-10 mx-auto max-w-7xl px-6 py-10 md:py-14">
+                <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+                    {DEMO_CONFIGS.map((config) => (
+                        <VoiceDemoCard key={config.hostId} config={config} />
+                    ))}
+                </div>
+
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.45 }}
-                    className="mx-auto w-full max-w-lg"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: 0.08 }}
+                    className="mx-auto mt-8 max-w-5xl"
                 >
-                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
-                        <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-neon via-cyan-400 to-neon" />
+                    <p className="mb-6 text-center text-sm leading-relaxed text-gray-400">
+                        Want a tailored rollout plan after testing? Book a walkthrough or send your requirements.
+                    </p>
 
-                        <div className="absolute top-6 left-1/2 z-20 -translate-x-1/2">
-                            <div className="h-28 w-28 rounded-full border-2 border-neon bg-black p-[2px] shadow-[0_0_25px_rgba(0,255,255,0.35)]">
-                                <img
-                                    src="/images/ai-avatar-female.png"
-                                    alt="Tradie voice AI"
-                                    className="h-full w-full rounded-full object-cover"
-                                />
-                            </div>
-                        </div>
+                    <div className="mb-6 grid gap-3 md:grid-cols-2">
+                        <a
+                            href="https://calendly.com/jessallan/30min"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
+                        >
+                            <CalendarDays className="h-4 w-4" />
+                            In-Person Demo
+                        </a>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center rounded-lg bg-neon px-5 py-3 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-colors hover:bg-white"
+                        >
+                            Open Contact Form
+                        </Link>
+                    </div>
 
-                        <div className="px-8 pb-8 pt-40 text-center">
-                            <p className="mb-5 font-mono text-lg font-bold tracking-tighter text-white">
-                                allconvos<span className="text-neon">_</span>
+                    <div className="mb-6 grid gap-3 text-left sm:grid-cols-2">
+                        <a
+                            href="tel:+61404283605"
+                            className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
+                        >
+                            <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
+                                <Phone className="h-3 w-3" />
+                                Phone
                             </p>
-
-                            <h1 className="mb-2 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
-                                Tradies Voice Demo
-                            </h1>
-                            <p className="mb-7 text-sm font-bold italic uppercase tracking-widest text-neon">
-                                Click the Orb and Start Talking
+                            <p className="font-mono text-sm text-gray-300">+61 404 283 605</p>
+                        </a>
+                        <a
+                            href="mailto:jesse@allconvos.ai"
+                            className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
+                        >
+                            <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
+                                <Mail className="h-3 w-3" />
+                                Email
                             </p>
+                            <p className="font-mono text-sm text-gray-300">jesse@allconvos.ai</p>
+                        </a>
+                    </div>
 
-                            <div className="mb-6 rounded-2xl border border-white/5 bg-ocean-950 p-6">
-                                <div className="flex items-center justify-center py-3">
-                                    <div className="relative">
-                                        <motion.div
-                                            aria-hidden="true"
-                                            className={`absolute inset-[-14px] rounded-full blur-2xl ${
-                                                callState === "live" || callState === "connecting"
-                                                    ? "bg-red-400/20"
-                                                    : "bg-sky-400/24"
-                                            }`}
-                                            animate={
-                                                callState === "live" || callState === "connecting"
-                                                    ? { scale: [0.96, 1.06, 0.96], opacity: [0.25, 0.55, 0.25] }
-                                                    : { scale: [0.94, 1.05, 0.94], opacity: [0.22, 0.46, 0.22] }
-                                            }
-                                            transition={{ duration: callState === "live" || callState === "connecting" ? 1.8 : 3.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                        />
-                                        {callState !== "live" && callState !== "connecting" ? (
-                                            <motion.div
-                                                aria-hidden="true"
-                                                className="absolute inset-[-6px] rounded-full bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(125,211,252,0.18)_60deg,rgba(96,165,250,0.12)_120deg,rgba(34,211,238,0.2)_210deg,rgba(255,255,255,0)_320deg)] blur-md"
-                                                animate={{ rotate: [0, 360] }}
-                                                transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                                            />
-                                        ) : null}
-                                        <motion.button
-                                            type="button"
-                                            onClick={handleOrbClick}
-                                            disabled={isBusy}
-                                            whileHover={{ scale: 1.03 }}
-                                            whileTap={{ scale: 0.985 }}
-                                            animate={
-                                                callState === "live" || callState === "connecting"
-                                                    ? { y: [0, -1, 0], scale: [1, 1.012, 1] }
-                                                    : { y: [0, -3, 0], scale: [1, 1.016, 1] }
-                                            }
-                                            transition={{ duration: callState === "live" || callState === "connecting" ? 1.8 : 3.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                            className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
-                                                callState === "live" || callState === "connecting"
-                                                    ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                                                    : "border-sky-200/70 bg-[radial-gradient(circle_at_34%_28%,rgba(224,242,254,0.9)_0%,rgba(147,197,253,0.54)_18%,rgba(56,189,248,0.34)_34%,rgba(37,99,235,0.26)_50%,rgba(15,23,42,0.98)_78%)] shadow-[0_0_0_1px_rgba(125,211,252,0.18),0_0_58px_rgba(37,99,235,0.22)] hover:border-white hover:shadow-[0_0_0_1px_rgba(191,219,254,0.26),0_0_76px_rgba(59,130,246,0.3)]"
-                                            }`}
-                                        >
-                                            {callState !== "live" && callState !== "connecting" ? (
-                                                <>
-                                                    <motion.div
-                                                        aria-hidden="true"
-                                                        className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_24%,rgba(255,255,255,0.34),transparent_18%),radial-gradient(circle_at_70%_74%,rgba(56,189,248,0.18),transparent_24%)]"
-                                                        animate={{ opacity: [0.55, 0.9, 0.55] }}
-                                                        transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                                    />
-                                                    <motion.div
-                                                        aria-hidden="true"
-                                                        className="absolute inset-[8px] rounded-full border border-sky-100/20"
-                                                        animate={{ rotate: [0, -360] }}
-                                                        transition={{ duration: 18, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                                                    />
-                                                </>
-                                            ) : null}
-                                            <div className="absolute inset-[10px] rounded-full border border-white/5" />
-                                            <div className="relative flex flex-col items-center gap-3 px-5 text-center">
-                                                <div
-                                                    className={`flex h-12 w-12 items-center justify-center rounded-full border ${
-                                                        callState === "live" || callState === "connecting"
-                                                            ? "border-red-300/40 bg-red-500/10 text-red-100"
-                                                            : "border-sky-100/50 bg-white/14 text-sky-50"
-                                                    }`}
-                                                >
-                                                    <PhoneCall className="h-4 w-4" />
-                                                </div>
-                                                <div className="space-y-1">
-                                                    <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
-                                                        {callState === "live" || callState === "connecting" ? "End Call" : "Voice Demo"}
-                                                    </div>
-                                                    <div className="text-lg font-black uppercase tracking-[0.16em] text-white md:text-xl">
-                                                        {orbLabel}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </motion.button>
-                                    </div>
-                                </div>
-                                <p className="mt-4 text-sm text-gray-300">{statusText}</p>
-                            </div>
-
-                            <p className="mb-6 text-sm leading-relaxed text-gray-400">
-                                Test how the AI handles after-hours overflow, urgent plumbing calls, quote requests, and callbacks for local service businesses.
-                            </p>
-
-                            <div className="mb-6 grid gap-3">
-                                <a
-                                    href="https://calendly.com/jessallan/30min"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
-                                >
-                                    <CalendarDays className="h-4 w-4" />
-                                    In-Person Demo
-                                </a>
-                                <Link
-                                    href="/contact"
-                                    className="inline-flex items-center justify-center rounded-lg bg-neon px-5 py-3 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-colors hover:bg-white"
-                                >
-                                    Open Contact Form
-                                </Link>
-                            </div>
-
-                            <div className="mb-6 grid gap-3 text-left sm:grid-cols-2">
-                                <a
-                                    href="tel:+61404283605"
-                                    className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
-                                >
-                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
-                                        <Phone className="h-3 w-3" />
-                                        Phone
-                                    </p>
-                                    <p className="font-mono text-sm text-gray-300">+61 404 283 605</p>
-                                </a>
-                                <a
-                                    href="mailto:jesse@allconvos.ai"
-                                    className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
-                                >
-                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
-                                        <Mail className="h-3 w-3" />
-                                        Email
-                                    </p>
-                                    <p className="font-mono text-sm text-gray-300">jesse@allconvos.ai</p>
-                                </a>
-                            </div>
-
-                            <Link
-                                href="/demo"
-                                className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-gray-500 transition-colors hover:text-white"
-                            >
-                                <ArrowLeft className="h-3 w-3" />
-                                Back to Main Demo
-                            </Link>
-                        </div>
+                    <div className="text-center">
+                        <Link
+                            href="/demo"
+                            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-gray-500 transition-colors hover:text-white"
+                        >
+                            <ArrowLeft className="h-3 w-3" />
+                            Back to Main Demo
+                        </Link>
                     </div>
                 </motion.div>
             </div>
