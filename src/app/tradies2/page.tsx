@@ -470,8 +470,14 @@ export default function TradiesPage() {
                         Tradies Voice AI Demo
                     </p>
                     <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-                        Hear Your AI Receptionist in Action
+                        Hear Your AI
+                        <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
+                            Receptionist in Action
+                        </span>
                     </h1>
+                    <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
+                        All calls, all convos, no worries.
+                    </p>
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-gray-400 md:text-lg">
                         Test two live tradie examples, then call the real mobile demo to hear how your receptionist could
                         handle plumbing questions, urgent jobs, quote requests, and after-hours enquiries.
