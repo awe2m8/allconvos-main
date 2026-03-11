@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { TrendingDown, RefreshCcw, BellOff, XCircle, AlertTriangle, Terminal, Activity } from "lucide-react";
+import { ComingSoonButton } from "@/components/ui/ComingSoonButton";
 
 export function Problem() {
     const painPoints = [
@@ -218,10 +219,13 @@ export function Problem() {
                         transition={{ delay: 0.6 }}
                         className="text-center"
                     >
-                        <a href="/build" className="inline-flex items-center gap-2 bg-neon text-ocean-950 px-8 py-4 rounded-xl font-mono uppercase font-bold tracking-wider hover:bg-white transition-colors group">
+                        <ComingSoonButton
+                            className="inline-flex items-center gap-2 bg-neon text-ocean-950 px-8 py-4 rounded-xl font-mono uppercase font-bold tracking-wider hover:bg-white transition-colors group"
+                            popoverClassName="left-1/2 -translate-x-1/2"
+                        >
                             Build your agent now
                             <TrendingDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
-                        </a>
+                        </ComingSoonButton>
                     </motion.div>
                 </div>
             </div>

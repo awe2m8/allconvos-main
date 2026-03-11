@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
-import Link from "next/link";
 import { ArrowRight, Bot, User, CheckCircle, Mic, Terminal, MessageSquare, ShieldCheck, Activity } from "lucide-react";
+import { ComingSoonButton } from "../ui/ComingSoonButton";
 
 export function Hero() {
     const [micPermissionGranted, setMicPermissionGranted] = useState(false);
@@ -90,9 +90,12 @@ export function Hero() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="flex flex-col sm:flex-row gap-4 pt-4"
                     >
-                        <Link href="/build">
-                            <Button>Build My AI Agent</Button>
-                        </Link>
+                        <ComingSoonButton
+                            className="inline-flex items-center justify-center px-8 py-4 font-bold rounded-sm uppercase tracking-wide font-mono transition-all duration-200 outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-ocean-950 bg-neon text-ocean-950 border-2 border-neon shadow-[0px_0px_20px_rgba(163,230,53,0.3)] hover:bg-neon-hover hover:shadow-[0px_0px_30px_rgba(163,230,53,0.5)] active:translate-y-0.5"
+                            popoverClassName="left-1/2 -translate-x-1/2"
+                        >
+                            Build My AI Agent
+                        </ComingSoonButton>
                         <Button
                             variant="secondary"
                             className="group"

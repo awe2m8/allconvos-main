@@ -1,20 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { appUrl, marketingUrl } from "@/lib/siteUrls";
+import { ComingSoonButton } from "@/components/ui/ComingSoonButton";
 
 export function Navbar() {
-    const [showComingSoon, setShowComingSoon] = useState(false);
     const marketingHomeUrl = marketingUrl("/");
     const appOnboardingUrl = appUrl("/app/onboarding");
-
-    useEffect(() => {
-        if (!showComingSoon) return;
-        const timer = setTimeout(() => setShowComingSoon(false), 2200);
-        return () => clearTimeout(timer);
-    }, [showComingSoon]);
 
     return (
         <nav className="fixed w-full z-50 top-0 left-0 bg-ocean-950/80 backdrop-blur-lg border-b border-white/5">
@@ -27,25 +20,16 @@ export function Navbar() {
                     <Link href={`${marketingHomeUrl}#problem`} className="hover:text-neon transition-colors">The Problem</Link>
                     <Link href={`${marketingHomeUrl}#how`} className="hover:text-neon transition-colors">How It Works</Link>
                     <Link href={`${marketingHomeUrl}#pricing`} className="hover:text-neon transition-colors">Pricing</Link>
-                    <Link href={marketingUrl("/build")} className="text-neon hover:text-white transition-colors">Build My Agent</Link>
+                    <ComingSoonButton className="text-neon hover:text-white transition-colors">
+                        Build My Agent
+                    </ComingSoonButton>
                 </div>
 
                 <div className="hidden md:flex items-center gap-3">
                     <SignedOut>
-                        <div className="relative">
-                            <button
-                                type="button"
-                                onClick={() => setShowComingSoon(true)}
-                                className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all"
-                            >
-                                Member Login
-                            </button>
-                            {showComingSoon && (
-                                <div className="pointer-events-none absolute left-0 top-full mt-2 whitespace-nowrap rounded-md border border-neon/30 bg-ocean-900/95 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-neon shadow-lg">
-                                    Coming soon.
-                                </div>
-                            )}
-                        </div>
+                        <ComingSoonButton className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all">
+                            Member Login
+                        </ComingSoonButton>
                     </SignedOut>
 
                     <SignedIn>
