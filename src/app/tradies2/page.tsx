@@ -460,6 +460,24 @@ export default function TradiesPage() {
                     </Link>
                 </nav>
 
+                <motion.div
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45 }}
+                    className="mx-auto mb-10 max-w-4xl text-center"
+                >
+                    <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.34em] text-neon">
+                        Tradies Voice AI Demo
+                    </p>
+                    <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
+                        Hear Your AI Receptionist in Action
+                    </h1>
+                    <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-gray-400 md:text-lg">
+                        Test two live tradie examples, then call the real mobile demo to hear how your receptionist could
+                        handle plumbing questions, urgent jobs, quote requests, and after-hours enquiries.
+                    </p>
+                </motion.div>
+
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
                     {DEMO_CONFIGS.map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
