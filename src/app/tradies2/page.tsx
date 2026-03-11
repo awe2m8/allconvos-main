@@ -483,6 +483,10 @@ export default function TradiesPage() {
                         receptionist could work for you. The other is a tradie plumber example focused on real
                         callouts, quote requests, and after-hours enquiries.
                     </p>
+                    <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-neon/80 md:text-base">
+                        Call the live mobile demo to hear a voice AI receptionist in action, or click either example
+                        below to try both conversation styles.
+                    </p>
                 </motion.div>
 
                 <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
