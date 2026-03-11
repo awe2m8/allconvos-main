@@ -40,8 +40,8 @@ const DEMO_CONFIGS = [
         widgetId: "69b161140ec30015b844b0d2",
         scriptSrc: "https://widgets.leadconnectorhq.com/loader.js",
         resourcesUrl: "https://widgets.leadconnectorhq.com/chat-widget/loader.js",
-        title: "Plumbing Example",
-        subtitle: "Burst Pipes, Hot Water, Emergency Callouts",
+        title: "Tradies Example",
+        subtitle: "Plumbing, Hot Water, Burst Pipes, Emergency Callouts",
         description:
             "A plumbing-specific example focused on urgent callouts, hot water issues, pipe bursts, and booking the next available callback.",
         avatarSrc: "/images/ai-avatar.png",
