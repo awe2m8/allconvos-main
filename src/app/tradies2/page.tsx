@@ -450,7 +450,7 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
 export default function TradiesPage() {
     return (
         <main className="min-h-screen overflow-hidden bg-ocean-950 text-white selection:bg-white/20">
-            <div className="fixed inset-0 bg-[linear-gradient(to_right,#182235_1px,transparent_1px),linear-gradient(to_bottom,#182235_1px,transparent_1px)] bg-[size:42px_42px] opacity-12 pointer-events-none" />
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#24324b_1px,transparent_1px),linear-gradient(to_bottom,#24324b_1px,transparent_1px)] bg-[size:42px_42px] opacity-[0.18] pointer-events-none" />
             <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-10 md:py-14">
