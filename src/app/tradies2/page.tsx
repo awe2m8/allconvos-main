@@ -59,7 +59,7 @@ const DEMO_CONFIGS = [
     },
 ] as const;
 
-const HOST_ORDER = DEMO_CONFIGS.map((config) => config.hostId);
+const HOST_ORDER: readonly string[] = DEMO_CONFIGS.map((config) => config.hostId);
 
 type CallState = "idle" | "connecting" | "live" | "error";
 
@@ -384,19 +384,19 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                                 <motion.div
                                     aria-hidden="true"
                                     className={`absolute inset-[-18px] rounded-full blur-2xl ${isActive ? "bg-red-400/24" : config.idleHaloClass}`}
-                                    animate={
-                                        isActive
-                                            ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
-                                            : { scale: [0.92, 1.08, 0.92], opacity: [0.26, 0.58, 0.26] }
-                                    }
-                                    transition={{ duration: isActive ? 1.6 : 2.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                        animate={
+                                            isActive
+                                                ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
+                                                : { scale: [0.86, 1.18, 0.86], opacity: [0.24, 0.78, 0.24] }
+                                        }
+                                    transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                                 />
                                 {!isActive ? (
                                     <motion.div
                                         aria-hidden="true"
                                         className={`absolute inset-[-8px] rounded-full blur-md ${config.idleConicClass}`}
                                         animate={{ rotate: [0, 360] }}
-                                        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                        transition={{ duration: 4.8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                                     />
                                 ) : null}
                                 <motion.button
@@ -405,12 +405,12 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                                     disabled={isBusy}
                                     whileHover={{ scale: 1.04 }}
                                     whileTap={{ scale: 0.985 }}
-                                    animate={
-                                        isActive
-                                            ? { y: [0, -2, 0], scale: [1, 1.014, 1] }
-                                            : { y: [0, -6, 0], scale: [1, 1.03, 1] }
-                                    }
-                                    transition={{ duration: isActive ? 1.6 : 2.6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                        animate={
+                                            isActive
+                                                ? { y: [0, -2, 0], scale: [1, 1.014, 1] }
+                                                : { y: [0, -12, 0], scale: [1, 1.05, 1], rotate: [0, 0.7, 0, -0.7, 0] }
+                                        }
+                                    transition={{ duration: isActive ? 1.6 : 2.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                                     className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
                                         isActive
                                             ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
@@ -422,14 +422,14 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                                             <motion.div
                                                 aria-hidden="true"
                                                 className={`absolute inset-0 rounded-full ${config.idleShimmerClass}`}
-                                                animate={{ opacity: [0.48, 0.92, 0.48] }}
-                                                transition={{ duration: 2.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                                animate={{ opacity: [0.38, 1, 0.38], scale: [0.985, 1.018, 0.985] }}
+                                                transition={{ duration: 1.9, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                                             />
                                             <motion.div
                                                 aria-hidden="true"
                                                 className={`absolute inset-[8px] rounded-full border ${config.idleInnerRingClass}`}
                                                 animate={{ rotate: [0, -360] }}
-                                                transition={{ duration: 14, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                                transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                                             />
                                         </>
                                     ) : null}
