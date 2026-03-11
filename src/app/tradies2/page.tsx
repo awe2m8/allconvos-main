@@ -330,42 +330,42 @@ export default function TradiesPage() {
                     transition={{ duration: 0.45 }}
                     className="mx-auto max-w-4xl text-center"
                 >
-                    <div className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-white/4 px-4 py-2 text-[10px] font-mono uppercase tracking-[0.28em] text-neon">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-neon/20 bg-white/[0.04] px-4 py-2 text-[10px] font-mono uppercase tracking-[0.28em] text-neon">
                         <Wrench className="h-3.5 w-3.5" />
                         Tradie Voice AI Demo
                     </div>
 
-                    <div className="mt-8 space-y-5">
+                    <div className="mt-8 space-y-4">
                         <h1 className="text-5xl font-black uppercase tracking-tight text-white md:text-7xl">
                             Don&apos;t Let Job Calls
                             <span className="block italic text-neon">Go to Waste</span>
                         </h1>
-                        <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-300 md:text-lg">
+                        <p className="mx-auto max-w-xl text-sm leading-relaxed text-gray-300 md:text-base">
                             A live voice demo for plumbers, sparkies, builders, and local service crews.
-                            Hear how AI can handle after-hours calls, urgent triage, and quote requests.
+                            Hear how AI handles after-hours calls, urgent triage, and quote requests.
                         </p>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-[11px] font-mono uppercase tracking-[0.24em] text-gray-400">
-                        <span className="rounded-full border border-white/10 px-4 py-2">After-Hours Overflow</span>
-                        <span className="rounded-full border border-white/10 px-4 py-2">Urgent Job Triage</span>
-                        <span className="rounded-full border border-white/10 px-4 py-2">Quote Capture</span>
+                    <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-[10px] font-mono uppercase tracking-[0.24em] text-gray-400">
+                        <span className="rounded-full border border-white/8 px-4 py-2">After-Hours Overflow</span>
+                        <span className="rounded-full border border-white/8 px-4 py-2">Urgent Job Triage</span>
+                        <span className="rounded-full border border-white/8 px-4 py-2">Quote Capture</span>
                     </div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 18, scale: 0.985 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.5, delay: 0.08 }}
-                        className="relative mx-auto mt-10 max-w-3xl"
+                        className="relative mx-auto mt-10 max-w-2xl"
                     >
-                        <div className="absolute inset-x-20 top-12 h-40 rounded-full bg-cyan-400/10 blur-[90px]" />
-                        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,17,33,0.78),rgba(3,8,23,0.96))] px-6 py-8 shadow-[0_40px_120px_rgba(0,0,0,0.28)] md:px-10 md:py-10">
-                            <div className="mx-auto max-w-xl">
+                        <div className="absolute inset-x-24 top-12 h-32 rounded-full bg-cyan-400/8 blur-[80px]" />
+                        <div className="relative overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,18,33,0.74),rgba(3,8,23,0.94))] px-6 py-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)] md:px-10 md:py-10">
+                            <div className="mx-auto max-w-lg">
                                 <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-neon">
-                                    Tap To Start
+                                    Live Demo
                                 </p>
-                                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-400">
-                                    Keep it simple. Click once, speak like a real caller, and hear how the AI handles the job.
+                                <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-gray-400">
+                                    Click once and talk like a real customer. Keep it simple.
                                 </p>
                             </div>
 
@@ -374,28 +374,28 @@ export default function TradiesPage() {
                                     type="button"
                                     onClick={handleOrbClick}
                                     disabled={isBusy}
-                                    className={`group relative flex h-[17.5rem] w-[17.5rem] items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-[19rem] md:w-[19rem] ${
+                                    className={`group relative flex h-44 w-44 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-48 md:w-48 ${
                                         callState === "live" || callState === "connecting"
-                                            ? "border-red-300/65 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.28),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.18),0_0_65px_rgba(248,113,113,0.2)]"
-                                            : "border-neon/45 bg-[radial-gradient(circle_at_50%_28%,rgba(196,255,82,0.12),transparent_38%),linear-gradient(180deg,rgba(8,22,40,0.98),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(192,239,34,0.12),0_0_65px_rgba(34,211,238,0.14)] hover:border-neon/70 hover:shadow-[0_0_0_1px_rgba(192,239,34,0.16),0_0_80px_rgba(34,211,238,0.2)]"
+                                            ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_50px_rgba(248,113,113,0.16)]"
+                                            : "border-neon/35 bg-[radial-gradient(circle_at_50%_28%,rgba(196,255,82,0.1),transparent_38%),linear-gradient(180deg,rgba(8,22,40,0.98),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(192,239,34,0.08),0_0_50px_rgba(34,211,238,0.12)] hover:border-neon/55 hover:shadow-[0_0_0_1px_rgba(192,239,34,0.12),0_0_64px_rgba(34,211,238,0.16)]"
                                     }`}
                                 >
-                                    <div className="absolute inset-[10px] rounded-full border border-white/6" />
-                                    <div className="relative flex flex-col items-center gap-5 px-6 text-center">
+                                    <div className="absolute inset-[10px] rounded-full border border-white/5" />
+                                    <div className="relative flex flex-col items-center gap-4 px-6 text-center">
                                         <div
-                                            className={`flex h-16 w-16 items-center justify-center rounded-full border ${
+                                            className={`flex h-14 w-14 items-center justify-center rounded-full border ${
                                                 callState === "live" || callState === "connecting"
-                                                    ? "border-red-300/50 bg-red-500/10 text-red-100"
-                                                    : "border-neon/45 bg-neon/10 text-neon"
+                                                    ? "border-red-300/40 bg-red-500/10 text-red-100"
+                                                    : "border-neon/35 bg-neon/10 text-neon"
                                             }`}
                                         >
-                                            <PhoneCall className="h-6 w-6" />
+                                            <PhoneCall className="h-5 w-5" />
                                         </div>
-                                        <div className="space-y-2">
+                                        <div className="space-y-1.5">
                                             <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
                                                 {callState === "live" || callState === "connecting" ? "End Call" : "Voice Demo"}
                                             </div>
-                                            <div className="text-2xl font-black uppercase tracking-[0.2em] text-white md:text-[1.85rem]">
+                                            <div className="text-xl font-black uppercase tracking-[0.18em] text-white md:text-2xl">
                                                 {orbLabel}
                                             </div>
                                         </div>
@@ -407,15 +407,20 @@ export default function TradiesPage() {
                                 <p className="text-sm text-gray-300">{statusText}</p>
                             </div>
 
-                            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-left">
-                                <div className="rounded-full border border-white/8 bg-white/[0.03] px-4 py-3 text-xs uppercase tracking-[0.2em] text-gray-300">
-                                    “My hot water system burst”
-                                </div>
-                                <div className="rounded-full border border-white/8 bg-white/[0.03] px-4 py-3 text-xs uppercase tracking-[0.2em] text-gray-300">
-                                    “Can I get a quote next week?”
-                                </div>
-                                <div className="rounded-full border border-white/8 bg-white/[0.03] px-4 py-3 text-xs uppercase tracking-[0.2em] text-gray-300">
-                                    “I need an urgent callback”
+                            <div className="mx-auto mt-8 max-w-lg rounded-[1.5rem] border border-white/6 bg-white/[0.02] p-4 text-left">
+                                <p className="mb-3 text-[10px] font-mono uppercase tracking-[0.24em] text-gray-500">
+                                    Try saying
+                                </p>
+                                <div className="space-y-2.5 text-sm text-gray-300">
+                                    <div className="rounded-xl border border-white/6 px-4 py-3">
+                                        My hot water system burst and I need help tonight.
+                                    </div>
+                                    <div className="rounded-xl border border-white/6 px-4 py-3">
+                                        Can I get a quote for next week?
+                                    </div>
+                                    <div className="rounded-xl border border-white/6 px-4 py-3">
+                                        I need someone to call me back urgently.
+                                    </div>
                                 </div>
                             </div>
 
@@ -424,7 +429,7 @@ export default function TradiesPage() {
                                     href="https://calendly.com/jessallan/30min"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 rounded-full border border-neon/35 px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-neon transition-all hover:border-neon hover:bg-neon/8"
+                                    className="inline-flex items-center justify-center gap-2 rounded-full border border-neon/28 px-6 py-3 text-xs font-bold uppercase tracking-[0.22em] text-neon transition-all hover:border-neon/45 hover:bg-neon/8"
                                 >
                                     <CalendarDays className="h-4 w-4" />
                                     Book a Walkthrough
