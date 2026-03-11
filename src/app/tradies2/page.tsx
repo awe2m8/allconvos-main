@@ -344,37 +344,61 @@ export default function TradiesPage() {
 
                             <div className="mb-6 rounded-2xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(148,163,184,0.03))] p-6">
                                 <div className="flex items-center justify-center py-3">
-                                    <button
-                                        type="button"
-                                        onClick={handleOrbClick}
-                                        disabled={isBusy}
-                                        className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
-                                            callState === "live" || callState === "connecting"
-                                                ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                                                : "border-sky-100/80 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.92)_0%,rgba(224,242,254,0.7)_20%,rgba(125,211,252,0.42)_38%,rgba(18,42,74,0.94)_72%,rgba(6,14,28,1)_100%)] shadow-[0_0_0_1px_rgba(191,219,254,0.22),0_0_66px_rgba(56,189,248,0.24)] hover:border-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.3),0_0_82px_rgba(125,211,252,0.34)]"
-                                        }`}
-                                    >
-                                        <div className="absolute inset-[10px] rounded-full border border-white/15" />
-                                        <div className="relative flex flex-col items-center gap-3 px-5 text-center">
-                                            <div
-                                                className={`flex h-12 w-12 items-center justify-center rounded-full border ${
-                                                    callState === "live" || callState === "connecting"
-                                                        ? "border-red-300/40 bg-red-500/10 text-red-100"
-                                                        : "border-white/35 bg-white/14 text-sky-50"
-                                                }`}
-                                            >
-                                                <PhoneCall className="h-4 w-4" />
-                                            </div>
-                                            <div className="space-y-1">
-                                                <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
-                                                    {callState === "live" || callState === "connecting" ? "End Call" : "Voice Demo"}
+                                    <div className="relative">
+                                        <motion.div
+                                            aria-hidden="true"
+                                            className={`absolute inset-[-14px] rounded-full blur-2xl ${
+                                                callState === "live" || callState === "connecting"
+                                                    ? "bg-red-400/20"
+                                                    : "bg-sky-300/25"
+                                            }`}
+                                            animate={
+                                                callState === "live" || callState === "connecting"
+                                                    ? { scale: [0.96, 1.06, 0.96], opacity: [0.25, 0.55, 0.25] }
+                                                    : { scale: [0.94, 1.04, 0.94], opacity: [0.2, 0.42, 0.2] }
+                                            }
+                                            transition={{ duration: callState === "live" || callState === "connecting" ? 1.8 : 3.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                        />
+                                        <motion.button
+                                            type="button"
+                                            onClick={handleOrbClick}
+                                            disabled={isBusy}
+                                            whileHover={{ scale: 1.03 }}
+                                            whileTap={{ scale: 0.985 }}
+                                            animate={
+                                                callState === "live" || callState === "connecting"
+                                                    ? { y: [0, -1, 0], scale: [1, 1.012, 1] }
+                                                    : { y: [0, -3, 0], scale: [1, 1.016, 1] }
+                                            }
+                                            transition={{ duration: callState === "live" || callState === "connecting" ? 1.8 : 3.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                                            className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
+                                                callState === "live" || callState === "connecting"
+                                                    ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
+                                                    : "border-sky-100/80 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.92)_0%,rgba(224,242,254,0.7)_20%,rgba(125,211,252,0.42)_38%,rgba(18,42,74,0.94)_72%,rgba(6,14,28,1)_100%)] shadow-[0_0_0_1px_rgba(191,219,254,0.22),0_0_66px_rgba(56,189,248,0.24)] hover:border-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.3),0_0_82px_rgba(125,211,252,0.34)]"
+                                            }`}
+                                        >
+                                            <div className="absolute inset-[10px] rounded-full border border-white/15" />
+                                            <div className="relative flex flex-col items-center gap-3 px-5 text-center">
+                                                <div
+                                                    className={`flex h-12 w-12 items-center justify-center rounded-full border ${
+                                                        callState === "live" || callState === "connecting"
+                                                            ? "border-red-300/40 bg-red-500/10 text-red-100"
+                                                            : "border-white/35 bg-white/14 text-sky-50"
+                                                    }`}
+                                                >
+                                                    <PhoneCall className="h-4 w-4" />
                                                 </div>
-                                                <div className="text-lg font-black uppercase tracking-[0.16em] text-white md:text-xl">
-                                                    {orbLabel}
+                                                <div className="space-y-1">
+                                                    <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
+                                                        {callState === "live" || callState === "connecting" ? "End Call" : "Voice Demo"}
+                                                    </div>
+                                                    <div className="text-lg font-black uppercase tracking-[0.16em] text-white md:text-xl">
+                                                        {orbLabel}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
+                                        </motion.button>
+                                    </div>
                                 </div>
                                 <p className="mt-4 text-sm text-gray-300">{statusText}</p>
                             </div>
