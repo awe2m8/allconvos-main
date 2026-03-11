@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Users, Hammer, Dumbbell, Play, Pause, Volume2 } from "lucide-react";
+import { Hammer, Play, Pause } from "lucide-react";
 
 export function CallHandling() {
     const [playing, setPlaying] = useState<string | null>(null);
@@ -20,12 +20,7 @@ export function CallHandling() {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
 
-                // Use explicit file mapping so each industry can point to its latest demo asset.
-                const audioFileByType: Record<string, string> = {
-                    Tradies: "tradies.mp3",
-                    Gyms: "gymdemoV1.mp3",
-                };
-                audioRef.current.src = `/audio/${audioFileByType[type] ?? "tradies.mp3"}`;
+                audioRef.current.src = "/audio/tradies.mp3";
                 audioRef.current.load();
                 audioRef.current.volume = 1.0;
 
@@ -49,14 +44,6 @@ export function CallHandling() {
             description: "Dispatch teams and capture job details while you're on tools.",
             color: "from-blue-500/20 to-cyan-500/20",
             accent: "text-blue-400",
-        },
-        {
-            id: "Gyms",
-            icon: <Dumbbell className="w-6 h-6" />,
-            title: "Gyms",
-            description: "Book trial classes and handle membership enquiries 24/7.",
-            color: "from-purple-500/20 to-pink-500/20",
-            accent: "text-purple-400",
         },
     ];
 
@@ -107,7 +94,7 @@ export function CallHandling() {
                     </motion.p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div className="grid gap-8 max-w-3xl mx-auto">
                     {categories.map((cat, idx) => (
                         <motion.div
                             key={cat.id}
@@ -183,7 +170,7 @@ export function CallHandling() {
                     transition={{ delay: 0.8 }}
                     className="mt-16 flex flex-wrap justify-center gap-4 filter grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 >
-                    {["Real Estate", "Medical", "Automotive", "Home Services", "Tradies", "Gyms", "Med Spas", "Fitness Studios"].map((industry) => (
+                    {["Real Estate", "Medical", "Automotive", "Home Services", "Tradies", "Med Spas", "Fitness Studios"].map((industry) => (
                         <span key={industry} className="px-4 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/50">
                             {industry}
                         </span>
