@@ -320,8 +320,8 @@ export default function TradiesPage() {
                     <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
                         <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-neon via-cyan-400 to-neon" />
 
-                        <div className="absolute top-8 left-1/2 z-20 -translate-x-1/2">
-                            <div className="h-24 w-24 rounded-full border-2 border-neon bg-black p-1 shadow-[0_0_25px_rgba(0,255,255,0.35)]">
+                        <div className="absolute top-6 left-1/2 z-20 -translate-x-1/2">
+                            <div className="h-28 w-28 rounded-full border-2 border-neon bg-black p-[2px] shadow-[0_0_25px_rgba(0,255,255,0.35)]">
                                 <img
                                     src="/images/ai-avatar-female.png"
                                     alt="Tradie voice AI"
@@ -330,7 +330,7 @@ export default function TradiesPage() {
                             </div>
                         </div>
 
-                        <div className="px-8 pb-8 pt-36 text-center">
+                        <div className="px-8 pb-8 pt-40 text-center">
                             <p className="mb-5 font-mono text-lg font-bold tracking-tighter text-white">
                                 allconvos<span className="text-neon">_</span>
                             </p>
