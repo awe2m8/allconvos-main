@@ -317,11 +317,11 @@ export default function TradiesPage() {
                     transition={{ duration: 0.45 }}
                     className="mx-auto w-full max-w-lg"
                 >
-                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
-                        <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-neon via-cyan-400 to-neon" />
+                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(180deg,#101827_0%,#0b1220_48%,#060b14_100%)] shadow-2xl">
+                        <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-white via-sky-300 to-cyan-400" />
 
                         <div className="absolute top-8 left-1/2 z-20 -translate-x-1/2">
-                            <div className="h-24 w-24 rounded-full border-2 border-neon bg-black p-1 shadow-[0_0_25px_rgba(0,255,255,0.35)]">
+                            <div className="h-24 w-24 rounded-full border-2 border-sky-200/80 bg-[#050816] p-1 shadow-[0_0_28px_rgba(125,211,252,0.34)]">
                                 <img
                                     src="/images/ai-avatar.png"
                                     alt="Tradie voice AI"
@@ -332,17 +332,17 @@ export default function TradiesPage() {
 
                         <div className="px-8 pb-8 pt-36 text-center">
                             <p className="mb-5 font-mono text-lg font-bold tracking-tighter text-white">
-                                allconvos<span className="text-neon">_</span>
+                                allconvos<span className="text-sky-300">_</span>
                             </p>
 
                             <h1 className="mb-2 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
                                 Tradies Voice Demo
                             </h1>
-                            <p className="mb-7 text-sm font-bold italic uppercase tracking-widest text-neon">
+                            <p className="mb-7 text-sm font-bold italic uppercase tracking-widest text-sky-200">
                                 Click the Orb and Start Talking
                             </p>
 
-                            <div className="mb-6 rounded-2xl border border-white/5 bg-ocean-950 p-6">
+                            <div className="mb-6 rounded-2xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(148,163,184,0.03))] p-6">
                                 <div className="flex items-center justify-center py-3">
                                     <button
                                         type="button"
@@ -351,16 +351,16 @@ export default function TradiesPage() {
                                         className={`group relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-40 md:w-40 ${
                                             callState === "live" || callState === "connecting"
                                                 ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                                                : "border-cyan-300/65 bg-[radial-gradient(circle_at_50%_26%,rgba(125,211,252,0.24),transparent_34%),linear-gradient(180deg,rgba(12,40,68,0.98),rgba(5,14,30,1))] shadow-[0_0_0_1px_rgba(125,211,252,0.16),0_0_56px_rgba(56,189,248,0.2)] hover:border-cyan-200/80 hover:shadow-[0_0_0_1px_rgba(125,211,252,0.24),0_0_72px_rgba(56,189,248,0.28)]"
+                                                : "border-sky-100/80 bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.92)_0%,rgba(224,242,254,0.7)_20%,rgba(125,211,252,0.42)_38%,rgba(18,42,74,0.94)_72%,rgba(6,14,28,1)_100%)] shadow-[0_0_0_1px_rgba(191,219,254,0.22),0_0_66px_rgba(56,189,248,0.24)] hover:border-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.3),0_0_82px_rgba(125,211,252,0.34)]"
                                         }`}
                                     >
-                                        <div className="absolute inset-[10px] rounded-full border border-white/5" />
+                                        <div className="absolute inset-[10px] rounded-full border border-white/15" />
                                         <div className="relative flex flex-col items-center gap-3 px-5 text-center">
                                             <div
                                                 className={`flex h-12 w-12 items-center justify-center rounded-full border ${
                                                     callState === "live" || callState === "connecting"
                                                         ? "border-red-300/40 bg-red-500/10 text-red-100"
-                                                        : "border-cyan-200/55 bg-cyan-300/10 text-cyan-200"
+                                                        : "border-white/35 bg-white/14 text-sky-50"
                                                 }`}
                                             >
                                                 <PhoneCall className="h-4 w-4" />
@@ -388,14 +388,14 @@ export default function TradiesPage() {
                                     href="https://calendly.com/jessallan/30min"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
+                                    className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-sky-200/35 px-5 py-3 text-sm font-bold uppercase tracking-wide text-sky-100 transition-all hover:border-sky-200/55 hover:bg-sky-300/10"
                                 >
                                     <CalendarDays className="h-4 w-4" />
                                     In-Person Demo
                                 </a>
                                 <Link
                                     href="/contact"
-                                    className="inline-flex items-center justify-center rounded-lg bg-neon px-5 py-3 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-colors hover:bg-white"
+                                    className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-3 text-sm font-bold uppercase tracking-wide text-slate-950 transition-colors hover:bg-sky-100"
                                 >
                                     Open Contact Form
                                 </Link>
@@ -404,9 +404,9 @@ export default function TradiesPage() {
                             <div className="mb-6 grid gap-3 text-left sm:grid-cols-2">
                                 <a
                                     href="tel:+61404283605"
-                                    className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
+                                    className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-sky-200/35"
                                 >
-                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
+                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-sky-200">
                                         <Phone className="h-3 w-3" />
                                         Phone
                                     </p>
@@ -414,9 +414,9 @@ export default function TradiesPage() {
                                 </a>
                                 <a
                                     href="mailto:jesse@allconvos.ai"
-                                    className="rounded-xl border border-white/10 bg-ocean-900/70 px-4 py-3 transition-colors hover:border-neon/40"
+                                    className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-sky-200/35"
                                 >
-                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-neon">
+                                    <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-sky-200">
                                         <Mail className="h-3 w-3" />
                                         Email
                                     </p>
