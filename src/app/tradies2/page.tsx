@@ -479,8 +479,9 @@ export default function TradiesPage() {
                         All calls, all convos, no worries.
                     </p>
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-gray-400 md:text-lg">
-                        Test two live tradie examples, then call the real mobile demo to hear how your receptionist could
-                        handle plumbing questions, urgent jobs, quote requests, and after-hours enquiries.
+                        Test two voice AI examples. One helps you talk through your business and role play how an AI
+                        receptionist could work for you. The other is a tradie plumber example focused on real
+                        callouts, quote requests, and after-hours enquiries.
                     </p>
                 </motion.div>
 
