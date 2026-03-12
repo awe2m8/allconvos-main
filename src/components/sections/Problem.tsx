@@ -225,7 +225,7 @@ export function Problem() {
                             href={tradiesDemoUrl}
                             className="inline-flex items-center gap-2 bg-neon text-ocean-950 px-8 py-4 rounded-xl font-mono uppercase font-bold tracking-wider hover:bg-white transition-colors group"
                         >
-                            Demo Voice Agent
+                            More Demos
                             <TrendingDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>

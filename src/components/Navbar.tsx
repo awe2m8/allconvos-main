@@ -21,7 +21,7 @@ export function Navbar() {
                     <Link href={`${marketingHomeUrl}#how`} className="hover:text-neon transition-colors">How It Works</Link>
                     <Link href={`${marketingHomeUrl}#pricing`} className="hover:text-neon transition-colors">Pricing</Link>
                     <Link href={tradiesDemoUrl} className="text-neon hover:text-white transition-colors">
-                        Demo Voice Agent
+                        More Demos
                     </Link>
                 </div>
 

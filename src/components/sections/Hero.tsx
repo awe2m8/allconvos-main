@@ -93,6 +93,34 @@ export function Hero() {
                     </motion.div>
 
                     <motion.div
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.28 }}
+                        className="w-full max-w-3xl rounded-2xl border border-neon/20 bg-white/[0.04] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(163,230,53,0.05)]"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
+                                <ArrowRight className="h-4 w-4 rotate-[-45deg]" />
+                            </div>
+                            <div>
+                                <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
+                                    Live Mobile Demo
+                                </p>
+                                <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                                    Call{" "}
+                                    <a
+                                        href="tel:0485009296"
+                                        className="font-mono font-bold tracking-[0.18em] text-neon underline decoration-neon/40 underline-offset-4 transition-colors hover:text-white"
+                                    >
+                                        0485 009 296
+                                    </a>{" "}
+                                    to hear a live voice AI receptionist in action, or click through for more demos.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
@@ -102,7 +130,7 @@ export function Hero() {
                             href={tradiesDemoUrl}
                             className="inline-flex items-center justify-center px-8 py-4 font-bold rounded-sm uppercase tracking-wide font-mono transition-all duration-200 outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-ocean-950 bg-neon text-ocean-950 border-2 border-neon shadow-[0px_0px_20px_rgba(163,230,53,0.3)] hover:bg-neon-hover hover:shadow-[0px_0px_30px_rgba(163,230,53,0.5)] active:translate-y-0.5"
                         >
-                            Demo Voice Agent
+                            More Demos
                         </Link>
                         <Button
                             variant="secondary"
