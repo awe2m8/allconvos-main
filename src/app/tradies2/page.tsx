@@ -461,10 +461,10 @@ export default function TradiesPage() {
                             allconvos<span className="text-neon">_</span>
                         </div>
                         <a
-                            href="tel:0404283605"
+                            href="tel:0401027141"
                             className="mt-2 text-[11px] font-mono uppercase tracking-[0.18em] text-white/82 transition-colors hover:text-neon"
                         >
-                            Call or text Jesse - 0404 283 605
+                            Call or text Giles - 0401 027 141
                         </a>
                     </div>
                     <div className="hidden md:flex md:flex-col md:items-end md:gap-2">
