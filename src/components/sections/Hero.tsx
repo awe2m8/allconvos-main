@@ -92,6 +92,27 @@ export function Hero() {
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.28 }}
+                        className="flex flex-col justify-center gap-4 pt-2 sm:flex-row"
+                    >
+                        <Link
+                            href={tradiesDemoUrl}
+                            className="inline-flex items-center justify-center px-8 py-4 font-bold rounded-sm uppercase tracking-wide font-mono transition-all duration-200 outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-ocean-950 bg-neon text-ocean-950 border-2 border-neon shadow-[0px_0px_20px_rgba(163,230,53,0.3)] hover:bg-neon-hover hover:shadow-[0px_0px_30px_rgba(163,230,53,0.5)] active:translate-y-0.5"
+                        >
+                            More Demos
+                        </Link>
+                        <Button
+                            variant="secondary"
+                            className="group"
+                            onClick={handleTalkClick}
+                        >
+                            Try our voice AI now <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
                         className="w-full max-w-3xl rounded-2xl border border-neon/20 bg-white/[0.04] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(163,230,53,0.05)]"
                     >
                         <div className="flex items-start gap-4">
@@ -114,27 +135,6 @@ export function Hero() {
                                 </p>
                             </div>
                         </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex flex-col justify-center gap-4 pt-2 sm:flex-row"
-                    >
-                        <Link
-                            href={tradiesDemoUrl}
-                            className="inline-flex items-center justify-center px-8 py-4 font-bold rounded-sm uppercase tracking-wide font-mono transition-all duration-200 outline-none focus:ring-2 focus:ring-neon focus:ring-offset-2 focus:ring-offset-ocean-950 bg-neon text-ocean-950 border-2 border-neon shadow-[0px_0px_20px_rgba(163,230,53,0.3)] hover:bg-neon-hover hover:shadow-[0px_0px_30px_rgba(163,230,53,0.5)] active:translate-y-0.5"
-                        >
-                            More Demos
-                        </Link>
-                        <Button
-                            variant="secondary"
-                            className="group"
-                            onClick={handleTalkClick}
-                        >
-                            Try our voice AI now <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
                     </motion.div>
 
                     <motion.p
