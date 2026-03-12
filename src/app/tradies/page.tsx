@@ -455,31 +455,45 @@ export default function TradiesPage() {
             <div className="fixed inset-x-0 top-[-10%] mx-auto h-[36rem] w-[36rem] rounded-full bg-cyan-400/8 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-10 md:py-14">
-                <nav className="mb-10 flex items-center">
+                <nav className="mb-10 flex items-center justify-between gap-4">
                     <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
                         allconvos<span className="text-neon">_</span>
                     </Link>
+                    <div className="hidden items-center gap-2 md:flex">
+                        <a
+                            href="https://calendly.com/jessallan/30min"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center rounded-md border border-neon/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neon transition-all hover:border-neon hover:bg-neon/10"
+                        >
+                            Book In
+                        </a>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:border-neon/30 hover:bg-white/[0.08]"
+                        >
+                            Contact
+                        </Link>
+                    </div>
                 </nav>
 
                 <motion.div
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.45 }}
-                    className="mx-auto mb-10 max-w-4xl text-center"
+                    className="relative mx-auto mb-10 max-w-5xl text-center"
                 >
                     <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.34em] text-neon">
                         Lennox Head + Northern Rivers Tradies
                     </p>
-                    <div className="mx-auto flex max-w-5xl flex-col items-center gap-5 md:flex-row md:items-center md:justify-center md:gap-6">
-                        <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-                            Hear Your AI
-                            <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
-                                Receptionist in Action
-                            </span>
-                        </h1>
-                        <div className="shrink-0 md:translate-y-2">
-                            <SelfSellVoiceOrb variant="compact" />
-                        </div>
+                    <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
+                        Hear Your AI
+                        <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
+                            Receptionist in Action
+                        </span>
+                    </h1>
+                    <div className="mt-5 flex justify-center md:absolute md:right-0 md:top-10 md:mt-0">
+                        <SelfSellVoiceOrb variant="compact" />
                     </div>
                     <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
                         All calls, all convos, no worries.
