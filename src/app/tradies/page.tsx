@@ -327,7 +327,7 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className={`w-full ${config.title === "Tradies Example" ? "order-1 lg:order-2" : "order-2 lg:order-1"}`}
+            className={`mx-auto w-full max-w-[540px] ${config.title === "Tradies Example" ? "order-1 lg:order-2" : "order-2 lg:order-1"}`}
         >
             <Script
                 id={`${config.hostId}-script`}
@@ -337,11 +337,11 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                 strategy="afterInteractive"
             />
 
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
+            <div className="relative overflow-hidden rounded-[1.4rem] border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 shadow-2xl">
                 <div className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${config.accentBar}`} />
 
-                <div className="absolute top-6 left-1/2 z-20 -translate-x-1/2">
-                    <div className="h-28 w-28 rounded-full border-2 border-neon bg-black p-[2px] shadow-[0_0_25px_rgba(0,255,255,0.35)]">
+                <div className="absolute top-5 left-1/2 z-20 -translate-x-1/2">
+                    <div className="h-20 w-20 rounded-full border-2 border-neon bg-black p-[2px] shadow-[0_0_22px_rgba(0,255,255,0.28)] md:h-24 md:w-24">
                         <img
                             src={config.avatarSrc}
                             alt={config.title}
@@ -350,20 +350,20 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                     </div>
                 </div>
 
-                <div className="px-8 pb-8 pt-40 text-center">
-                    <p className="mb-5 font-mono text-lg font-bold tracking-tighter text-white">
+                <div className="px-6 pb-6 pt-28 text-center md:px-7 md:pt-32">
+                    <p className="mb-4 font-mono text-base font-bold tracking-tighter text-white">
                         allconvos<span className={config.accentText}>_</span>
                     </p>
 
-                    <h2 className="mb-2 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+                    <h2 className="mb-2 text-2xl font-black uppercase tracking-tight text-white md:text-[2rem]">
                         {config.title}
                     </h2>
-                    <p className={`mb-7 text-sm font-bold italic uppercase tracking-widest ${config.accentText}`}>
+                    <p className={`mb-5 text-xs font-bold italic uppercase tracking-[0.22em] md:text-[13px] ${config.accentText}`}>
                         {config.subtitle}
                     </p>
 
-                    <div className="mb-6 rounded-2xl border border-white/5 bg-ocean-950 p-6">
-                        <div className="flex items-center justify-center py-3">
+                    <div className="mb-5 rounded-[1.25rem] border border-white/5 bg-ocean-950 p-5">
+                        <div className="flex items-center justify-center py-2">
                             <div className="relative">
                                 <motion.div
                                     aria-hidden="true"
@@ -424,10 +424,10 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
                                 </motion.button>
                             </div>
                         </div>
-                        <p className="mt-4 text-[10px] font-mono uppercase tracking-[0.22em] text-white/45">{statusText}</p>
+                        <p className="mt-3 text-[9px] font-mono uppercase tracking-[0.2em] text-white/45">{statusText}</p>
                     </div>
 
-                    <p className="mb-1 text-sm leading-relaxed text-gray-400">{config.description}</p>
+                    <p className="mb-1 text-sm leading-relaxed text-gray-400/90">{config.description}</p>
                 </div>
             </div>
         </motion.div>
@@ -520,7 +520,7 @@ export default function TradiesPage() {
                     </div>
                 </motion.div>
 
-                <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+                <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-2">
                     {DEMO_CONFIGS.map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
                     ))}
