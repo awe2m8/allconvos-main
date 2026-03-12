@@ -26,8 +26,8 @@ export function Hero() {
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen animate-pulse" />
             <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
-            <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
-                <div className="space-y-8">
+            <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-6 text-center">
+                <div className="flex w-full max-w-4xl flex-col items-center gap-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-5xl lg:text-7xl font-bold leading-[0.9] text-white"
+                        className="text-5xl font-bold leading-[0.9] text-white md:text-6xl lg:text-7xl"
                     >
                         STOP MISSING <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400">CALLS.</span> <br />
@@ -57,16 +57,46 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-xl text-gray-400 max-w-lg leading-relaxed"
+                        className="max-w-2xl text-xl leading-relaxed text-gray-400"
                     >
                         The AI receptionist that answers every call, qualifies every lead, and books jobs 24/7—so you can get back on the tools.
                     </motion.p>
 
                     <motion.div
+                        id="mission-control"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.25 }}
+                        className="relative w-full max-w-3xl"
+                    >
+                        <div className="absolute inset-10 rounded-full bg-neon/10 blur-[90px] pointer-events-none" />
+                        <div className="absolute inset-x-16 top-12 h-40 rounded-full bg-cyan-400/8 blur-[80px] pointer-events-none" />
+
+                        {isHighlighting && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 0.35, 0] }}
+                                transition={{ duration: 1.5, times: [0, 0.5, 1] }}
+                                className="absolute inset-4 z-20 rounded-[2rem] border border-neon/60 bg-neon/6 pointer-events-none"
+                            />
+                        )}
+
+                        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,34,0.96),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_40px_120px_rgba(2,8,20,0.85)]">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(163,230,53,0.08),transparent_24%),radial-gradient(circle_at_50%_58%,rgba(56,189,248,0.08),transparent_34%)]" />
+
+                            <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden px-8 py-12 sm:min-h-[380px]">
+                                <div className="scale-[1.35] sm:scale-[1.45]">
+                                    <SelfSellVoiceOrb />
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex flex-col sm:flex-row gap-4 pt-4"
+                        className="flex flex-col justify-center gap-4 pt-2 sm:flex-row"
                     >
                         <Link
                             href={tradiesDemoUrl}
@@ -87,42 +117,11 @@ export function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
-                        className="text-xs font-mono text-neon/60 uppercase tracking-widest pt-4"
+                        className="pt-2 text-xs font-mono uppercase tracking-widest text-neon/60"
                     >
                         No complex setup. No "tech bro" jargon. Just results.
                     </motion.p>
                 </div>
-
-                {/* Hero Visual */}
-                <motion.div
-                    id="mission-control"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="relative hidden lg:block"
-                >
-                    <div className="absolute inset-10 rounded-full bg-neon/10 blur-[90px] pointer-events-none" />
-                    <div className="absolute inset-x-16 top-12 h-40 rounded-full bg-cyan-400/8 blur-[80px] pointer-events-none" />
-
-                    {isHighlighting && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: [0, 0.35, 0] }}
-                            transition={{ duration: 1.5, times: [0, 0.5, 1] }}
-                            className="absolute inset-4 z-20 rounded-[2rem] border border-neon/60 bg-neon/6 pointer-events-none"
-                        />
-                    )}
-
-                    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,34,0.96),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_40px_120px_rgba(2,8,20,0.85)]">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(163,230,53,0.08),transparent_24%),radial-gradient(circle_at_50%_58%,rgba(56,189,248,0.08),transparent_34%)]" />
-
-                        <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden px-8 py-12">
-                            <div className="scale-[1.45]">
-                                <SelfSellVoiceOrb />
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
             </div>
         </section>
     );
