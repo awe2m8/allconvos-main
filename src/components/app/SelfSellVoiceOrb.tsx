@@ -344,18 +344,18 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                 <div className="relative">
                     <motion.div
                         aria-hidden="true"
-                        className={`absolute inset-[-18px] rounded-full blur-2xl ${isActive ? "bg-red-400/24" : "bg-cyan-400/26"}`}
+                        className={`absolute inset-[-18px] rounded-full blur-2xl ${isActive ? "bg-red-400/24" : "bg-neon/48"}`}
                         animate={
                             isActive
                                 ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
-                                : { scale: [0.86, 1.18, 0.86], opacity: [0.24, 0.78, 0.24] }
+                                : { scale: [0.9, 1.22, 0.9], opacity: [0.44, 1, 0.44] }
                         }
                         transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                     />
                     {!isActive ? (
                         <motion.div
                             aria-hidden="true"
-                            className="absolute inset-[-8px] rounded-full blur-md bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(125,211,252,0.2)_70deg,rgba(34,211,238,0.18)_150deg,rgba(14,165,233,0.16)_230deg,rgba(255,255,255,0)_320deg)]"
+                            className="absolute inset-[-8px] rounded-full blur-md bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(217,255,65,0.42)_70deg,rgba(163,230,53,0.36)_150deg,rgba(34,211,238,0.18)_230deg,rgba(255,255,255,0)_320deg)]"
                             animate={{ rotate: [0, 360] }}
                             transition={{ duration: 4.8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                         />
@@ -375,20 +375,20 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                         className={`group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-36 md:w-36 ${
                             isActive
                                 ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                                : "border-cyan-300/70 bg-[radial-gradient(circle_at_34%_26%,rgba(224,242,254,0.82)_0%,rgba(125,211,252,0.26)_20%,rgba(34,211,238,0.34)_38%,rgba(8,47,73,0.92)_70%,rgba(5,14,30,1)_100%)] shadow-[0_0_0_1px_rgba(103,232,249,0.16),0_0_64px_rgba(56,189,248,0.24)] hover:border-cyan-100 hover:shadow-[0_0_0_1px_rgba(165,243,252,0.24),0_0_84px_rgba(56,189,248,0.32)]"
+                                : "border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.24)_0%,rgba(217,255,65,0.18)_18%,rgba(163,230,53,0.14)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.26),0_0_72px_rgba(163,230,53,0.34)] hover:border-neon hover:shadow-[0_0_0_1px_rgba(217,255,65,0.34),0_0_92px_rgba(163,230,53,0.42)]"
                         }`}
                     >
                         {!isActive ? (
                             <>
                                 <motion.div
                                     aria-hidden="true"
-                                    className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_28%_24%,rgba(255,255,255,0.34),transparent_18%),radial-gradient(circle_at_72%_74%,rgba(34,211,238,0.18),transparent_26%)]"
+                                    className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_28%_24%,rgba(255,255,255,0.22),transparent_16%),radial-gradient(circle_at_72%_74%,rgba(163,230,53,0.16),transparent_26%)]"
                                     animate={{ opacity: [0.38, 1, 0.38], scale: [0.985, 1.018, 0.985] }}
                                     transition={{ duration: 1.9, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                                 />
                                 <motion.div
                                     aria-hidden="true"
-                                    className="absolute inset-[8px] rounded-full border border-cyan-100/18"
+                                    className="absolute inset-[8px] rounded-full border border-neon/18"
                                     animate={{ rotate: [0, -360] }}
                                     transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                                 />
@@ -398,7 +398,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                         <div className="relative flex flex-col items-center gap-2 px-4 text-center">
                             <div
                                 className={`flex h-10 w-10 items-center justify-center rounded-full border ${
-                                    isActive ? "border-red-300/40 bg-red-500/10 text-red-100" : "border-cyan-200/55 bg-cyan-300/10 text-cyan-100"
+                                    isActive ? "border-red-300/40 bg-red-500/10 text-red-100" : "border-neon/55 bg-neon/10 text-white"
                                 }`}
                             >
                                 <PhoneCall className="h-4 w-4" />
