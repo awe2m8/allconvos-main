@@ -5,8 +5,14 @@ import { PhoneCall } from "lucide-react";
 import Script from "next/script";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const SELF_SELL_WIDGET_ID = "69a7bdf999dd5635833c8454";
+const DEFAULT_WIDGET_ID = "69a7bdf999dd5635833c8454";
 const SELF_SELL_HOST_ID = "hero-self-sell-widget";
+
+export type SelfSellVoiceOrbProps = {
+    variant?: "full" | "compact";
+    widgetId?: string;
+    titleLabel?: string;
+};
 
 type CallState = "idle" | "connecting" | "live" | "error";
 
@@ -22,7 +28,7 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
     return null;
 };
 
-export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "compact" }) {
+export function SelfSellVoiceOrb({ variant = "full", widgetId = DEFAULT_WIDGET_ID, titleLabel = "Quick Demo" }: SelfSellVoiceOrbProps) {
     const [callState, setCallState] = useState<CallState>("idle");
     const [isWidgetReady, setIsWidgetReady] = useState(false);
     const [isBusy, setIsBusy] = useState(false);
@@ -31,8 +37,8 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
 
     const getWidgetHost = useCallback(() => {
         const selector = [
-            `chat-widget[widget-id="${SELF_SELL_WIDGET_ID}"]`,
-            `chat-widget[data-widget-id="${SELF_SELL_WIDGET_ID}"]`,
+            `chat-widget[widget-id="${widgetId}"]`,
+            `chat-widget[data-widget-id="${widgetId}"]`,
             `chat-widget#${SELF_SELL_HOST_ID}-script`,
             `chat-widget#${SELF_SELL_HOST_ID}`,
         ].join(", ");
@@ -265,7 +271,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                     id={`${SELF_SELL_HOST_ID}-script`}
                     src="https://beta.leadconnectorhq.com/loader.js"
                     data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
-                    data-widget-id={SELF_SELL_WIDGET_ID}
+                    data-widget-id={widgetId}
                     strategy="afterInteractive"
                 />
 
@@ -316,7 +322,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
 
                     <div className="pr-3">
                         <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-neon/80">
-                            Quick Demo
+                            {titleLabel}
                         </p>
                         <p className="mt-1 text-sm font-black uppercase tracking-[0.16em] text-white">
                             {isActive ? "Voice AI Live" : "Voice AI Demo"}
@@ -336,7 +342,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                 id={`${SELF_SELL_HOST_ID}-script`}
                 src="https://beta.leadconnectorhq.com/loader.js"
                 data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
-                data-widget-id={SELF_SELL_WIDGET_ID}
+                data-widget-id={widgetId}
                 strategy="afterInteractive"
             />
 

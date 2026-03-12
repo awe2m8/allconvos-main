@@ -2,7 +2,7 @@
 
 import { SelfSellVoiceOrb } from "@/components/app/SelfSellVoiceOrb";
 import { motion } from "framer-motion";
-import { CalendarDays, Mail, Phone, Briefcase, Dumbbell, Stethoscope, Scissors } from "lucide-react";
+import { CalendarDays, Mail, Phone, Briefcase, Dumbbell, Stethoscope, Scissors, Sparkles, Wrench, Droplets } from "lucide-react";
 import Link from "next/link";
 import { marketingUrl } from "@/lib/siteUrls";
 
@@ -30,6 +30,24 @@ const INDUSTRIES = [
         slug: "salons",
         description: "Handling appointment bookings & service questions.",
         icon: Scissors,
+    },
+    {
+        name: "Massage Parlours",
+        slug: "massage",
+        description: "Booking relaxation sessions & answering service queries.",
+        icon: Sparkles,
+    },
+    {
+        name: "Automotive",
+        slug: "automotive",
+        description: "Mechanic bookings, repair updates & quotes.",
+        icon: Wrench,
+    },
+    {
+        name: "Pool Maintenance",
+        slug: "pools",
+        description: "Scheduling cleanings & quoting out repairs.",
+        icon: Droplets,
     },
 ];
 
@@ -91,7 +109,7 @@ export default function DemosHubPage() {
                     {/* Quick Demo Centered Orb */}
                     <div className="mt-16 flex justify-center">
                         <div className="w-full max-w-[290px] [&>button]:w-full [&>button]:justify-center">
-                            <SelfSellVoiceOrb variant="compact" />
+                            <SelfSellVoiceOrb variant="compact" widgetId="69b2dbf34d840e2b50d7bce3" />
                         </div>
                     </div>
                 </motion.div>
@@ -113,7 +131,7 @@ export default function DemosHubPage() {
                         {INDUSTRIES.map((industry) => {
                             const Icon = industry.icon;
                             return (
-                                <Link
+                                <a
                                     key={industry.slug}
                                     href={`/demos/${industry.slug}`}
                                     className="group relative flex flex-col justify-between overflow-hidden rounded-[1.4rem] border border-white/10 bg-gradient-to-b from-ocean-900 to-ocean-950 p-6 shadow-xl transition-all hover:border-neon/40 hover:shadow-[0_0_0_1px_rgba(163,230,53,0.1),0_0_40px_rgba(163,230,53,0.1)]"
@@ -134,7 +152,7 @@ export default function DemosHubPage() {
                                     <div className="inline-flex items-center text-xs font-mono font-bold uppercase tracking-widest text-white/60 group-hover:text-neon transition-colors">
                                         Listen to Demo <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                                     </div>
-                                </Link>
+                                </a>
                             );
                         })}
                     </div>
