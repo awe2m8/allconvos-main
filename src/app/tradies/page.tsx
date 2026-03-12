@@ -470,9 +470,9 @@ export default function TradiesPage() {
                         Lennox Head + Northern Rivers Tradies
                     </p>
                     <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-                        Voice AI for
+                        Hear Your AI
                         <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
-                            Local Heroes
+                            Receptionist in Action
                         </span>
                     </h1>
                     <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
