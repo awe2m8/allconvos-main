@@ -526,7 +526,7 @@ export default function TradiesPage() {
                                     Call 0485 009 296
                                 </p>
                                 <p className="mt-1 text-xs text-gray-400">
-                                    Hear the receptionist in action
+                                    Hear tradie receptionist in action
                                 </p>
                             </div>
                             <ArrowLeft className="h-4 w-4 shrink-0 rotate-180 text-neon transition-transform duration-300 group-hover:translate-x-1" />
