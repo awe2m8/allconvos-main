@@ -275,23 +275,23 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                     disabled={isBusy}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.985 }}
-                    className="group inline-flex items-center gap-3 rounded-full border border-white/10 bg-ocean-900/90 px-3 py-3 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_28px_rgba(163,230,53,0.08)] transition-all duration-300 hover:border-neon/50 hover:bg-ocean-900"
+                    className="group inline-flex items-center gap-3 rounded-full border border-white/10 bg-ocean-900/90 px-3 py-3 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_36px_rgba(163,230,53,0.12)] transition-all duration-300 hover:border-neon/60 hover:bg-ocean-900"
                 >
                     <div className="relative shrink-0">
                         <motion.div
                             aria-hidden="true"
-                            className={`absolute inset-[-12px] rounded-full blur-xl ${isActive ? "bg-red-400/24" : "bg-neon/34"}`}
+                            className={`absolute inset-[-14px] rounded-full blur-xl ${isActive ? "bg-red-400/24" : "bg-neon/48"}`}
                             animate={
                                 isActive
                                     ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
-                                    : { scale: [0.88, 1.2, 0.88], opacity: [0.34, 0.92, 0.34] }
+                                    : { scale: [0.9, 1.22, 0.9], opacity: [0.44, 1, 0.44] }
                             }
                             transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                         />
                         {!isActive ? (
                             <motion.div
                                 aria-hidden="true"
-                                className="absolute inset-[-5px] rounded-full blur-sm bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(217,255,65,0.32)_70deg,rgba(163,230,53,0.28)_150deg,rgba(34,211,238,0.16)_230deg,rgba(255,255,255,0)_320deg)]"
+                                className="absolute inset-[-6px] rounded-full blur-sm bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(217,255,65,0.42)_70deg,rgba(163,230,53,0.36)_150deg,rgba(34,211,238,0.18)_230deg,rgba(255,255,255,0)_320deg)]"
                                 animate={{ rotate: [0, 360] }}
                                 transition={{ duration: 4.8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                             />
@@ -306,7 +306,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                             className={`relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border ${
                                 isActive
                                     ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_34px_rgba(248,113,113,0.16)]"
-                                    : "border-neon/85 bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.16)_0%,rgba(217,255,65,0.12)_18%,rgba(163,230,53,0.1)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.2),0_0_54px_rgba(163,230,53,0.28)]"
+                                    : "border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.24)_0%,rgba(217,255,65,0.18)_18%,rgba(163,230,53,0.14)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.26),0_0_72px_rgba(163,230,53,0.34)]"
                             }`}
                         >
                             <div className="absolute inset-[6px] rounded-full border border-white/5" />

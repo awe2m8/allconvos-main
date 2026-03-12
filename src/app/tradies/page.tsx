@@ -492,7 +492,7 @@ export default function TradiesPage() {
                             Receptionist in Action
                         </span>
                     </h1>
-                    <div className="mt-5 flex justify-center md:absolute md:right-0 md:top-10 md:mt-0">
+                    <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-10 md:mt-0">
                         <SelfSellVoiceOrb variant="compact" />
                     </div>
                     <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
