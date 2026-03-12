@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
@@ -9,13 +8,7 @@ import { SelfSellVoiceOrb } from "../app/SelfSellVoiceOrb";
 import { marketingUrl } from "@/lib/siteUrls";
 
 export function Hero() {
-    const [isHighlighting, setIsHighlighting] = useState(false);
     const tradiesDemoUrl = marketingUrl("/tradies");
-
-    const handleTalkClick = () => {
-        setIsHighlighting(true);
-        setTimeout(() => setIsHighlighting(false), 2000);
-    };
 
     return (
         <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
@@ -75,15 +68,6 @@ export function Hero() {
                         <div className="absolute inset-x-20 top-10 h-36 rounded-full bg-neon/6 blur-[78px] pointer-events-none" />
                         <div className="absolute inset-x-28 top-20 h-24 rounded-full bg-cyan-400/6 blur-[72px] pointer-events-none" />
 
-                        {isHighlighting && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: [0, 0.35, 0] }}
-                                transition={{ duration: 1.5, times: [0, 0.5, 1] }}
-                                className="absolute left-1/2 top-1/2 z-20 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-neon/60 bg-neon/6 pointer-events-none md:h-40 md:w-40"
-                            />
-                        )}
-
                         <div className="relative flex min-h-[220px] items-center justify-center px-8 py-6 sm:min-h-[250px]">
                             <div className="scale-[1.25] sm:scale-[1.3]">
                                 <SelfSellVoiceOrb />
@@ -106,9 +90,11 @@ export function Hero() {
                         <Button
                             variant="secondary"
                             className="group sm:min-w-[260px]"
-                            onClick={handleTalkClick}
+                            onClick={() => {
+                                window.location.href = "tel:0485009296";
+                            }}
                         >
-                            Try Voice AI Now <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            Call 0485 009 296 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </motion.div>
 
