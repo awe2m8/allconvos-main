@@ -105,10 +105,10 @@ export function Hero() {
                         </Link>
                         <Button
                             variant="secondary"
-                            className="group"
+                            className="group sm:min-w-[260px]"
                             onClick={handleTalkClick}
                         >
-                            Try our voice AI now <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            Try Voice AI Now <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </motion.div>
 
