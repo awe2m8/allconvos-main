@@ -327,7 +327,7 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className={`mx-auto w-full max-w-[540px] ${config.title === "Tradies Example" ? "order-1 lg:order-2" : "order-2 lg:order-1"}`}
+            className="mx-auto w-full max-w-[540px]"
         >
             <Script
                 id={`${config.hostId}-script`}
@@ -520,8 +520,8 @@ export default function TradiesPage() {
                     </div>
                 </motion.div>
 
-                <div className="mx-auto mt-20 grid max-w-5xl gap-6 lg:grid-cols-2">
-                    {DEMO_CONFIGS.map((config) => (
+                <div className="mx-auto mt-20 flex max-w-3xl flex-col items-center gap-6">
+                    {[DEMO_CONFIGS[1], DEMO_CONFIGS[0]].map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
                     ))}
                 </div>
