@@ -502,9 +502,6 @@ export default function TradiesPage() {
                             Receptionist in Action
                         </span>
                     </h1>
-                    <div className="mt-6 flex justify-center">
-                        <SelfSellVoiceOrb variant="compact" />
-                    </div>
                     <div className="mx-auto mt-6 max-w-3xl">
                         <p className="text-lg font-bold text-white md:text-2xl">
                             Built for Lennox Head and Northern Rivers tradies.
@@ -513,28 +510,37 @@ export default function TradiesPage() {
                             Every local enquiry answered. Every after-hours call covered.
                         </p>
                     </div>
-                    <div className="mx-auto mt-5 max-w-3xl rounded-2xl border border-neon/20 bg-white/[0.04] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(163,230,53,0.05)]">
-                        <div className="flex items-start gap-4">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
-                                <PhoneCall className="h-4 w-4" />
+                    <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                        <div className="w-full max-w-[290px] [&>button]:w-full [&>button]:justify-start">
+                            <SelfSellVoiceOrb variant="compact" />
+                        </div>
+                        <a
+                            href="tel:0485009296"
+                            className="group inline-flex w-full max-w-[290px] items-center gap-3 rounded-full border border-white/10 bg-ocean-900/90 px-3 py-3 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_36px_rgba(163,230,53,0.12)] transition-all duration-300 hover:border-neon/60 hover:bg-ocean-900"
+                        >
+                            <div className="relative shrink-0">
+                                <div
+                                    aria-hidden="true"
+                                    className="absolute inset-[-14px] rounded-full bg-neon/28 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+                                />
+                                <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.24)_0%,rgba(217,255,65,0.18)_18%,rgba(163,230,53,0.14)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.26),0_0_72px_rgba(163,230,53,0.24)]">
+                                    <div className="absolute inset-[6px] rounded-full border border-white/5" />
+                                    <PhoneCall className="relative h-5 w-5 text-white" />
+                                </div>
                             </div>
-                            <div>
-                                <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
+
+                            <div className="pr-3">
+                                <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-neon/80">
                                     Live Mobile Demo
                                 </p>
-                                <p className="text-sm leading-relaxed text-white/90 md:text-base">
-                                    Call{" "}
-                                    <a
-                                        href="tel:0485009296"
-                                        className="font-mono font-bold tracking-[0.18em] text-neon underline decoration-neon/40 underline-offset-4 transition-colors hover:text-white"
-                                    >
-                                        0485 009 296
-                                    </a>{" "}
-                                    to hear a live voice AI receptionist in action, or click either example below to
-                                    compare both conversation styles.
+                                <p className="mt-1 text-sm font-black uppercase tracking-[0.16em] text-white">
+                                    Call 0485 009 296
+                                </p>
+                                <p className="mt-1 text-xs text-gray-400">
+                                    Hear the receptionist in action
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </motion.div>
 
