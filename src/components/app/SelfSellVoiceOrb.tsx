@@ -22,7 +22,7 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
     return null;
 };
 
-export function SelfSellVoiceOrb() {
+export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "compact" }) {
     const [callState, setCallState] = useState<CallState>("idle");
     const [isWidgetReady, setIsWidgetReady] = useState(false);
     const [isBusy, setIsBusy] = useState(false);
@@ -257,6 +257,78 @@ export function SelfSellVoiceOrb() {
     }, [callState, isWidgetReady]);
 
     const isActive = callState === "live" || callState === "connecting";
+
+    if (variant === "compact") {
+        return (
+            <>
+                <Script
+                    id={`${SELF_SELL_HOST_ID}-script`}
+                    src="https://beta.leadconnectorhq.com/loader.js"
+                    data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+                    data-widget-id={SELF_SELL_WIDGET_ID}
+                    strategy="afterInteractive"
+                />
+
+                <motion.button
+                    type="button"
+                    onClick={handleOrbClick}
+                    disabled={isBusy}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.985 }}
+                    className="group inline-flex items-center gap-3 rounded-full border border-white/10 bg-ocean-900/90 px-3 py-3 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition-all duration-300 hover:border-neon/40 hover:bg-ocean-900"
+                >
+                    <div className="relative shrink-0">
+                        <motion.div
+                            aria-hidden="true"
+                            className={`absolute inset-[-10px] rounded-full blur-xl ${isActive ? "bg-red-400/24" : "bg-cyan-400/26"}`}
+                            animate={
+                                isActive
+                                    ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
+                                    : { scale: [0.86, 1.18, 0.86], opacity: [0.24, 0.78, 0.24] }
+                            }
+                            transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                        />
+                        {!isActive ? (
+                            <motion.div
+                                aria-hidden="true"
+                                className="absolute inset-[-4px] rounded-full blur-sm bg-[conic-gradient(from_0deg,rgba(255,255,255,0)_0deg,rgba(125,211,252,0.2)_70deg,rgba(34,211,238,0.18)_150deg,rgba(14,165,233,0.16)_230deg,rgba(255,255,255,0)_320deg)]"
+                                animate={{ rotate: [0, 360] }}
+                                transition={{ duration: 4.8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                            />
+                        ) : null}
+                        <motion.div
+                            animate={
+                                isActive
+                                    ? { y: [0, -1, 0], scale: [1, 1.014, 1] }
+                                    : { y: [0, -4, 0], scale: [1, 1.03, 1], rotate: [0, 0.4, 0, -0.4, 0] }
+                            }
+                            transition={{ duration: isActive ? 1.6 : 2.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                            className={`relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border ${
+                                isActive
+                                    ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_34px_rgba(248,113,113,0.16)]"
+                                    : "border-cyan-300/70 bg-[radial-gradient(circle_at_34%_26%,rgba(224,242,254,0.82)_0%,rgba(125,211,252,0.26)_20%,rgba(34,211,238,0.34)_38%,rgba(8,47,73,0.92)_70%,rgba(5,14,30,1)_100%)] shadow-[0_0_0_1px_rgba(103,232,249,0.16),0_0_42px_rgba(56,189,248,0.24)]"
+                            }`}
+                        >
+                            <div className="absolute inset-[6px] rounded-full border border-white/5" />
+                            <PhoneCall className={`relative h-5 w-5 ${isActive ? "text-red-100" : "text-cyan-100"}`} />
+                        </motion.div>
+                    </div>
+
+                    <div className="pr-3">
+                        <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-neon/80">
+                            Quick Demo
+                        </p>
+                        <p className="mt-1 text-sm font-black uppercase tracking-[0.16em] text-white">
+                            {isActive ? "Voice AI Live" : "Voice AI Demo"}
+                        </p>
+                        <p className="mt-1 text-xs text-gray-400">
+                            {isActive ? "Tap to end call" : "Click here"}
+                        </p>
+                    </div>
+                </motion.button>
+            </>
+        );
+    }
 
     return (
         <>

@@ -1,6 +1,7 @@
 "use client";
 
 import { CallHandling } from "@/components/sections/CallHandling";
+import { SelfSellVoiceOrb } from "@/components/app/SelfSellVoiceOrb";
 import { DIYDemo } from "@/components/sections/DIYDemo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Pricing } from "@/components/sections/Pricing";
@@ -469,12 +470,17 @@ export default function TradiesPage() {
                     <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.34em] text-neon">
                         Lennox Head + Northern Rivers Tradies
                     </p>
-                    <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-                        Hear Your AI
-                        <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
-                            Receptionist in Action
-                        </span>
-                    </h1>
+                    <div className="mx-auto flex max-w-5xl flex-col items-center gap-5 md:flex-row md:items-center md:justify-center md:gap-6">
+                        <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
+                            Hear Your AI
+                            <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
+                                Receptionist in Action
+                            </span>
+                        </h1>
+                        <div className="shrink-0 md:translate-y-2">
+                            <SelfSellVoiceOrb variant="compact" />
+                        </div>
+                    </div>
                     <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
                         All calls, all convos, no worries.
                     </p>
