@@ -460,6 +460,12 @@ export default function TradiesPage() {
                         <div className="font-mono text-2xl font-bold tracking-tighter text-white">
                             allconvos<span className="text-neon">_</span>
                         </div>
+                        <a
+                            href="tel:0404283605"
+                            className="mt-2 text-[11px] font-mono uppercase tracking-[0.18em] text-white/82 transition-colors hover:text-neon"
+                        >
+                            Call or text Jesse - 0404 283 605
+                        </a>
                     </div>
                     <div className="hidden md:flex md:flex-col md:items-end md:gap-2">
                         <div className="flex items-center gap-2">
@@ -478,12 +484,6 @@ export default function TradiesPage() {
                                 Contact
                             </Link>
                         </div>
-                        <a
-                            href="tel:0404283605"
-                            className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/82 transition-colors hover:text-neon"
-                        >
-                            Or call or text Jesse - 0404 283 605
-                        </a>
                     </div>
                 </nav>
 
