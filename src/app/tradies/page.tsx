@@ -457,14 +457,9 @@ export default function TradiesPage() {
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-10 md:py-14">
                 <nav className="mb-10 flex items-center justify-between gap-4">
                     <div className="flex flex-col items-start">
-                        <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
+                        <div className="font-mono text-2xl font-bold tracking-tighter text-white">
                             allconvos<span className="text-neon">_</span>
-                        </Link>
-                        <p className="mt-2 text-[11px] font-mono uppercase leading-relaxed tracking-[0.22em] text-white/78">
-                            For Lennox and
-                            <br />
-                            Northern Rivers Tradies
-                        </p>
+                        </div>
                     </div>
                     <div className="hidden md:flex md:flex-col md:items-end md:gap-2">
                         <div className="flex items-center gap-2">
