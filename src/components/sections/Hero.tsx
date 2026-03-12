@@ -4,8 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
-import { ArrowRight, Bot, User, CheckCircle } from "lucide-react";
-import { ComingSoonButton } from "../ui/ComingSoonButton";
+import { ArrowRight } from "lucide-react";
 import { SelfSellVoiceOrb } from "../app/SelfSellVoiceOrb";
 import { marketingUrl } from "@/lib/siteUrls";
 
@@ -94,7 +93,7 @@ export function Hero() {
                     </motion.p>
                 </div>
 
-                {/* Hero Visual: Mission Control Interface */}
+                {/* Hero Visual */}
                 <motion.div
                     id="mission-control"
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -102,92 +101,26 @@ export function Hero() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="relative hidden lg:block"
                 >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-neon to-blue-600 rounded-lg blur opacity-20" />
+                    <div className="absolute inset-10 rounded-full bg-neon/10 blur-[90px] pointer-events-none" />
+                    <div className="absolute inset-x-16 top-12 h-40 rounded-full bg-cyan-400/8 blur-[80px] pointer-events-none" />
 
-                    {/* Pulsing Highlight Border */}
                     {isHighlighting && (
                         <motion.div
                             initial={{ opacity: 0 }}
-                            animate={{ opacity: [0, 0.15, 0] }}
+                            animate={{ opacity: [0, 0.35, 0] }}
                             transition={{ duration: 1.5, times: [0, 0.5, 1] }}
-                            className="absolute -inset-0.5 rounded-lg bg-neon/80 z-20 pointer-events-none"
-                            style={{ filter: 'blur(1px)' }}
+                            className="absolute inset-4 z-20 rounded-[2rem] border border-neon/60 bg-neon/6 pointer-events-none"
                         />
                     )}
 
-                    <div className="relative bg-ocean-900 border border-white/10 rounded-lg shadow-2xl overflow-hidden">
-                        <div className="bg-ocean-950 border-b border-white/10 px-4 py-3 flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="flex space-x-2">
-                                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                                </div>
-                                <span className="text-[10px] font-mono text-neon uppercase tracking-widest hidden sm:block">Live_Demo_Console</span>
+                    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,34,0.96),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_40px_120px_rgba(2,8,20,0.85)]">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(163,230,53,0.08),transparent_24%),radial-gradient(circle_at_50%_58%,rgba(56,189,248,0.08),transparent_34%)]" />
+                        <div className="absolute inset-[28px] rounded-[1.5rem] border border-white/6" />
+
+                        <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden px-8 py-12">
+                            <div className="scale-[1.45]">
+                                <SelfSellVoiceOrb />
                             </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-neon animate-pulse" />
-                                <div className="font-mono text-[10px] text-gray-500 uppercase tracking-tighter">sys_link_v4.2</div>
-                            </div>
-                        </div>
-
-                        <div className="p-4 space-y-4 font-mono text-sm relative">
-                            {/* Experience the future of sales header */}
-                            <div className="mb-2">
-                                <span className="text-xs text-neon uppercase tracking-wider font-bold">Experience the future of sales</span>
-                            </div>
-
-                            {/* Chat Illustration */}
-                            <div className="space-y-3 opacity-80 scale-90 origin-top">
-                                <div className="flex items-start space-x-3">
-                                    <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0"><User className="w-3.5 h-3.5" /></div>
-                                    <div className="bg-ocean-800 p-2.5 rounded-lg rounded-tl-none border border-white/5 text-gray-400 text-xs">
-                                        <p>Hey, do you guys do emergency plumbing in Ballina?</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start space-x-3 justify-end">
-                                    <div className="bg-neon/5 p-2.5 rounded-lg rounded-tr-none border border-neon/10 text-neon/80 text-xs">
-                                        <p>We sure do! Tell me what's going on...</p>
-                                    </div>
-                                    <div className="w-7 h-7 rounded-full bg-neon/80 flex items-center justify-center shrink-0 text-ocean-950 font-bold"><Bot className="w-3.5 h-3.5" /></div>
-                                </div>
-                            </div>
-
-                            {/* Integrated Voice AI Orb */}
-                            <div className="relative px-4 pb-4">
-                                <div className="absolute inset-0 bg-neon/5 rounded-xl blur-lg" />
-                                <div className="relative bg-black/40 border border-white/5 rounded-xl p-2 h-[220px] flex items-center justify-center overflow-hidden">
-                                    <SelfSellVoiceOrb />
-                                </div>
-                            </div>
-
-                            {/* Notification Overlay */}
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 2, duration: 0.5 }}
-                                className="mt-2 bg-ocean-800/80 border-l-4 border-neon p-3 shadow-xl backdrop-blur-sm"
-                            >
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <p className="text-[10px] text-gray-500 uppercase font-bold mb-0.5">Live Intercept</p>
-                                        <p className="text-white font-bold text-xs uppercase tracking-tight">New Job Booked</p>
-                                        <p className="text-[10px] text-gray-400">Calendar Synced • SMS Sent</p>
-                                    </div>
-                                    <div className="bg-neon/20 p-1.5 rounded text-neon">
-                                        <CheckCircle className="w-4 h-4" />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </div>
-                    </div>
-
-                    {/* Decorative Console Tags */}
-                    <div className="absolute -bottom-6 -right-6 hidden xl:block">
-                        <div className="bg-ocean-800 border border-white/10 p-4 rounded-lg shadow-xl font-mono text-[10px] space-y-1">
-                            <div className="text-neon/80">{'>'} intercept_channel_active</div>
-                            <div className="text-gray-500">{'>'} neural_voice_ready</div>
                         </div>
                     </div>
                 </motion.div>
