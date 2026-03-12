@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, ArrowRight, Star, ShieldCheck, Zap, RefreshCcw } from "lucide-react";
 
@@ -15,6 +15,7 @@ type DIYDemoProps = {
     phoneEyebrow?: string;
     phoneHelper?: string;
     webDemoLabel?: string;
+    customWebDemo?: ReactNode;
 };
 
 export function DIYDemo({
@@ -28,6 +29,7 @@ export function DIYDemo({
     phoneEyebrow = "DIAL DIRECTLY",
     phoneHelper = "Just call this number",
     webDemoLabel = "Start Live Web Demo",
+    customWebDemo,
 }: DIYDemoProps) {
     const [showVoice, setShowVoice] = useState(false);
 
@@ -166,43 +168,47 @@ export function DIYDemo({
                                             exit={{ opacity: 0, y: -10 }}
                                             className="relative z-10 flex flex-col items-center w-full"
                                         >
-                                            {/* Button-styled orb container */}
-                                            <div className="relative group cursor-pointer">
-                                                {/* Outer glow ring */}
-                                                <div className="absolute -inset-4 bg-gradient-to-r from-neon/20 via-cyan-400/20 to-neon/20 rounded-full blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
+                                            {customWebDemo ?? (
+                                                <>
+                                                    {/* Button-styled orb container */}
+                                                    <div className="relative group cursor-pointer">
+                                                        {/* Outer glow ring */}
+                                                        <div className="absolute -inset-4 bg-gradient-to-r from-neon/20 via-cyan-400/20 to-neon/20 rounded-full blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
 
-                                                {/* Button frame */}
-                                                <div className="relative bg-gradient-to-b from-ocean-800 to-ocean-900 rounded-full p-6 border-2 border-neon/30 shadow-[0_0_40px_rgba(26,222,241,0.2)] group-hover:border-neon/60 group-hover:shadow-[0_0_60px_rgba(26,222,241,0.4)] transition-all duration-300">
-                                                    <iframe
-                                                        src="https://iframes.ai/o/1770341151771x557178828267716600?color=11eddd&icon="
-                                                        allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
-                                                        style={{ width: "120px", height: "120px", border: "none", borderRadius: "50%", transform: "translateY(-10px)" }}
-                                                        id="assistantFrame"
-                                                        title="AI Voice Assistant"
-                                                    />
-                                                </div>
-                                            </div>
+                                                        {/* Button frame */}
+                                                        <div className="relative bg-gradient-to-b from-ocean-800 to-ocean-900 rounded-full p-6 border-2 border-neon/30 shadow-[0_0_40px_rgba(26,222,241,0.2)] group-hover:border-neon/60 group-hover:shadow-[0_0_60px_rgba(26,222,241,0.4)] transition-all duration-300">
+                                                            <iframe
+                                                                src="https://iframes.ai/o/1770341151771x557178828267716600?color=11eddd&icon="
+                                                                allow="microphone https://iframes.ai; camera https://iframes.ai; autoplay *; encrypted-media *; fullscreen *; display-capture *; picture-in-picture *; clipboard-read *; clipboard-write *;"
+                                                                style={{ width: "120px", height: "120px", border: "none", borderRadius: "50%", transform: "translateY(-10px)" }}
+                                                                id="assistantFrame"
+                                                                title="AI Voice Assistant"
+                                                            />
+                                                        </div>
+                                                    </div>
 
-                                            {/* Label below the orb-button */}
-                                            <div className="text-center space-y-3 mt-8">
-                                                <p className="text-white font-black uppercase tracking-[0.15em] text-sm">
-                                                    Click to Start Call
-                                                </p>
-                                                <p className="text-[10px] font-mono text-neon uppercase tracking-[0.2em] animate-pulse">
-                                                    Voice_Link_Active
-                                                </p>
-                                                <p className="text-gray-500 text-xs font-medium leading-relaxed max-w-[280px]">
-                                                    Click the orb above and allow microphone access
-                                                </p>
+                                                    {/* Label below the orb-button */}
+                                                    <div className="text-center space-y-3 mt-8">
+                                                        <p className="text-white font-black uppercase tracking-[0.15em] text-sm">
+                                                            Click to Start Call
+                                                        </p>
+                                                        <p className="text-[10px] font-mono text-neon uppercase tracking-[0.2em] animate-pulse">
+                                                            Voice_Link_Active
+                                                        </p>
+                                                        <p className="text-gray-500 text-xs font-medium leading-relaxed max-w-[280px]">
+                                                            Click the orb above and allow microphone access
+                                                        </p>
+                                                    </div>
+                                                </>
+                                            )}
 
-                                                <button
-                                                    onClick={() => setShowVoice(false)}
-                                                    className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors pt-4"
-                                                >
-                                                    <RefreshCcw className="w-3 h-3" />
-                                                    Back to Phone Dial
-                                                </button>
-                                            </div>
+                                            <button
+                                                onClick={() => setShowVoice(false)}
+                                                className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors pt-6"
+                                            >
+                                                <RefreshCcw className="w-3 h-3" />
+                                                Back to Phone Dial
+                                            </button>
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
