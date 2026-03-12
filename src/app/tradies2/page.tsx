@@ -494,7 +494,7 @@ export default function TradiesPage() {
                     className="relative mx-auto mb-10 max-w-5xl text-center"
                 >
                     <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.34em] text-neon">
-                        Lennox Head + Northern Rivers Tradies
+                        Northern Beaches Tradies
                     </p>
                     <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
                         Hear Your AI
@@ -507,7 +507,7 @@ export default function TradiesPage() {
                     </div>
                     <div className="mx-auto mt-6 max-w-3xl">
                         <p className="text-lg font-bold text-white md:text-2xl">
-                            Built for Lennox Head and Northern Rivers tradies.
+                            Built for Northern Beaches tradies.
                         </p>
                         <p className="mt-2 text-sm font-mono uppercase tracking-[0.22em] text-neon/80 md:text-[13px]">
                             Every local enquiry answered. Every after-hours call covered.
@@ -555,16 +555,16 @@ export default function TradiesPage() {
                                     Local Offer
                                 </p>
                                 <p className="text-base font-semibold leading-relaxed text-white/95">
-                                    A Northern Rivers rollout for local heroes.
+                                    A Northern Beaches rollout for local heroes.
                                 </p>
                                 <p className="mt-1 text-sm leading-relaxed text-white/75 md:text-base">
-                                    Built to help Lennox Head tradies answer every missed call, quote request, and
+                                    Built to help Northern Beaches tradies answer every missed call, quote request, and
                                     after-hours enquiry.
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
-                            {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
+                            {["Manly", "Brookvale", "Dee Why", "Northern Beaches"].map((place) => (
                                 <span
                                     key={place}
                                     className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
