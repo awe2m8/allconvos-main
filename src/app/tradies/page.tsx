@@ -516,20 +516,9 @@ export default function TradiesPage() {
                         </div>
                         <a
                             href="tel:0485009296"
-                            className="group inline-flex w-full max-w-[290px] items-center gap-3 rounded-full border border-white/10 bg-ocean-900/90 px-3 py-3 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_36px_rgba(163,230,53,0.12)] transition-all duration-300 hover:border-neon/60 hover:bg-ocean-900"
+                            className="group inline-flex w-full max-w-[290px] items-center justify-between gap-4 rounded-full border border-white/10 bg-ocean-900/90 px-5 py-4 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_0_36px_rgba(163,230,53,0.12)] transition-all duration-300 hover:border-neon/60 hover:bg-ocean-900"
                         >
-                            <div className="relative shrink-0">
-                                <div
-                                    aria-hidden="true"
-                                    className="absolute inset-[-14px] rounded-full bg-neon/28 blur-xl transition-opacity duration-300 group-hover:opacity-100"
-                                />
-                                <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.24)_0%,rgba(217,255,65,0.18)_18%,rgba(163,230,53,0.14)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.26),0_0_72px_rgba(163,230,53,0.24)]">
-                                    <div className="absolute inset-[6px] rounded-full border border-white/5" />
-                                    <PhoneCall className="relative h-5 w-5 text-white" />
-                                </div>
-                            </div>
-
-                            <div className="pr-3">
+                            <div className="min-w-0">
                                 <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-neon/80">
                                     Live Mobile Demo
                                 </p>
@@ -540,6 +529,7 @@ export default function TradiesPage() {
                                     Hear the receptionist in action
                                 </p>
                             </div>
+                            <ArrowLeft className="h-4 w-4 shrink-0 rotate-180 text-neon transition-transform duration-300 group-hover:translate-x-1" />
                         </a>
                     </div>
                 </motion.div>

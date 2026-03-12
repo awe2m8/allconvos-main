@@ -16,7 +16,7 @@ export function VSL() {
     };
 
     return (
-        <section className="pb-24 pt-0 bg-ocean-950 relative overflow-hidden text-center">
+        <section className="pb-24 pt-[70px] bg-ocean-950 relative overflow-hidden text-center">
             <div className="max-w-5xl mx-auto px-6 relative z-10">
 
                 <motion.div
@@ -32,14 +32,21 @@ export function VSL() {
                         ref={videoRef}
                         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
                         src="/allconvos-demo.mp4"
+                        poster="/images/vsl-poster.jpg"
                         controls={isPlaying}
                         playsInline
                     />
 
                     {/* Placeholder Thumbnail UI */}
                     {!isPlaying && (
-                        <div className="absolute inset-0 bg-gradient-to-br from-ocean-900 via-ocean-950 to-black flex items-center justify-center z-10">
-                            <div className="absolute inset-0 opacity-10 bg-[url('/tech-grid.svg')] bg-grid" />
+                        <div className="absolute inset-0 flex items-center justify-center z-10">
+                            <img
+                                src="/images/vsl-poster.jpg"
+                                alt="Video thumbnail"
+                                className="absolute inset-0 h-full w-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,22,0.18),rgba(4,10,22,0.58))]" />
+                            <div className="absolute inset-0 opacity-[0.08] bg-[url('/tech-grid.svg')] bg-grid" />
 
                             <div className="relative z-10 flex flex-col items-center">
                                 <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center shadow-2xl group-hover:bg-neon/20 group-hover:border-neon group-hover:shadow-[0_0_40px_rgba(7,222,20,0.3)] transition-all duration-500">
