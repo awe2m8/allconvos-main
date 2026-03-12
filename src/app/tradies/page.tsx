@@ -6,7 +6,7 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Pricing } from "@/components/sections/Pricing";
 import { Problem } from "@/components/sections/Problem";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, Mail, Phone, PhoneCall } from "lucide-react";
+import { ArrowLeft, CalendarDays, Mail, MapPin, Phone, PhoneCall } from "lucide-react";
 import Link from "next/link";
 import Script from "next/script";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -467,22 +467,51 @@ export default function TradiesPage() {
                     className="mx-auto mb-10 max-w-4xl text-center"
                 >
                     <p className="mb-4 text-[11px] font-mono uppercase tracking-[0.34em] text-neon">
-                        Tradies Voice AI Demo
+                        Lennox Head + Northern Rivers Tradies
                     </p>
                     <h1 className="text-4xl font-black tracking-tight text-white md:text-6xl">
-                        Hear Your AI
+                        Voice AI for
                         <span className="block bg-gradient-to-r from-neon via-cyan-300 to-white bg-clip-text text-transparent">
-                            Receptionist in Action
+                            Local Heroes
                         </span>
                     </h1>
                     <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
                         All calls, all convos, no worries.
                     </p>
                     <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-gray-400 md:text-lg">
+                        Built for Lennox Head and Northern Rivers tradies who want every local enquiry answered.
                         Test two voice AI examples. One helps you talk through your business and role play how an AI
                         receptionist could work for you. The other is a tradie plumber example focused on real
                         callouts, quote requests, and after-hours enquiries.
                     </p>
+                    <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div className="flex items-start gap-3">
+                                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
+                                    <MapPin className="h-4 w-4" />
+                                </div>
+                                <div>
+                                    <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
+                                        Local Offer
+                                    </p>
+                                    <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                                        A Northern Rivers rollout for local heroes. Built to help Lennox Head tradies
+                                        answer every missed call, quote request, and after-hours enquiry.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
+                                {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
+                                    <span
+                                        key={place}
+                                        className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
+                                    >
+                                        {place}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                     <div className="mx-auto mt-5 max-w-3xl rounded-2xl border border-neon/20 bg-white/[0.04] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(163,230,53,0.05)]">
                         <div className="flex items-start gap-4">
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
