@@ -459,21 +459,29 @@ export default function TradiesPage() {
                     <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
                         allconvos<span className="text-neon">_</span>
                     </Link>
-                    <div className="hidden items-center gap-2 md:flex">
+                    <div className="hidden md:flex md:flex-col md:items-end md:gap-2">
+                        <div className="flex items-center gap-2">
+                            <a
+                                href="https://calendly.com/jessallan/30min"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center rounded-md border border-neon/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neon transition-all hover:border-neon hover:bg-neon/10"
+                            >
+                                Book In
+                            </a>
+                            <Link
+                                href="/contact"
+                                className="inline-flex items-center justify-center rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:border-neon/30 hover:bg-white/[0.08]"
+                            >
+                                Contact
+                            </Link>
+                        </div>
                         <a
-                            href="https://calendly.com/jessallan/30min"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-md border border-neon/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neon transition-all hover:border-neon hover:bg-neon/10"
+                            href="tel:0404283605"
+                            className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/65 transition-colors hover:text-neon"
                         >
-                            Book In
+                            Or call or text Jesse - 0404 283 605
                         </a>
-                        <Link
-                            href="/contact"
-                            className="inline-flex items-center justify-center rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:border-neon/30 hover:bg-white/[0.08]"
-                        >
-                            Contact
-                        </Link>
                     </div>
                 </nav>
 
@@ -495,42 +503,13 @@ export default function TradiesPage() {
                     <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-10 md:mt-0">
                         <SelfSellVoiceOrb variant="compact" />
                     </div>
-                    <p className="mt-5 text-sm font-mono uppercase tracking-[0.28em] text-neon/85 md:text-base">
-                        All calls, all convos, no worries.
-                    </p>
-                    <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-gray-400 md:text-lg">
-                        Built for Lennox Head and Northern Rivers tradies who want every local enquiry answered.
-                        Test two voice AI examples. One helps you talk through your business and role play how an AI
-                        receptionist could work for you. The other is a tradie plumber example focused on real
-                        callouts, quote requests, and after-hours enquiries.
-                    </p>
-                    <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div className="flex items-start gap-3">
-                                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
-                                    <MapPin className="h-4 w-4" />
-                                </div>
-                                <div>
-                                    <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
-                                        Local Offer
-                                    </p>
-                                    <p className="text-sm leading-relaxed text-white/90 md:text-base">
-                                        A Northern Rivers rollout for local heroes. Built to help Lennox Head tradies
-                                        answer every missed call, quote request, and after-hours enquiry.
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
-                                {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
-                                    <span
-                                        key={place}
-                                        className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
-                                    >
-                                        {place}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                    <div className="mx-auto mt-6 max-w-3xl">
+                        <p className="text-lg font-bold text-white md:text-2xl">
+                            Built for Lennox Head and Northern Rivers tradies.
+                        </p>
+                        <p className="mt-2 text-sm font-mono uppercase tracking-[0.22em] text-neon/80 md:text-[13px]">
+                            Every local enquiry answered. Every after-hours call covered.
+                        </p>
                     </div>
                     <div className="mx-auto mt-5 max-w-3xl rounded-2xl border border-neon/20 bg-white/[0.04] px-5 py-4 text-left shadow-[0_0_0_1px_rgba(163,230,53,0.05)]">
                         <div className="flex items-start gap-4">
@@ -561,6 +540,38 @@ export default function TradiesPage() {
                     {DEMO_CONFIGS.map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
                     ))}
+                </div>
+
+                <div className="mx-auto mt-8 max-w-5xl rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div className="flex items-start gap-3">
+                            <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
+                                <MapPin className="h-4 w-4" />
+                            </div>
+                            <div>
+                                <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
+                                    Local Offer
+                                </p>
+                                <p className="text-base font-semibold leading-relaxed text-white/95">
+                                    A Northern Rivers rollout for local heroes.
+                                </p>
+                                <p className="mt-1 text-sm leading-relaxed text-white/75 md:text-base">
+                                    Built to help Lennox Head tradies answer every missed call, quote request, and
+                                    after-hours enquiry.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
+                            {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
+                                <span
+                                    key={place}
+                                    className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
+                                >
+                                    {place}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 <motion.div
