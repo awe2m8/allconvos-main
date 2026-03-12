@@ -38,7 +38,7 @@ export function DIYDemo({
 
     return (
         <section className="py-24 relative overflow-hidden bg-ocean-950">
-            {webDemoVariant === "plumbing-ghl" && includeWidgetScript ? <PlumbingDemoVoiceOrbLoader /> : null}
+            {webDemoVariant === "plumbing-ghl" && includeWidgetScript && !showVoice ? <PlumbingDemoVoiceOrbLoader /> : null}
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-neon/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
@@ -173,7 +173,7 @@ export function DIYDemo({
                                             className="relative z-10 flex flex-col items-center w-full"
                                         >
                                             {webDemoVariant === "plumbing-ghl" ? (
-                                                <PlumbingDemoVoiceOrb includeScript={false} />
+                                                <PlumbingDemoVoiceOrb includeScript={!includeWidgetScript} />
                                             ) : (
                                                 <>
                                                     {/* Button-styled orb container */}
