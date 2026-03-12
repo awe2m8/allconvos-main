@@ -526,38 +526,6 @@ export default function TradiesPage() {
                     ))}
                 </div>
 
-                <div className="mx-auto mt-8 max-w-5xl rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                        <div className="flex items-start gap-3">
-                            <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
-                                <MapPin className="h-4 w-4" />
-                            </div>
-                            <div>
-                                <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
-                                    Local Offer
-                                </p>
-                                <p className="text-base font-semibold leading-relaxed text-white/95">
-                                    A Northern Rivers rollout for local heroes.
-                                </p>
-                                <p className="mt-1 text-sm leading-relaxed text-white/75 md:text-base">
-                                    Built to help Lennox Head tradies answer every missed call, quote request, and
-                                    after-hours enquiry.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
-                            {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
-                                <span
-                                    key={place}
-                                    className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
-                                >
-                                    {place}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -633,6 +601,37 @@ export default function TradiesPage() {
                     webDemoVariant="plumbing-ghl"
                     includeWidgetScript={false}
                 />
+                <div className="mx-auto mt-8 max-w-5xl rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div className="flex items-start gap-3">
+                            <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neon/20 bg-neon/10 text-neon">
+                                <MapPin className="h-4 w-4" />
+                            </div>
+                            <div>
+                                <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.3em] text-neon/80">
+                                    Local Offer
+                                </p>
+                                <p className="text-base font-semibold leading-relaxed text-white/95">
+                                    A Northern Rivers rollout for local heroes.
+                                </p>
+                                <p className="mt-1 text-sm leading-relaxed text-white/75 md:text-base">
+                                    Built to help Lennox Head tradies answer every missed call, quote request, and
+                                    after-hours enquiry.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2 md:max-w-[280px] md:justify-end">
+                            {["Lennox Head", "Ballina", "Byron Bay", "Northern Rivers"].map((place) => (
+                                <span
+                                    key={place}
+                                    className="rounded-full border border-white/10 bg-ocean-900/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.22em] text-white/70"
+                                >
+                                    {place}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
                 <Problem />
                 <CallHandling />
                 <HowItWorks />
