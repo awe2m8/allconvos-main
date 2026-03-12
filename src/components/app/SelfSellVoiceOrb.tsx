@@ -344,11 +344,11 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                 <div className="relative">
                     <motion.div
                         aria-hidden="true"
-                        className={`absolute inset-[-14px] rounded-full blur-xl ${isActive ? "bg-red-400/24" : "bg-neon/48"}`}
+                        className={`absolute inset-[-12px] rounded-full blur-lg ${isActive ? "bg-red-400/18" : "bg-neon/32"}`}
                         animate={
                             isActive
-                                ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
-                                : { scale: [0.9, 1.22, 0.9], opacity: [0.44, 1, 0.44] }
+                                ? { scale: [0.97, 1.06, 0.97], opacity: [0.22, 0.42, 0.22] }
+                                : { scale: [0.92, 1.16, 0.92], opacity: [0.24, 0.54, 0.24] }
                         }
                         transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                     />
