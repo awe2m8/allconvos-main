@@ -507,7 +507,7 @@ export default function TradiesPage() {
                             Receptionist in Action
                         </span>
                     </h1>
-                    <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-[40px] md:mt-0">
+                    <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-[70px] md:mt-0">
                         <SelfSellVoiceOrb variant="compact" />
                     </div>
                     <div className="mx-auto mt-6 max-w-3xl">

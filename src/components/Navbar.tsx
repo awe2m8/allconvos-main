@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import { appUrl, marketingUrl } from "@/lib/siteUrls";
-import { ComingSoonButton } from "@/components/ui/ComingSoonButton";
 
 export function Navbar() {
     const marketingHomeUrl = marketingUrl("/");
@@ -27,12 +26,6 @@ export function Navbar() {
                 </div>
 
                 <div className="hidden md:flex items-center gap-3">
-                    <SignedOut>
-                        <ComingSoonButton className="inline-flex items-center justify-center px-5 py-2 text-sm border-2 border-neon/30 text-neon rounded-sm font-bold uppercase tracking-wide font-mono hover:border-neon hover:bg-neon/10 transition-all">
-                            Member Login
-                        </ComingSoonButton>
-                    </SignedOut>
-
                     <SignedIn>
                         <Link
                             href={appOnboardingUrl}
