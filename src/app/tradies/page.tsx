@@ -1,7 +1,6 @@
 "use client";
 
 import { CallHandling } from "@/components/sections/CallHandling";
-import { CaseStudy } from "@/components/sections/CaseStudy";
 import { DIYDemo } from "@/components/sections/DIYDemo";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Pricing } from "@/components/sections/Pricing";
@@ -587,10 +586,11 @@ export default function TradiesPage() {
                     phoneEyebrow="CALL THE MOBILE DEMO"
                     phoneHelper="Call this number now"
                     webDemoLabel="Or Start Live Web Demo"
+                    webDemoVariant="plumbing-ghl"
+                    includeWidgetScript={false}
                 />
                 <Problem />
                 <CallHandling />
-                <CaseStudy />
                 <HowItWorks />
                 <Pricing />
             </section>
