@@ -67,27 +67,23 @@ export function Hero() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, delay: 0.25 }}
-                        className="relative w-full max-w-3xl"
+                        className="relative flex w-full max-w-3xl justify-center py-2"
                     >
-                        <div className="absolute inset-10 rounded-full bg-neon/10 blur-[90px] pointer-events-none" />
-                        <div className="absolute inset-x-16 top-12 h-40 rounded-full bg-cyan-400/8 blur-[80px] pointer-events-none" />
+                        <div className="absolute inset-x-12 top-8 h-48 rounded-full bg-neon/12 blur-[110px] pointer-events-none" />
+                        <div className="absolute inset-x-24 top-20 h-32 rounded-full bg-cyan-400/10 blur-[96px] pointer-events-none" />
 
                         {isHighlighting && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: [0, 0.35, 0] }}
                                 transition={{ duration: 1.5, times: [0, 0.5, 1] }}
-                                className="absolute inset-4 z-20 rounded-[2rem] border border-neon/60 bg-neon/6 pointer-events-none"
+                                className="absolute left-1/2 top-1/2 z-20 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-neon/60 bg-neon/6 pointer-events-none md:h-40 md:w-40"
                             />
                         )}
 
-                        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,34,0.96),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_40px_120px_rgba(2,8,20,0.85)]">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(163,230,53,0.08),transparent_24%),radial-gradient(circle_at_50%_58%,rgba(56,189,248,0.08),transparent_34%)]" />
-
-                            <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden px-8 py-12 sm:min-h-[380px]">
-                                <div className="scale-[1.35] sm:scale-[1.45]">
-                                    <SelfSellVoiceOrb />
-                                </div>
+                        <div className="relative flex min-h-[220px] items-center justify-center px-8 py-6 sm:min-h-[250px]">
+                            <div className="scale-[1.25] sm:scale-[1.3]">
+                                <SelfSellVoiceOrb />
                             </div>
                         </div>
                     </motion.div>
