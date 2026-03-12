@@ -48,8 +48,11 @@ export function Hero() {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="text-5xl font-bold leading-[0.9] text-white md:text-6xl lg:text-7xl"
                     >
-                        STOP MISSING <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400">CALLS.</span> <br />
+                        <span className="sm:whitespace-nowrap">
+                            STOP MISSING{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400">CALLS.</span>
+                        </span>{" "}
+                        <br />
                         START MAKING <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400">MONEY.</span>
                     </motion.h1>
 
