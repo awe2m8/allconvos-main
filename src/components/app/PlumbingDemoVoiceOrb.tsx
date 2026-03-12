@@ -22,6 +22,18 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
     return null;
 };
 
+export function PlumbingDemoVoiceOrbLoader() {
+    return (
+        <Script
+            id={`${PLUMBING_HOST_ID}-script`}
+            src="https://widgets.leadconnectorhq.com/loader.js"
+            data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+            data-widget-id={PLUMBING_WIDGET_ID}
+            strategy="afterInteractive"
+        />
+    );
+}
+
 export function PlumbingDemoVoiceOrb({ includeScript = true }: { includeScript?: boolean }) {
     const [callState, setCallState] = useState<CallState>("idle");
     const [isWidgetReady, setIsWidgetReady] = useState(false);
@@ -117,10 +129,10 @@ export function PlumbingDemoVoiceOrb({ includeScript = true }: { includeScript?:
             return;
         }
 
-        if (!statusText && !callStatus) {
+        if (!statusText && !callStatus && callState !== "connecting" && callState !== "live") {
             setCallState("idle");
         }
-    }, [getWidgetRoot]);
+    }, [callState, getWidgetRoot]);
 
     const prewarmWidget = useCallback(async () => {
         if (isPrewarmed) return;
@@ -258,15 +270,7 @@ export function PlumbingDemoVoiceOrb({ includeScript = true }: { includeScript?:
 
     return (
         <>
-            {includeScript ? (
-                <Script
-                    id={`${PLUMBING_HOST_ID}-script`}
-                    src="https://widgets.leadconnectorhq.com/loader.js"
-                    data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-                    data-widget-id={PLUMBING_WIDGET_ID}
-                    strategy="afterInteractive"
-                />
-            ) : null}
+            {includeScript ? <PlumbingDemoVoiceOrbLoader /> : null}
 
             <div className="flex w-full flex-col items-center">
                 <div className="relative">
