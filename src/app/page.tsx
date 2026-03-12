@@ -19,7 +19,7 @@ export default function Home() {
       <Problem />
       <TestimonialStrip />
       <CallHandling />
-      <DIYDemo />
+      <DIYDemo webDemoVariant="plumbing-ghl" />
       <DashboardPreview />
       <HowItWorks />
       <Pricing />

@@ -448,94 +448,6 @@ function VoiceDemoCard({ config }: { config: DemoConfig }) {
     );
 }
 
-function PlumbingWebDemoOrb() {
-    const config = DEMO_CONFIGS[1];
-    const { callState, isBusy, orbLabel, statusText, handleOrbClick } = useGhlVoiceDemo(config);
-    const isActive = callState === "live" || callState === "connecting";
-
-    return (
-        <div className="flex w-full flex-col items-center">
-            <div className="relative">
-                <motion.div
-                    aria-hidden="true"
-                    className={`absolute inset-[-18px] rounded-full blur-2xl ${isActive ? "bg-red-400/24" : config.idleHaloClass}`}
-                    animate={
-                        isActive
-                            ? { scale: [0.96, 1.08, 0.96], opacity: [0.28, 0.62, 0.28] }
-                            : { scale: [0.86, 1.18, 0.86], opacity: [0.24, 0.78, 0.24] }
-                    }
-                    transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                />
-                {!isActive ? (
-                    <motion.div
-                        aria-hidden="true"
-                        className={`absolute inset-[-8px] rounded-full blur-md ${config.idleConicClass}`}
-                        animate={{ rotate: [0, 360] }}
-                        transition={{ duration: 4.8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                    />
-                ) : null}
-                <motion.button
-                    type="button"
-                    onClick={handleOrbClick}
-                    disabled={isBusy}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.985 }}
-                    animate={
-                        isActive
-                            ? { y: [0, -2, 0], scale: [1, 1.014, 1] }
-                            : { y: [0, -12, 0], scale: [1, 1.05, 1], rotate: [0, 0.7, 0, -0.7, 0] }
-                    }
-                    transition={{ duration: isActive ? 1.6 : 2.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                    className={`group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-36 md:w-36 ${
-                        isActive
-                            ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_46px_rgba(248,113,113,0.16)]"
-                            : config.idleOrbClass
-                    }`}
-                >
-                    {!isActive ? (
-                        <>
-                            <motion.div
-                                aria-hidden="true"
-                                className={`absolute inset-0 rounded-full ${config.idleShimmerClass}`}
-                                animate={{ opacity: [0.38, 1, 0.38], scale: [0.985, 1.018, 0.985] }}
-                                transition={{ duration: 1.9, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                            />
-                            <motion.div
-                                aria-hidden="true"
-                                className={`absolute inset-[8px] rounded-full border ${config.idleInnerRingClass}`}
-                                animate={{ rotate: [0, -360] }}
-                                transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                            />
-                        </>
-                    ) : null}
-                    <div className="absolute inset-[10px] rounded-full border border-white/5" />
-                    <div className="relative flex flex-col items-center gap-3 px-5 text-center">
-                        <div
-                            className={`flex h-11 w-11 items-center justify-center rounded-full border ${
-                                isActive ? "border-red-300/40 bg-red-500/10 text-red-100" : config.idleIconClass
-                            }`}
-                        >
-                            <PhoneCall className="h-4 w-4" />
-                        </div>
-                        <div className="space-y-1">
-                            <div className="text-[10px] font-mono uppercase tracking-[0.34em] text-gray-400">
-                                {isActive ? "End Call" : "Voice Demo"}
-                            </div>
-                            <div className="text-base font-black uppercase tracking-[0.16em] text-white md:text-lg">
-                                {orbLabel}
-                            </div>
-                        </div>
-                    </div>
-                </motion.button>
-            </div>
-            <p className="mt-5 max-w-[320px] text-center text-sm text-gray-300">{statusText}</p>
-            <p className="mt-3 max-w-[320px] text-center text-xs text-gray-500">
-                Try the tradie plumbing example in-browser before routing real enquiries.
-            </p>
-        </div>
-    );
-}
-
 export default function TradiesPage() {
     return (
         <main className="min-h-screen overflow-hidden bg-ocean-950 text-white selection:bg-white/20">
@@ -675,7 +587,8 @@ export default function TradiesPage() {
                     phoneEyebrow="CALL THE MOBILE DEMO"
                     phoneHelper="Call this number now"
                     webDemoLabel="Or Start Live Web Demo"
-                    customWebDemo={<PlumbingWebDemoOrb />}
+                    webDemoVariant="plumbing-ghl"
+                    includeWidgetScript={false}
                 />
                 <Problem />
                 <CallHandling />

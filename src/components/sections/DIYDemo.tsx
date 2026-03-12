@@ -1,8 +1,9 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, ArrowRight, Star, ShieldCheck, Zap, RefreshCcw } from "lucide-react";
+import { PlumbingDemoVoiceOrb } from "@/components/app/PlumbingDemoVoiceOrb";
 
 type DIYDemoProps = {
     eyebrowLabel?: string;
@@ -15,7 +16,8 @@ type DIYDemoProps = {
     phoneEyebrow?: string;
     phoneHelper?: string;
     webDemoLabel?: string;
-    customWebDemo?: ReactNode;
+    webDemoVariant?: "default" | "plumbing-ghl";
+    includeWidgetScript?: boolean;
 };
 
 export function DIYDemo({
@@ -29,7 +31,8 @@ export function DIYDemo({
     phoneEyebrow = "DIAL DIRECTLY",
     phoneHelper = "Just call this number",
     webDemoLabel = "Start Live Web Demo",
-    customWebDemo,
+    webDemoVariant = "default",
+    includeWidgetScript = true,
 }: DIYDemoProps) {
     const [showVoice, setShowVoice] = useState(false);
 
@@ -168,7 +171,9 @@ export function DIYDemo({
                                             exit={{ opacity: 0, y: -10 }}
                                             className="relative z-10 flex flex-col items-center w-full"
                                         >
-                                            {customWebDemo ?? (
+                                            {webDemoVariant === "plumbing-ghl" ? (
+                                                <PlumbingDemoVoiceOrb includeScript={includeWidgetScript} />
+                                            ) : (
                                                 <>
                                                     {/* Button-styled orb container */}
                                                     <div className="relative group cursor-pointer">
