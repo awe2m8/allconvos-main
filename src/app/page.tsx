@@ -18,7 +18,7 @@ export default function Home() {
       <VSL />
       <Problem />
       <TestimonialStrip />
-      <CallHandling />
+      <CallHandling includeGyms />
       <DIYDemo webDemoVariant="plumbing-ghl" />
       <DashboardPreview />
       <HowItWorks />

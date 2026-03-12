@@ -2,9 +2,13 @@
 
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Hammer, Play, Pause } from "lucide-react";
+import { Hammer, Dumbbell, Play, Pause } from "lucide-react";
 
-export function CallHandling() {
+type CallHandlingProps = {
+    includeGyms?: boolean;
+};
+
+export function CallHandling({ includeGyms = false }: CallHandlingProps) {
     const [playing, setPlaying] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -20,7 +24,11 @@ export function CallHandling() {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
 
-                audioRef.current.src = "/audio/tradies.mp3";
+                const audioFileByType: Record<string, string> = {
+                    Tradies: "tradies.mp3",
+                    Gyms: "gymdemoV1.mp3",
+                };
+                audioRef.current.src = `/audio/${audioFileByType[type] ?? "tradies.mp3"}`;
                 audioRef.current.load();
                 audioRef.current.volume = 1.0;
 
@@ -45,6 +53,27 @@ export function CallHandling() {
             color: "from-blue-500/20 to-cyan-500/20",
             accent: "text-blue-400",
         },
+        ...(includeGyms
+            ? [{
+                id: "Gyms",
+                icon: <Dumbbell className="w-6 h-6" />,
+                title: "Gyms",
+                description: "Book trial classes and handle membership enquiries 24/7.",
+                color: "from-purple-500/20 to-pink-500/20",
+                accent: "text-purple-400",
+            }]
+            : []),
+    ];
+
+    const industries = [
+        "Real Estate",
+        "Medical",
+        "Automotive",
+        "Home Services",
+        "Tradies",
+        ...(includeGyms ? ["Gyms"] : []),
+        "Med Spas",
+        "Fitness Studios",
     ];
 
     return (
@@ -94,7 +123,7 @@ export function CallHandling() {
                     </motion.p>
                 </div>
 
-                <div className="grid gap-8 max-w-3xl mx-auto">
+                <div className={`grid gap-8 mx-auto ${categories.length > 1 ? "max-w-5xl md:grid-cols-2" : "max-w-3xl"}`}>
                     {categories.map((cat, idx) => (
                         <motion.div
                             key={cat.id}
@@ -170,7 +199,7 @@ export function CallHandling() {
                     transition={{ delay: 0.8 }}
                     className="mt-16 flex flex-wrap justify-center gap-4 filter grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 >
-                    {["Real Estate", "Medical", "Automotive", "Home Services", "Tradies", "Med Spas", "Fitness Studios"].map((industry) => (
+                    {industries.map((industry) => (
                         <span key={industry} className="px-4 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/50">
                             {industry}
                         </span>
