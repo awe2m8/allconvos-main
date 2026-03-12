@@ -69,8 +69,8 @@ export function Hero() {
                         transition={{ duration: 0.5, delay: 0.25 }}
                         className="relative flex w-full max-w-3xl justify-center py-2"
                     >
-                        <div className="absolute inset-x-12 top-8 h-48 rounded-full bg-neon/12 blur-[110px] pointer-events-none" />
-                        <div className="absolute inset-x-24 top-20 h-32 rounded-full bg-cyan-400/10 blur-[96px] pointer-events-none" />
+                        <div className="absolute inset-x-20 top-10 h-36 rounded-full bg-neon/6 blur-[78px] pointer-events-none" />
+                        <div className="absolute inset-x-28 top-20 h-24 rounded-full bg-cyan-400/6 blur-[72px] pointer-events-none" />
 
                         {isHighlighting && (
                             <motion.div

@@ -344,11 +344,11 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                 <div className="relative">
                     <motion.div
                         aria-hidden="true"
-                        className={`absolute inset-[-12px] rounded-full blur-lg ${isActive ? "bg-red-400/18" : "bg-neon/32"}`}
+                        className={`absolute inset-[-8px] rounded-full blur-md ${isActive ? "bg-red-400/16" : "bg-neon/18"}`}
                         animate={
                             isActive
                                 ? { scale: [0.97, 1.06, 0.97], opacity: [0.22, 0.42, 0.22] }
-                                : { scale: [0.92, 1.16, 0.92], opacity: [0.24, 0.54, 0.24] }
+                                : { scale: [0.96, 1.08, 0.96], opacity: [0.12, 0.26, 0.12] }
                         }
                         transition={{ duration: isActive ? 1.6 : 2.05, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                     />
@@ -375,7 +375,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
                         className={`group relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border transition-all duration-300 md:h-20 md:w-20 ${
                             isActive
                                 ? "border-red-300/55 bg-[radial-gradient(circle_at_50%_30%,rgba(140,26,26,0.22),transparent_42%),linear-gradient(180deg,rgba(20,10,20,0.98),rgba(9,6,16,1))] shadow-[0_0_0_1px_rgba(248,113,113,0.14),0_0_34px_rgba(248,113,113,0.16)]"
-                                : "border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.24)_0%,rgba(217,255,65,0.18)_18%,rgba(163,230,53,0.14)_34%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.26),0_0_72px_rgba(163,230,53,0.34)]"
+                                : "border-neon bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.22)_0%,rgba(217,255,65,0.14)_16%,rgba(163,230,53,0.1)_30%,rgba(7,30,54,0.95)_72%,rgba(4,12,26,1)_100%)] shadow-[0_0_0_1px_rgba(163,230,53,0.22),0_0_42px_rgba(163,230,53,0.16)]"
                         }`}
                     >
                         {!isActive ? (
