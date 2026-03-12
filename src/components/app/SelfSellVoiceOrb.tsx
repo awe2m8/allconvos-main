@@ -253,7 +253,7 @@ export function SelfSellVoiceOrb({ variant = "full" }: { variant?: "full" | "com
         if (callState === "live") return "Live Call";
         if (callState === "error") return "Retry";
         if (!isWidgetReady) return "Loading Voice";
-        return "Self-Sell Ready";
+        return "Demo Voice Agent";
     }, [callState, isWidgetReady]);
 
     const isActive = callState === "live" || callState === "connecting";

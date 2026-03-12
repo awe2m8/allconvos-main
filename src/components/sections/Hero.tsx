@@ -115,7 +115,6 @@ export function Hero() {
 
                     <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,34,0.96),rgba(4,10,22,1))] shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_40px_120px_rgba(2,8,20,0.85)]">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(163,230,53,0.08),transparent_24%),radial-gradient(circle_at_50%_58%,rgba(56,189,248,0.08),transparent_34%)]" />
-                        <div className="absolute inset-[28px] rounded-[1.5rem] border border-white/6" />
 
                         <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden px-8 py-12">
                             <div className="scale-[1.45]">
