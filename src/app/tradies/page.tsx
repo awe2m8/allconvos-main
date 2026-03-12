@@ -460,8 +460,10 @@ export default function TradiesPage() {
                         <Link href="/" className="font-mono text-2xl font-bold tracking-tighter text-white">
                             allconvos<span className="text-neon">_</span>
                         </Link>
-                        <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.24em] text-white/55">
-                            For Lennox and Northern Rivers Tradies
+                        <p className="mt-2 text-[11px] font-mono uppercase leading-relaxed tracking-[0.22em] text-white/78">
+                            For Lennox and
+                            <br />
+                            Northern Rivers Tradies
                         </p>
                     </div>
                     <div className="hidden md:flex md:flex-col md:items-end md:gap-2">
@@ -483,7 +485,7 @@ export default function TradiesPage() {
                         </div>
                         <a
                             href="tel:0404283605"
-                            className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/65 transition-colors hover:text-neon"
+                            className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/82 transition-colors hover:text-neon"
                         >
                             Or call or text Jesse - 0404 283 605
                         </a>
@@ -505,7 +507,7 @@ export default function TradiesPage() {
                             Receptionist in Action
                         </span>
                     </h1>
-                    <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-10 md:mt-0">
+                    <div className="mt-5 flex justify-center md:absolute md:-right-[70px] md:top-[40px] md:mt-0">
                         <SelfSellVoiceOrb variant="compact" />
                     </div>
                     <div className="mx-auto mt-6 max-w-3xl">
