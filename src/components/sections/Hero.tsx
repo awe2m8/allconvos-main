@@ -27,7 +27,7 @@ export function Hero() {
             <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-6 text-center">
-                <div className="flex w-full max-w-4xl flex-col items-center gap-8">
+                <div className="flex w-full max-w-4xl flex-col items-center gap-8 pt-24">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
