@@ -39,7 +39,16 @@ function deriveMarketingOriginFromAppOrigin(appOrigin: URL): string {
 
 export function getAppOrigin(): string {
   const appUrl = parseUrl(process.env.NEXT_PUBLIC_APP_URL);
-  return appUrl ? removeTrailingSlash(appUrl.origin) : LOCAL_ORIGIN;
+  if (appUrl) {
+    return removeTrailingSlash(appUrl.origin);
+  }
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return LOCAL_ORIGIN;
 }
 
 export function getMarketingOrigin(): string {
@@ -49,11 +58,18 @@ export function getMarketingOrigin(): string {
   }
 
   const appUrl = parseUrl(process.env.NEXT_PUBLIC_APP_URL);
-  if (!appUrl) {
-    return LOCAL_ORIGIN;
+  if (appUrl) {
+    return deriveMarketingOriginFromAppOrigin(appUrl);
   }
 
-  return deriveMarketingOriginFromAppOrigin(appUrl);
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return LOCAL_ORIGIN;
 }
 
 export function appUrl(pathWithQuery: string): string {
