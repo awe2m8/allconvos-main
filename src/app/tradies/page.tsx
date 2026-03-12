@@ -496,7 +496,7 @@ export default function TradiesPage() {
                             Every local enquiry answered. Every after-hours call covered.
                         </p>
                     </div>
-                    <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                    <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                         <div className="w-full max-w-[290px] [&>button]:w-full [&>button]:justify-start">
                             <SelfSellVoiceOrb variant="compact" />
                         </div>
@@ -520,7 +520,7 @@ export default function TradiesPage() {
                     </div>
                 </motion.div>
 
-                <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-2">
+                <div className="mx-auto mt-10 grid max-w-5xl gap-6 lg:grid-cols-2">
                     {DEMO_CONFIGS.map((config) => (
                         <VoiceDemoCard key={config.hostId} config={config} />
                     ))}
