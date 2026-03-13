@@ -193,6 +193,37 @@ export default function DemosHubPage() {
                         </div>
                     </div>
                 </motion.div>
+
+                {/* Demo Limitations Block */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.15 }}
+                    className="mx-auto mt-20 max-w-5xl"
+                >
+                    <div className="rounded-2xl border border-white/10 bg-ocean-900/30 p-6 md:p-8 text-left backdrop-blur-sm shadow-sm">
+                        <div className="mb-4 flex items-center gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-neon/30 bg-neon/10">
+                                <span className="text-sm font-bold text-neon">!</span>
+                            </div>
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-white">Demo Limitations</h3>
+                        </div>
+                        <ul className="space-y-3 text-sm text-gray-400 leading-relaxed">
+                            <li className="flex items-start gap-3">
+                                <span className="mt-0.5 text-neon/70">›</span>
+                                <div><strong className="text-gray-300 font-medium">Limited Knowledge Base:</strong> These demos are trained on a minimal set of data for display purposes. Before going into production, they will be heavily trained on a significant amount of your specific business materials.</div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="mt-0.5 text-neon/70">›</span>
+                                <div><strong className="text-gray-300 font-medium">No Live Calendar Integration:</strong> This public demo does not have a live calendar attached, so actual test bookings or re-scheduling actions will not be completed.</div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="mt-0.5 text-neon/70">›</span>
+                                <div><strong className="text-gray-300 font-medium">No Live CRM Pushing:</strong> Real-time internal actions (like transferring your call directly to a human staff member or sending an immediate SMS confirmation) have been disabled for these public demos.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </motion.div>
             </div>
         </main>
     );

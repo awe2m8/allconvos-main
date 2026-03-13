@@ -16,34 +16,12 @@ export function Navbar() {
                     allconvos<span className="text-neon">_</span>
                 </Link>
 
-                <div className="hidden md:flex items-center space-x-8 text-sm font-mono text-gray-400">
+                <div className="hidden md:flex space-x-8 text-sm font-mono text-gray-400">
                     <Link href={`${marketingHomeUrl}#problem`} className="hover:text-neon transition-colors">The Problem</Link>
                     <Link href={`${marketingHomeUrl}#how`} className="hover:text-neon transition-colors">How It Works</Link>
                     <Link href={`${marketingHomeUrl}#pricing`} className="hover:text-neon transition-colors">Pricing</Link>
-                    
-                    <div className="flex items-center gap-3 ml-2">
-                        {/* Tradie Demo Button */}
-                        <div className="relative group">
-                            <Link 
-                                href={tradiesDemoUrl} 
-                                className="bg-[#ff4d00] text-white px-3 py-1.5 rounded-sm font-bold text-[10px] uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center whitespace-nowrap"
-                            >
-                                Tradie Demo
-                            </Link>
-                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#ff4d00] rotate-45" />
-                        </div>
-
-                        {/* More Demos Button */}
-                        <div className="relative group">
-                            <Link 
-                                href={marketingUrl("/demos")} 
-                                className="bg-[#ff4d00] text-white px-3 py-1.5 rounded-sm font-bold text-[10px] uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center whitespace-nowrap"
-                            >
-                                More Demos
-                            </Link>
-                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#ff4d00] rotate-45" />
-                        </div>
-                    </div>
+                    <Link href={tradiesDemoUrl} className="hover:text-neon transition-colors">Tradie Demo</Link>
+                    <Link href={marketingUrl("/demos")} className="text-neon hover:text-white transition-colors">More Demos</Link>
                 </div>
 
                 <div className="hidden md:flex items-center gap-3">
