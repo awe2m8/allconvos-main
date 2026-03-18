@@ -2,16 +2,16 @@
 
 import { SelfSellVoiceOrb } from "@/components/app/SelfSellVoiceOrb";
 import { motion } from "framer-motion";
-import { CalendarDays, Mail, Phone, Briefcase, Dumbbell, Stethoscope, Scissors, Sparkles, Wrench, Droplets } from "lucide-react";
+import { Sun, CalendarDays, Mail, Phone, Briefcase, Dumbbell, Stethoscope, Scissors, Sparkles, Wrench, Droplets } from "lucide-react";
 import Link from "next/link";
 import { marketingUrl } from "@/lib/siteUrls";
 
 const INDUSTRIES = [
     {
-        name: "Tradies",
-        slug: "tradies",
-        description: "Plumbers, Electricians, HVAC & emergency callouts.",
-        icon: Briefcase,
+        name: "Solar",
+        slug: "solar",
+        description: "Handling solar inquiries, quotes & booking installations.",
+        icon: Sun,
     },
     {
         name: "Gyms & Fitness",
@@ -20,22 +20,22 @@ const INDUSTRIES = [
         icon: Dumbbell,
     },
     {
+        name: "Tradies",
+        slug: "tradies",
+        description: "Plumbers, Electricians, HVAC & emergency callouts.",
+        icon: Briefcase,
+    },
+    {
         name: "Clinics",
         slug: "clinics",
         description: "Patient scheduling, FAQs & after-hours routing.",
         icon: Stethoscope,
     },
     {
-        name: "Salons & Spas",
+        name: "Salon's, Massage and Spa's",
         slug: "salons",
-        description: "Handling appointment bookings & service questions.",
+        description: "Handling appointment bookings, massage sessions & service questions.",
         icon: Scissors,
-    },
-    {
-        name: "Massage Parlours",
-        slug: "massage",
-        description: "Booking relaxation sessions & answering service queries.",
-        icon: Sparkles,
     },
     {
         name: "Automotive",
@@ -68,7 +68,7 @@ export default function DemosHubPage() {
                     </div>
                     <div className="hidden md:flex md:items-center md:gap-2">
                         <a
-                            href="https://api.leadconnectorhq.com/widget/booking/OYHMC46ijO5WgqMTNb8G"
+                            href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center rounded-md border border-neon/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neon transition-all hover:border-neon hover:bg-neon/10"
@@ -206,7 +206,7 @@ export default function DemosHubPage() {
 
                         <div className="mx-auto max-w-sm flex flex-col gap-3">
                             <a
-                                href="https://api.leadconnectorhq.com/widget/booking/OYHMC46ijO5WgqMTNb8G"
+                                href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-neon px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-all hover:bg-white hover:shadow-[0_0_20px_rgba(163,230,53,0.4)]"

@@ -7,7 +7,7 @@ import Script from "next/script";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import { SelfSellVoiceOrb } from "@/components/app/SelfSellVoiceOrb";
-import { Hammer, Dumbbell, Play, Pause, Stethoscope, Scissors, Sparkles, Wrench, Droplets } from "lucide-react";
+import { Sun, Hammer, Dumbbell, Play, Pause, Stethoscope, Scissors, Sparkles, Wrench, Droplets } from "lucide-react";
 
 // Using the same generic hook/logic as tradies
 const sleep = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
@@ -23,20 +23,18 @@ const waitForValue = async <T,>(finder: () => T | null, timeoutMs = 6000, stepMs
 };
 
 const NICHES = {
-    tradies: {
-        title: "The AI Receptionist for Tradies",
-        subtitle: "Plumbers, Electricians, Builders",
-        blurb: "Test how the AI handles after-hours overflow, urgent trade calls, quote requests, and callbacks.",
-        phoneNumber: "0485 009 296", // Default demo number or user's specific number
-        features: ["24/7 Call Answering", "Smart Job Qualification", "Direct Calendar Booking"],
-        widgetId: "69b2dd4c6a7fad7efe2a936f",
-        orbLabel: "Tradie AI Voice Demo",
-        audioFile: "tradies.mp3",
-        audioTitle: "Tradies",
-        audioDesc: "Dispatch teams and capture job details while you're on tools.",
-        icon: Hammer,
-        color: "from-blue-500/20 to-cyan-500/20",
-        accent: "text-blue-400",
+    solar: {
+        title: "The AI Receptionist for Solar",
+        subtitle: "Solar Installations, Energy Quotes",
+        blurb: "Experience how the AI handles solar panel inquiries, qualifies roof types, and books property assessments.",
+        phoneNumber: null,
+        features: ["Lead Qualification", "Property Assessments", "General Enquiries"],
+        widgetId: "69b2e21d4d840e52e6d98441",
+        orbLabel: "Solar AI Voice Demo",
+        audioFile: null,
+        icon: Sun,
+        color: "from-yellow-500/20 to-orange-500/20",
+        accent: "text-yellow-400",
     },
     gyms: {
         title: "The AI Receptionist for Gyms",
@@ -53,6 +51,21 @@ const NICHES = {
         color: "from-purple-500/20 to-pink-500/20",
         accent: "text-purple-400",
     },
+    tradies: {
+        title: "The AI Receptionist for Tradies",
+        subtitle: "Plumbers, Electricians, Builders",
+        blurb: "Test how the AI handles after-hours overflow, urgent trade calls, quote requests, and callbacks.",
+        phoneNumber: "0485 009 296", // Default demo number or user's specific number
+        features: ["24/7 Call Answering", "Smart Job Qualification", "Direct Calendar Booking"],
+        widgetId: "69b2dd4c6a7fad7efe2a936f",
+        orbLabel: "Tradie AI Voice Demo",
+        audioFile: "tradies.mp3",
+        audioTitle: "Tradies",
+        audioDesc: "Dispatch teams and capture job details while you're on tools.",
+        icon: Hammer,
+        color: "from-blue-500/20 to-cyan-500/20",
+        accent: "text-blue-400",
+    },
     clinics: {
         title: "The AI Receptionist for Clinics",
         subtitle: "Dental, Physio, Medical",
@@ -64,21 +77,13 @@ const NICHES = {
         audioFile: null,
     },
     salons: {
-        title: "The AI Receptionist for Salons",
-        subtitle: "Hair, Beauty, Spas",
-        blurb: "Check out how the AI handles appointment adjustments, service questions, and bookings.",
+        title: "The AI Receptionist for Salon's, Massage and Spa's",
+        subtitle: "Hair, Beauty, Spas, Massage Parlours",
+        blurb: "Check out how the AI handles appointment adjustments, service questions, and massage bookings.",
         phoneNumber: null,
         features: ["Appointment Management", "Service Pricing Quotes", "Reminders & Follow-Ups"],
-        audioFile: null,
-    },
-    massage: {
-        title: "The AI Receptionist for Massage Parlours",
-        subtitle: "Massage, Relaxation, Wellness",
-        blurb: "Experience polite, calming booking assistance, service inquiries, and availability checks.",
-        phoneNumber: null,
-        features: ["Booking Relaxation Sessions", "Service Availability", "FAQ Handling"],
         widgetId: "69b2ee934d840e7823dd75f5",
-        orbLabel: "Massage AI Voice Demo",
+        orbLabel: "Salon AI Voice Demo",
         audioFile: null,
     },
     automotive: {
@@ -332,7 +337,7 @@ export default function NicheDemoPage() {
 
                     <div className="mb-6 grid gap-3 md:grid-cols-2">
                         <a
-                            href="https://api.leadconnectorhq.com/widget/booking/OYHMC46ijO5WgqMTNb8G"
+                            href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
