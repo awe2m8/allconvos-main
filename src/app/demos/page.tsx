@@ -68,7 +68,7 @@ export default function DemosHubPage() {
                     </div>
                     <div className="hidden md:flex md:items-center md:gap-2">
                         <a
-                            href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
+                            href="https://contact.allconvos.ai/widget/booking/8FhAQk87HxZX5NEuA4s5"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center rounded-md border border-neon/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neon transition-all hover:border-neon hover:bg-neon/10"
@@ -206,7 +206,7 @@ export default function DemosHubPage() {
 
                         <div className="mx-auto max-w-sm flex flex-col gap-3">
                             <a
-                                href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
+                                href="https://contact.allconvos.ai/widget/booking/8FhAQk87HxZX5NEuA4s5"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-neon px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-ocean-950 transition-all hover:bg-white hover:shadow-[0_0_20px_rgba(163,230,53,0.4)]"
