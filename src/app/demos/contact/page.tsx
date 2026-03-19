@@ -21,9 +21,7 @@ export default function GilesContactPage() {
         setIsSubmitting(true);
 
         try {
-            // Note: This is currently pointing to the shared GHL Webhook.
-            // When you have your separate GHL setup, update this URL to ensure leads only go to you.
-            const webhookUrl = "https://services.leadconnectorhq.com/hooks/JV3CnL8WkMU5iYblOolr/webhook-trigger/42236792-c249-4506-b4d9-9f34d4dd37a6";
+            const webhookUrl = "https://services.leadconnectorhq.com/hooks/T8MbqCetMfWQpg5W9oWF/webhook-trigger/5700ca6f-2fa7-4674-8b39-cd01a60c909a";
 
             // Send data to GHL
             await fetch(webhookUrl, {
