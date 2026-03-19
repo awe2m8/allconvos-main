@@ -337,7 +337,7 @@ export default function NicheDemoPage() {
 
                     <div className="mb-6 grid gap-3 md:grid-cols-2">
                         <a
-                            href="https://api.leadconnectorhq.com/widget/booking/8FhAQk87HxZX5NEuA4s5"
+                            href="https://contact.allconvos.ai/widget/booking/8FhAQk87HxZX5NEuA4s5"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-neon/40 px-5 py-3 text-sm font-bold uppercase tracking-wide text-neon transition-all hover:border-neon hover:bg-neon/10"
